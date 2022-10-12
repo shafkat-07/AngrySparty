@@ -68,7 +68,7 @@ Level::Level(const std::string& filename)
  * Handles drawing the items from the level on GameView
  * @param dc The wxDC object to write to
  */
-void Level::Draw(wxDC* dc)
+void Level::OnDraw(wxDC* dc)
 {
     //TODO Uncomment this after Item is added
 //    for(auto each_item : mItems){

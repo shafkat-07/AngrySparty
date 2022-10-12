@@ -15,13 +15,18 @@
 #include <wx/string.h>
 #include <wx/dc.h>
 
+/**
+ * A manager for the levels in the game
+ */
 class LevelManager {
 private:
-    // Collection of levels to be managed
+    /// Collection of levels to be managed
     std::vector<std::shared_ptr<Level>> mLevels;
-    // The total number of levels on the game
+
+    /// The total number of levels on the game
     int mLevelCount = 0;
-    // The index of the currently displayed level
+
+    /// The index of the currently displayed level
     int mDisplayedLevel = 0;
 public:
     LevelManager();

@@ -5,8 +5,11 @@
 
 #include "LevelManager.h"
 
-std::string XML1 = "path1";
+/// XML1's file location
+const std::string XML1 = "path1";
+/// XML2's file location
 const std::string XML2 = "path1";
+/// XML3's file location
 const std::string XML3 = "path1";
 
 /**
@@ -46,5 +49,5 @@ void LevelManager::ChangeLevel(int desiredlevel)
  */
 void LevelManager::OnDraw(wxDC* dc)
 {
-    mLevels[mDisplayedLevel]->Draw(dc);
+    mLevels[mDisplayedLevel]->OnDraw(dc);
 }
