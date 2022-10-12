@@ -43,7 +43,7 @@ public:
 
     /**
      * Updates the score by incrementing with the parameter (can be negative)
-     * @param m_score The parameter to increment by (can be negative)
+     * @param score The parameter to increment by (can be negative)
      */
     void UpdateScore(int score) {mScore += score;}
 };
