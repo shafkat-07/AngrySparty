@@ -1,6 +1,8 @@
-#include <iostream>
+/**
+ * @file main.cpp
+ * @author Juan Camilo Sabogal Olarte
+ */
 
-int main() {
-    std::cout << "." << std::endl;
-    return 0;
-}
+#include "GameApp.h"
+
+wxIMPLEMENT_APP(GameApp);
