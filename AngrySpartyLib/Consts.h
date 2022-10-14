@@ -10,9 +10,6 @@
 
 /**
  * Defines constants that are used for conversion and calculations.
- *
- * @Usage Say you want to find the width of an image with width mWidth:
- *          auto wid = mWidth * Consts::MtoCM;
  */
 class Const {
 public:
