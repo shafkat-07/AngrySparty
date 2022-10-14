@@ -6,27 +6,27 @@
 #include "LevelManager.h"
 
 /// XML1's file location
-const std::string XML1 = "path1";
+const std::wstring XML0 = L"../levels/level0.xml";
 /// XML2's file location
-const std::string XML2 = "path1";
+const std::wstring XML1 = L"../levels/level1.xml";
 /// XML3's file location
-const std::string XML3 = "path1";
+const std::wstring XML2 = L"..levels/level2.xml";
 
 /**
  * Constructor for the LevelManager, will load the 3 predefined levels on creation
  */
 LevelManager::LevelManager()
 {
+    Load(XML0);
     Load(XML1);
     Load(XML2);
-    Load(XML3);
 }
 
 /**
  * Loads a Level XML file into the game
  * @param filename Path of the XML file on disk
  */
-void LevelManager::Load(const std::string& filename)
+void LevelManager::Load(const std::wstring& filename)
 {
     auto new_level = std::make_shared<Level>(filename);
     mLevels.push_back(new_level);

@@ -3,7 +3,7 @@
  * @author Juan Camilo Sabogal Olarte
  */
 
-#include<memory>
+#include <memory>
 #include "Game.h"
 
 using namespace std;

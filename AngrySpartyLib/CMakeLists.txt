@@ -2,7 +2,7 @@ project(AngrySpartyLib)
 
 set(SOURCE_FILES MainFrame.cpp MainFrame.h
         GameView.cpp GameView.h
-        Game.cpp Game.h LevelManager.cpp LevelManager.h Level.cpp Level.h Item.cpp Item.h Physics.cpp Physics.h Consts.h pch.h)
+        Game.cpp Game.h LevelManager.cpp LevelManager.h Level.cpp Level.h Item.cpp Item.h Physics.cpp Physics.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

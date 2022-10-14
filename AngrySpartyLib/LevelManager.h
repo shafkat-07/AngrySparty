@@ -30,7 +30,7 @@ private:
     int mDisplayedLevel = 0;
 public:
     LevelManager();
-    void Load(const std::string& filename);
+    void Load(const std::wstring& filename);
     void ChangeLevel(int desiredlevel);
     void OnDraw(wxDC * dc);
 

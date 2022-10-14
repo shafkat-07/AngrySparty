@@ -29,3 +29,5 @@ target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES} ${APPLICATION_LIBRA
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/images/
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images/)
+
+add_subdirectory(Tests)
