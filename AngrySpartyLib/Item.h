@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "b2_body.h"
+#include <b2_body.h>
 #include <memory>
 #include <wx\graphics.h>
 #include <wx/xml/xml.h>
