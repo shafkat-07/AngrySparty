@@ -10,6 +10,7 @@
 #include "b2_body.h"
 #include <memory>
 #include <wx\graphics.h>
+#include <wx/xml/xml.h>
 
 class Level;
 class b2Body;
@@ -37,6 +38,9 @@ private:
     double mX = 0; ///< X location for the center of the item
     double mY = 0; ///< Y location for the center of the item
 
+    double mWidth = 0; ///< Width of the item
+    double mHeight = 0; ///< Height of the item
+
     std::unique_ptr<wxImage> mItemImage; ///< The underlying item image
 
     std::unique_ptr<wxBitmap> mItemBitmap; ///< The bitmap that can be displayed for an item
@@ -47,8 +51,10 @@ public:
     /// Copy constructor (disabled)
     Item(const Item &) = delete;
 
+    /// Constructor with a body definition.
     Item(b2BodyDef bodyDef);
 
+    /// Constructor with a level.
     Item(Level *level) {};
 
     /// Assignment operator (disabled)
@@ -84,4 +90,34 @@ public:
     virtual void Release() {}
 
     b2World* GetWorld();
+
+    /**
+     * Get the X location for the center of the item
+     * @return X location in pixels
+     */
+    double GetX() const { return mX; }
+
+    /**
+     * Get the Y location for the center of the item
+     * @return Y location in pixels
+     */
+     double GetY() const { return mY; }
+
+    /**
+    * The width of the item.
+    * @return Width in pixels
+    */
+    double GetWidth() const { return mWidth; }
+
+    /**
+     * The height of the item.
+     * @return Height in pixels.
+     */
+    double GetHeight() const { return mHeight; }
+
+    virtual void Draw(wxDC *dc);
+
+    virtual wxXmlNode* XmlSave(wxXmlNode* node);
+
+    virtual void XmlLoad(wxXmlNode* node);
 };

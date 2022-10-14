@@ -84,3 +84,26 @@ void Item::SetTransform(const b2Vec2& location, double angle)
 {
     mBody->SetTransform(location, (float)angle);
 }
+
+/**
+ * Draw the item.
+ * @param dc The drawing context to draw on.
+ */
+void Item::Draw(wxDC* dc)
+{
+    double wid = mItemBitmap->GetWidth();
+    double hit = mItemBitmap->GetHeight();
+    dc->DrawBitmap(*mItemBitmap,
+            int(GetX() - wid / 2),
+            int(GetY() - hit / 2));
+}
+
+void Item::XmlLoad(wxXmlNode* node)
+{
+
+}
+
+wxXmlNode* Item::XmlSave(wxXmlNode* node)
+{
+    return nullptr;
+}
