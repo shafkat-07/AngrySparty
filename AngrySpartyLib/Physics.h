@@ -9,6 +9,9 @@
 
 #include <Box2D/Box2D.h>
 
+/**
+ * Physics class for the game
+ */
 class Physics {
 public:
     /// Default constructor (disabled)

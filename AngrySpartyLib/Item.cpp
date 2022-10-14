@@ -11,6 +11,15 @@
 
 #include <b2_fixture.h>
 
+/**
+ * Constructor with a body definition.
+ * @param level The level this item is contained in
+ * @param bodyDef The body definition for this item
+ */
+Item::Item(Level* level, b2BodyDef bodyDef) : mLevel(level), mBodyDef(bodyDef)
+{
+    mBody = mLevel->GetWorld()->CreateBody(&mBodyDef);
+}
 
 /**
  * Test items to see if they have been clicked on.

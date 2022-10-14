@@ -51,11 +51,9 @@ public:
     /// Copy constructor (disabled)
     Item(const Item &) = delete;
 
-    /// Constructor with a body definition.
-    Item(b2BodyDef bodyDef);
 
-    /// Constructor with a level.
-    Item(Level *level) {};
+    Item(Level* level, b2BodyDef bodyDef);
+
 
     /// Assignment operator (disabled)
     void operator=(const Item &) = delete;
@@ -63,10 +61,16 @@ public:
     /// Destructor
     virtual ~Item();
 
-    /// Get the box2d body
+    /**
+     * Get the body of the item
+     * @return body of the item
+     */
     b2Body* GetBody() { return mBody; }
 
-    /// Get the box2d fixture
+    /**
+     * Get the fixture of the item
+     * @return fixture of the item
+     */
     b2Fixture* GetFixture() { return mFixture; }
 
     /**
@@ -75,16 +79,11 @@ public:
      */
     virtual void Update(double elapsed) = 0;
 
-    /**
-     * Set the transform for the item.
-     * @param location Location in meters
-     * @param angle Angle in radians
-     */
     void SetTransform(const b2Vec2& location, double angle);
 
     virtual bool HitTest(double x, double y);
 
-    b2Fixture* CreateFixture(b2Shape* shape);
+    b2Fixture* CreateFixture(b2Shape* sssssshape);
 
     /// Indicates that the item has been released by the mouse
     virtual void Release() {}
