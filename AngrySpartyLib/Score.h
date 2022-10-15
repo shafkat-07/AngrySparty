@@ -1,16 +1,26 @@
 /**
- * @file Score.cpp
- * @author Tyler Baird
+ * @file Score.h
+ * @author Western Tanager
+ *
+ * Class to represent a Score
  */
 #ifndef ANGRYSPARTY_SCORE_H
 #define ANGRYSPARTY_SCORE_H
 
-
+/**
+ * Class to represent a Score
+ */
 class Score {
 private:
-    int mScore;
+    /// The value of the score
+    int mValue;
+
 public:
-    void getScore();
+    /**
+     * Get the current score
+     * @return The current score
+     */
+    int getScore() { return mValue; }
 
 
 };

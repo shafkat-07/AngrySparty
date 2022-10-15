@@ -1,21 +1,12 @@
 /**
  * @file Level.h
- * @author Vetri Vijay
+ * @author Western Tanager
  *
  * Contains all the items for a level
- *
  */
 
 #ifndef ANGRYSPARTY_LEVEL_H
 #define ANGRYSPARTY_LEVEL_H
-
-//TODO Remove wx headers after pch.h is configured
-
-
-#include <wx/wx.h>
-#include <wx/string.h>
-#include <wx/xml/xml.h>
-#include <wx/dc.h>
 
 #include <b2_math.h>
 #include <b2_world.h>
@@ -64,6 +55,7 @@ private:
 
      /// Score tracking for each level
      int mScore = 0;
+
 public:
     Level(const std::wstring &);
     void Load(const std::wstring &);

@@ -1,14 +1,12 @@
 /**
  * @file Game.h
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  *
  * The class for our Game
  */
 
 #ifndef ANGRYSPARTY_GAME_H
 #define ANGRYSPARTY_GAME_H
-
-#include <wx/dc.h>
 
 /**
  * The class for our Game

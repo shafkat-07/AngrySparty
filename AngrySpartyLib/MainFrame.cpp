@@ -1,8 +1,9 @@
 /**
  * @file MainFrame.cpp
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  */
 
+#include "pch.h"
 #include "MainFrame.h"
 #include "GameView.h"
 

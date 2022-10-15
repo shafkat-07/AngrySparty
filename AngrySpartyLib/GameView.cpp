@@ -1,8 +1,9 @@
 /**
  * @file GameView.cpp
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  */
 
+#include "pch.h"
 #include <wx/dcbuffer.h>
 #include "GameView.h"
 

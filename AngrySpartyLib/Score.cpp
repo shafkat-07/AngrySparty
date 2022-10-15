@@ -1,5 +1,7 @@
-//
-// Created by Tyler Baird on 10/14/22.
-//
+/**
+ * @file Score.cpp
+ * @author Western Tanager
+ */
 
+#include "pch.h"
 #include "Score.h"

@@ -1,8 +1,8 @@
 /**
  * @file Physics.h
- * @author kabir
+ * @author Western Tanager
  *
- * Class
+ * Physics class for the game
  */
 
 #pragma once

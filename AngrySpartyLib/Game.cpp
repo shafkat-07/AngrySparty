@@ -1,8 +1,9 @@
 /**
  * @file Game.cpp
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  */
 
+#include "pch.h"
 #include <memory>
 #include "Game.h"
 

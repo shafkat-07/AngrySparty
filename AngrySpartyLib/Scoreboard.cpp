@@ -1,17 +1,25 @@
 /**
- * @file ScoreBoard.cpp
- * @author Tyler Baird
+ * @file Scoreboard.cpp
+ * @author Western Tanager
  */
 
-#include "ScoreBoard.h"
 #include "pch.h"
+#include "Scoreboard.h"
 
-
-void ScoreBoard::addScores(Score *score) {
-
+/**
+ * Add a score
+ *
+ * @param score The score to add
+ */
+void Scoreboard::addScores(Score *score)
+{
 
 }
 
-void ScoreBoard::getCurrentScore() {
+/**
+ * Get the current score
+ */
+void Scoreboard::getCurrentScore()
+{
 
 }

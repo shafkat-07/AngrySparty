@@ -5,7 +5,7 @@
  * Test the item class for the Angry Sparty game.
  */
 
-//#include <pch.h>
+#include <pch.h>
 #include "gtest/gtest.h"
 #include <Item.h>
 #include <Level.h>

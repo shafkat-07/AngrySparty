@@ -11,7 +11,4 @@
 #include <wx/wx.h>
 #endif
 
-#include <wx/xml/xml.h>
-
 #endif ANGRYSPARTY_PCH_H
-

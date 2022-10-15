@@ -1,6 +1,6 @@
 /**
  * @file Consts.h
- * @author Brendan Bushbaker
+ * @author Western Tanager
  *
  * Useful constants to use for conversion and other calculations.
  */

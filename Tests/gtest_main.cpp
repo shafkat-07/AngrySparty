@@ -3,7 +3,7 @@
  * @author Brendan Bushbaker
  */
 
-//#include <pch.h>
+#include <pch.h>
 #include "gtest/gtest.h"
 #include <wx/filefn.h>
 #include <wx/image.h>

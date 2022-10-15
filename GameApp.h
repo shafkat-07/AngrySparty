@@ -1,15 +1,12 @@
 /**
  * @file GameApp.h
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  *
  * Main application class
  */
 
 #ifndef ANGRYSPARTAN_GAMEAPP_H
 #define ANGRYSPARTAN_GAMEAPP_H
-
-
-#include <wx/wx.h>
 
 /**
  * Main application class

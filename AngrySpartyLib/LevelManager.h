@@ -1,6 +1,6 @@
 /**
  * @file LevelManager.h
- * @author Vetri Vijay
+ * @author Western Tanager
  *
  * Loads and manages all of the levels in the game
  *
@@ -10,10 +10,6 @@
 #define ANGRYSPARTY_LEVELMANAGER_H
 
 #include "Level.h"
-
-//TODO Remove wx headers after pch.h is configured
-#include <wx/string.h>
-#include <wx/dc.h>
 
 /**
  * A manager for the levels in the game

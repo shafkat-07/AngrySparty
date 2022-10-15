@@ -1,6 +1,6 @@
 /**
  * @file GameView.h
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  *
  * View class for our game
  */
@@ -8,7 +8,6 @@
 #ifndef ANGRYSPARTY_GAMEVIEW_H
 #define ANGRYSPARTY_GAMEVIEW_H
 
-#include <wx/wx.h>
 #include "Game.h"
 
 /**

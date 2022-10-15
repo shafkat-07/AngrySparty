@@ -1,6 +1,6 @@
 /**
  * @file Item.h
- * @author kabir and Brendan Bushbaker
+ * @author Western Tanager
  *
  * Base Class for all items in the game.
  */
@@ -9,8 +9,6 @@
 
 #include <b2_body.h>
 #include <memory>
-#include <wx/graphics.h>
-#include <wx/xml/xml.h>
 
 class Level;
 class b2Body;

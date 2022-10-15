@@ -36,5 +36,4 @@ target_link_libraries(Tests_run ${APPLICATION_LIBRARY} ${wxWidgets_LIBRARIES} )
 # linking Tests_run with the Google Test libraries
 target_link_libraries(Tests_run gtest box2d)
 
-# TODO: Uncomment after pch.h file is created.
-#target_precompile_headers(Tests_run PRIVATE ../${APPLICATION_LIBRARY}/pch.h)
+target_precompile_headers(Tests_run PRIVATE ../${APPLICATION_LIBRARY}/pch.h)

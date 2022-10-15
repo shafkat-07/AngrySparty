@@ -1,9 +1,9 @@
 /**
  * @file Physics.cpp
- * @author kabir
+ * @author Western Tanager
  */
 
-//#include "pch.h"
+#include "pch.h"
 #include "Physics.h"
 
 /// Number of velocity update iterations per step
