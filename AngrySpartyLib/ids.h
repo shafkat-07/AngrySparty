@@ -1,6 +1,6 @@
 /**
  * @file ids.h
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  *
  * ID values for our program.
  */
