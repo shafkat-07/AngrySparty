@@ -16,7 +16,8 @@ private:
 
 public:
     void Initialize();
-
+    void OnExit(wxCommandEvent& event);
+    void OnAbout(wxCommandEvent& event);
 };
 
 #endif //ANGRYSPARTY_MAINFRAME_H
