@@ -1,10 +1,10 @@
 /**
- * @file Physics.cpp
+ * @file World.cpp
  * @author Western Tanager
  */
 
 #include "pch.h"
-#include "Physics.h"
+#include "World.h"
 
 /// Number of velocity update iterations per step
 const int VelocityIterations = 6;
@@ -19,7 +19,7 @@ const float Gravity = -9.8f;
  * Constructor
  * @param size The size of the level in meters
  */
-Physics::Physics(const b2Vec2& size) : mWorld(b2Vec2(0.0f, Gravity))
+World::World(const b2Vec2& size) :mWorld(b2Vec2(0.0f, Gravity))
 {
     // Create a ground body at 0,0 to use as a reference
     b2BodyDef bodyDefinition;
