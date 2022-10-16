@@ -67,19 +67,19 @@ public:
      * Getter for the score from this level
      * @return Score
      */
-    int GetScore() const {return mScore;}
+    int GetScore() const { return mScore; }
 
     /**
      * Updates the score by incrementing with the parameter (can be negative)
      * @param score The parameter to increment by (can be negative)
      */
-    void UpdateScore(int score) {mScore += score;}
+    void UpdateScore(int score) { mScore += score; }
 
     /**
      * Get the Box2D World object
      * @return b2World object
      */
-    b2World *GetWorld() {return &mWorld;}
+    b2World *GetWorld() { return &mWorld; }
 };
 
 #endif //ANGRYSPARTY_LEVEL_H

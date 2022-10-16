@@ -16,7 +16,7 @@
 class GameView : public wxWindow {
 private:
     /// An object that describes our game
-    Game  mGame;
+    Game mGame;
 
     void OnPaint(wxPaintEvent& event);
 
