@@ -11,7 +11,7 @@
 /**
  * Defines constants that are used for conversion and calculations.
  */
-class Const {
+class Consts {
 public:
     /// Conversion of meters to centimeter display dimensions
     static constexpr double MtoCM = 100.0;
