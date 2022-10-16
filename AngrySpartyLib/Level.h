@@ -16,6 +16,7 @@
 #include <memory>
 
 #include "Item.h"
+#include "Physics.h"
 
 class b2MouseJoint;
 
@@ -32,6 +33,8 @@ private:
 
     /// Size of the playing area in meters
     b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
+
+    Physics mPhysics = Physics(mSize);
 
     /// Scale we are drawing at
     double mScale = 1;
