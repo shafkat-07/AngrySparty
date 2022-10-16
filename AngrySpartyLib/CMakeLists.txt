@@ -6,7 +6,7 @@ set(SOURCE_FILES MainFrame.cpp MainFrame.h
         LevelManager.cpp LevelManager.h
         Level.cpp Level.h
         Item.cpp Item.h
-        Physics.cpp Physics.h
+        World.cpp World.h
         pch.h
         Score.cpp Score.h
         Scoreboard.cpp Scoreboard.h

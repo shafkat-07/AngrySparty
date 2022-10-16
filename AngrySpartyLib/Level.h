@@ -16,7 +16,7 @@
 #include <memory>
 
 #include "Item.h"
-#include "Physics.h"
+#include "World.h"
 
 class b2MouseJoint;
 
@@ -35,7 +35,7 @@ private:
     b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
 
     /// The physics object initialized with the size of the display
-    Physics mPhysics = Physics(mSize);
+    World mPhysics = World(mSize);
 
     /// Scale we are drawing at
     double mScale = 1;
