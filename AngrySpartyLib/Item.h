@@ -43,6 +43,8 @@ private:
     double mRestitution; ///< Restitution of the item
     double mRadius; ///< Radius of the item
 
+protected:
+
     std::unique_ptr<wxImage> mItemImage; ///< The underlying item image
 
     std::unique_ptr<wxBitmap> mItemBitmap; ///< The bitmap that can be displayed for an item
@@ -54,7 +56,7 @@ public:
     Item(const Item &) = delete;
 
 
-    Item(Level* level, b2BodyDef* bodyDef);
+    Item(Level* level);
 
 
     /// Assignment operator (disabled)

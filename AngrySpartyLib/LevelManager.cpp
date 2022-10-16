@@ -11,7 +11,7 @@ const std::wstring XML0 = L"../levels/level0.xml";
 /// XML2's file location
 const std::wstring XML1 = L"../levels/level1.xml";
 /// XML3's file location
-const std::wstring XML2 = L"..levels/level2.xml";
+const std::wstring XML2 = L"../levels/level2.xml";
 
 /**
  * Constructor for the LevelManager, will load the 3 predefined levels on creation
