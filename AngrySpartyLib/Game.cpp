@@ -71,4 +71,6 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     graphics->PopState();
 
     graphics->PopState();
+
+    mLevelManager->OnDraw(graphics);
 }
