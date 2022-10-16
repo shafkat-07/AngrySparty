@@ -10,6 +10,7 @@
 #include <b2_circle_shape.h>
 #include <b2_mouse_joint.h>
 #include "Level.h"
+#include "Obstacle.h"
 
 class Item;
 
@@ -50,9 +51,13 @@ void Level::Load(const std::wstring &filename)
         auto name = child->GetName();
 
         // TODO change this to each of item's derived classes when completed
-        if(name == L"item")
+        if(name == L"items")
         {
-            XmlItem(child);
+            auto grandChild = child->GetChildren();
+            for ( ; grandChild; grandChild = grandChild->GetNext())
+            {
+                XmlItem(grandChild);
+            }
         }
     }
 }
@@ -68,13 +73,35 @@ void Level::XmlItem(wxXmlNode *node)
     std::shared_ptr<Item> item;
 
     // We have an item. What type?
-    auto type = node->GetAttribute(L"type");
-    if (type == L"block")
-    {
-        // TODO Item is virtual. Once derived classes such as block are made, uncomment
-//    item = std::make_shared<block>(this);
-//    item->XmlLoad(node);
+    auto type = node->GetName();
+    if (type == "obstacle") {
+        item = std::make_shared<Obstacle>(this);
     }
+//    TODO Comment this back in when the other item types are created.
+//    else if (type == "block")
+//    {
+//        item = std::make_shared<Block>(this);
+//    }
+//    else if (type == "poly")
+//    {
+//        item = std::make_shared<Poly>(this);
+//    }
+//    else if (type == "foe")
+//    {
+//        item = std::make_shared<Foe>(this);
+//    }
+//    else if (type == "sling")
+//    {
+//        item = std::make_shared<Sling>(this);
+//    }
+    else
+    {
+//        wxMessageBox(L"Unknown item type: " + type);
+//        return;
+        item = std::make_shared<Obstacle>(this);
+    }
+    item->XmlLoad(node);
+
 
     if (item != nullptr)
     {

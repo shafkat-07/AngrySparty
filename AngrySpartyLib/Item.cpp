@@ -12,21 +12,24 @@
 #include <b2_fixture.h>
 #include <b2_circle_shape.h>
 
-const double STANDARD_RADIUS = 0.3f;
+/// The standard radius of a circle item.
+const double StandardRadius = 0.3f;
 
 /**
  * Constructor with a body definition.
  * @param level The level this item is contained in
  * @param bodyDef The body definition for this item
  */
-Item::Item(Level* level, b2BodyDef* bodyDef) : mLevel(level), mBodyDef(bodyDef)
+Item::Item(Level* level) : mLevel(level)
 {
+    b2BodyDef bodyDef;
+    mBodyDef = &bodyDef;
     mBodyDef->type = b2_staticBody;
     mBody = GetWorld()->CreateBody(mBodyDef);
 
     // Create a circular default fixture.
     b2CircleShape shape;
-    shape.m_radius = STANDARD_RADIUS;
+    shape.m_radius = StandardRadius;
 
     mFixture = Item::CreateFixture(&shape);
 }
@@ -141,8 +144,11 @@ void Item::XmlLoad(wxXmlNode* node)
     mBodyDef->position.Set(mX, mY);
     mBodyDef->angle = (float) mAngle;
 
+    mWidth = mItemImage->GetWidth();
+    mHeight = mItemImage->GetHeight();
+
     b2CircleShape shape;
-    shape.m_radius = STANDARD_RADIUS;
+    shape.m_radius = StandardRadius;
 
     GetWorld()->DestroyBody(mBody);
     mBody = GetWorld()->CreateBody(mBodyDef);

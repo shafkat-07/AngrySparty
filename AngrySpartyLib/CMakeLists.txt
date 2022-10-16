@@ -10,7 +10,7 @@ set(SOURCE_FILES MainFrame.cpp MainFrame.h
         pch.h
         Score.cpp Score.h
         Scoreboard.cpp Scoreboard.h
-        Consts.h)
+        Consts.h Obstacle.cpp Obstacle.h Obstacle.cpp Obstacle.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)
