@@ -16,6 +16,7 @@ Game::Game()
 {
     mBackground = make_unique<wxBitmap>(
             L"images/background1.png", wxBITMAP_TYPE_ANY);
+    mLevelManager = make_unique<LevelManager>();
 }
 
 /**
@@ -31,4 +32,6 @@ void Game::OnDraw(wxDC *dc)
             wxFONTWEIGHT_NORMAL);
     dc->SetFont(font);
     dc->SetTextForeground(wxColour(0, 64, 0));
+
+    mLevelManager->OnDraw(dc);
 }

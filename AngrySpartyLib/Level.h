@@ -15,8 +15,9 @@
 #include <vector>
 #include <memory>
 
+#include "Item.h"
+
 class b2MouseJoint;
-class Item;
 
 /**
  * This class represents a level with it's own score and item collection

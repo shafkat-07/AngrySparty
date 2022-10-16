@@ -11,6 +11,8 @@
 #include <b2_mouse_joint.h>
 #include "Level.h"
 
+class Item;
+
 /// Gravity in meters per second per second
 const float Gravity = -9.8f;
 
@@ -46,6 +48,8 @@ void Level::Load(const std::wstring &filename)
     for( ; child; child=child->GetNext())
     {
         auto name = child->GetName();
+
+        // TODO change this to each of item's derived classes when completed
         if(name == L"item")
         {
             XmlItem(child);
@@ -54,20 +58,36 @@ void Level::Load(const std::wstring &filename)
 }
 
 /**
- * Clears the Items from the level
- */
-void Level::Clear()
-{
-//    mItems.clear(); //TODO Uncomment this after Item is added
-}
-
-/**
- * Handles the XML node coming into the level, passes it to the items
+ * Handle a node of type item.
+ * TODO create seperate functions for each of the item types (block, poly, foe, sling)
  * @param node XML node
  */
 void Level::XmlItem(wxXmlNode *node)
 {
+    // A pointer for the item we are loading
+    std::shared_ptr<Item> item;
 
+    // We have an item. What type?
+    auto type = node->GetAttribute(L"type");
+    if (type == L"block")
+    {
+        // TODO Item is virtual. Once derived classes such as block are made, uncomment
+//    item = std::make_shared<block>(this);
+//    item->XmlLoad(node);
+    }
+
+    if (item != nullptr)
+    {
+        mItems.push_back(item);
+    }
+}
+
+/**
+ * Clears the Items from the level
+ */
+void Level::Clear()
+{
+    mItems.clear();
 }
 
 /**
@@ -107,8 +127,8 @@ Level::Level(const std::wstring &filename) :mWorld(b2Vec2(0.0f, Gravity))
  */
 void Level::OnDraw(wxDC* dc)
 {
-    //TODO Uncomment this after Item is added
-//    for(auto each_item : mItems){
-//        each_item->Draw(dc);
-//    }
+    std::cout << "The item received the pointer to Level" << '\n';
+    for(auto each_item : mItems){
+        each_item->Draw(dc);
+    }
 }
