@@ -118,7 +118,7 @@ public:
      */
     double GetHeight() const { return mHeight; }
 
-    virtual void Draw(wxDC *dc);
+    virtual void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
 
     virtual wxXmlNode* XmlSave(wxXmlNode* node);
 

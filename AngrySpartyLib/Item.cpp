@@ -111,13 +111,20 @@ void Item::SetTransform(const b2Vec2& location, double angle)
  * Draw the item.
  * @param dc The drawing context to draw on.
  */
-void Item::Draw(wxDC* dc)
+void Item::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    double wid = mItemBitmap->GetWidth();
-    double hit = mItemBitmap->GetHeight();
-    dc->DrawBitmap(*mItemBitmap,
-            int(GetX() - wid / 2),
-            int(GetY() - hit / 2));
+    if (mItemBitmap == nullptr)
+    {
+        return;
+    }
+
+    b2Vec2 position = mBody->GetPosition();
+    double angle = mBody->GetAngle();
+
+    graphics->Translate(position.x, position.y);
+    graphics->Rotate(angle);
+
+    graphics->DrawBitmap(*mItemBitmap, -mWidth / 2, -mHeight / 2, mWidth, mHeight);
 }
 
 /**

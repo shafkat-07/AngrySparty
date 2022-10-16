@@ -66,7 +66,7 @@ public:
     void Load(const std::wstring &);
     void Clear();
     void XmlItem(wxXmlNode* node);
-    void OnDraw(wxDC * dc);
+    void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
 
     /**
      * Getter for the score from this level
