@@ -31,13 +31,17 @@ private:
     b2Fixture* mFixture;
 
     /// The box2d body definition
-    b2BodyDef mBodyDef;
+    b2BodyDef* mBodyDef;
 
     double mX = 0; ///< X location for the center of the item
     double mY = 0; ///< Y location for the center of the item
 
-    double mWidth = 0; ///< Width of the item
-    double mHeight = 0; ///< Height of the item
+    double mWidth; ///< Width of the item
+    double mHeight; ///< Height of the item
+    double mAngle; ///< Angle of the item
+    double mFriction; ///< Friction of the item
+    double mRestitution; ///< Restitution of the item
+    double mRadius; ///< Radius of the item
 
     std::unique_ptr<wxImage> mItemImage; ///< The underlying item image
 
@@ -50,7 +54,7 @@ public:
     Item(const Item &) = delete;
 
 
-    Item(Level* level, b2BodyDef bodyDef);
+    Item(Level* level, b2BodyDef* bodyDef);
 
 
     /// Assignment operator (disabled)
@@ -81,7 +85,7 @@ public:
 
     virtual bool HitTest(double x, double y);
 
-    b2Fixture* CreateFixture(b2Shape* sssssshape);
+    b2Fixture* CreateFixture(b2Shape* shape);
 
     /// Indicates that the item has been released by the mouse
     virtual void Release() {}

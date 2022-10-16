@@ -10,15 +10,25 @@
 #include "Level.h"
 
 #include <b2_fixture.h>
+#include <b2_circle_shape.h>
+
+const double STANDARD_RADIUS = 0.3f;
 
 /**
  * Constructor with a body definition.
  * @param level The level this item is contained in
  * @param bodyDef The body definition for this item
  */
-Item::Item(Level* level, b2BodyDef bodyDef) : mLevel(level), mBodyDef(bodyDef)
+Item::Item(Level* level, b2BodyDef* bodyDef) : mLevel(level), mBodyDef(bodyDef)
 {
-    mBody = mLevel->GetWorld()->CreateBody(&mBodyDef);
+    mBodyDef->type = b2_staticBody;
+    mBody = GetWorld()->CreateBody(mBodyDef);
+
+    // Create a circular default fixture.
+    b2CircleShape shape;
+    shape.m_radius = STANDARD_RADIUS;
+
+    mFixture = Item::CreateFixture(&shape);
 }
 
 /**
@@ -118,9 +128,27 @@ void Item::Draw(wxDC* dc)
  */
 void Item::XmlLoad(wxXmlNode* node)
 {
+    // Get the attributes for this item
+    mX = std::stof(node->GetAttribute(L"x", "0.0").ToStdWstring());
+    mY = std::stof(node->GetAttribute(L"y", "0.0").ToStdWstring());
+    mWidth = std::stof(node->GetAttribute(L"width", "0.0").ToStdWstring());
+    mHeight = std::stof(node->GetAttribute(L"height", "0.0").ToStdWstring());
+    mAngle = std::stof(node->GetAttribute(L"angle", "0.0").ToStdWstring());
+    mFriction = std::stof(node->GetAttribute(L"friction", "0.5").ToStdWstring());
+    mRestitution = std::stof(node->GetAttribute(L"restitution", "0.5").ToStdWstring());
 
+    mBodyDef->type = b2_staticBody;
+    mBodyDef->position.Set(mX, mY);
+    mBodyDef->angle = (float) mAngle;
+
+    b2CircleShape shape;
+    shape.m_radius = STANDARD_RADIUS;
+
+    GetWorld()->DestroyBody(mBody);
+    mBody = GetWorld()->CreateBody(mBodyDef);
+
+    mFixture = Item::CreateFixture(&shape);
 }
-
 /**
  * Save this item to an XML node
  * @param node The parent node we are going to be a child of
