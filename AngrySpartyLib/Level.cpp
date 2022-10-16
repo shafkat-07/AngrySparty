@@ -10,6 +10,9 @@
 #include <b2_circle_shape.h>
 #include <b2_mouse_joint.h>
 #include "Level.h"
+#include "Obstacle.h"
+
+class Item;
 
 /// Gravity in meters per second per second
 const float Gravity = -9.8f;
@@ -46,10 +49,63 @@ void Level::Load(const std::wstring &filename)
     for( ; child; child=child->GetNext())
     {
         auto name = child->GetName();
-        if(name == L"item")
+
+        // TODO change this to each of item's derived classes when completed
+        if(name == L"items")
         {
-            XmlItem(child);
+            auto grandChild = child->GetChildren();
+            for ( ; grandChild; grandChild = grandChild->GetNext())
+            {
+                XmlItem(grandChild);
+            }
         }
+    }
+}
+
+/**
+ * Handle a node of type item.
+ * TODO create seperate functions for each of the item types (block, poly, foe, sling)
+ * @param node XML node
+ */
+void Level::XmlItem(wxXmlNode *node)
+{
+    // A pointer for the item we are loading
+    std::shared_ptr<Item> item;
+
+    // We have an item. What type?
+    auto type = node->GetName();
+    if (type == "obstacle") {
+        item = std::make_shared<Obstacle>(this);
+    }
+//    TODO Comment this back in when the other item types are created.
+//    else if (type == "block")
+//    {
+//        item = std::make_shared<Block>(this);
+//    }
+//    else if (type == "poly")
+//    {
+//        item = std::make_shared<Poly>(this);
+//    }
+//    else if (type == "foe")
+//    {
+//        item = std::make_shared<Foe>(this);
+//    }
+//    else if (type == "sling")
+//    {
+//        item = std::make_shared<Sling>(this);
+//    }
+    else
+    {
+//        wxMessageBox(L"Unknown item type: " + type);
+//        return;
+        item = std::make_shared<Obstacle>(this);
+    }
+    item->XmlLoad(node);
+
+
+    if (item != nullptr)
+    {
+        mItems.push_back(item);
     }
 }
 
@@ -58,16 +114,7 @@ void Level::Load(const std::wstring &filename)
  */
 void Level::Clear()
 {
-//    mItems.clear(); //TODO Uncomment this after Item is added
-}
-
-/**
- * Handles the XML node coming into the level, passes it to the items
- * @param node XML node
- */
-void Level::XmlItem(wxXmlNode *node)
-{
-
+    mItems.clear();
 }
 
 /**
@@ -105,10 +152,10 @@ Level::Level(const std::wstring &filename) :mWorld(b2Vec2(0.0f, Gravity))
  * Handles drawing the items from the level on GameView
  * @param dc The wxDC object to write to
  */
-void Level::OnDraw(wxDC* dc)
+void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    //TODO Uncomment this after Item is added
-//    for(auto each_item : mItems){
-//        each_item->Draw(dc);
-//    }
+    std::cout << "The item received the pointer to Level" << '\n';
+    for(auto each_item : mItems){
+        each_item->OnDraw(graphics);
+    }
 }

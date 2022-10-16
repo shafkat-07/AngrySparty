@@ -11,7 +11,7 @@ const std::wstring XML0 = L"../levels/level0.xml";
 /// XML2's file location
 const std::wstring XML1 = L"../levels/level1.xml";
 /// XML3's file location
-const std::wstring XML2 = L"..levels/level2.xml";
+const std::wstring XML2 = L"../levels/level2.xml";
 
 /**
  * Constructor for the LevelManager, will load the 3 predefined levels on creation
@@ -38,17 +38,17 @@ void LevelManager::Load(const std::wstring& filename)
  * Updates the level displayed to the one passed in
  * @param desiredlevel The index of the level to play
  */
-void LevelManager::ChangeLevel(int desiredlevel)
+void LevelManager::ChangeLevel(int desiredLevel)
 {
     // TODO Delete the currently displayed level's object and add the desired ones
-    mDisplayedLevel = desiredlevel;
+    mDisplayedLevel = desiredLevel;
 }
 
 /**
  * Passes on the wxDC draw pointer to the Items
  * @param dc The wxDC pointer
  */
-void LevelManager::OnDraw(wxDC* dc)
+void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    mLevels[mDisplayedLevel]->OnDraw(dc);
+    mLevels[mDisplayedLevel]->OnDraw(graphics);
 }

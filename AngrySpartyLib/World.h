@@ -1,8 +1,8 @@
 /**
- * @file Physics.h
+ * @file World.h
  * @author Western Tanager
  *
- * Physics class for the game
+ * World class for the game
  */
 
 #pragma once
@@ -10,20 +10,20 @@
 #include <Box2D/Box2D.h>
 
 /**
- * Physics class for the game
+ * World class for the game
  */
-class Physics {
+class World {
 public:
     /// Default constructor (disabled)
-    Physics() = delete;
+    World() = delete;
 
     /// Copy constructor (disabled)
-    Physics(const Physics &) = delete;
+    World(const World &) = delete;
 
-    Physics(const b2Vec2& size);
+    World(const b2Vec2& size);
 
     /// Assignment operator
-    void operator=(const Physics &) = delete;
+    void operator=(const World &) = delete;
 
 
 private:

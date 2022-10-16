@@ -12,13 +12,15 @@
 
 const std::wstring filename = L"../levels/level0.xml";
 
-/** Mock class for testing the class Item */
+const std::wstring image = L"images/elementWood015.png";
+
+///** Mock class for testing the class Item */
 class ItemMock : public Item
 {
 private:
     Level *mLevel;
 public:
-    ItemMock(Level *level) : Item(level) { mLevel = level; }
+    ItemMock(Level *level) : Item(level, image) { mLevel = level; }
 
     void Update(double elapsed) override {}
 };

@@ -6,12 +6,13 @@ set(SOURCE_FILES MainFrame.cpp MainFrame.h
         LevelManager.cpp LevelManager.h
         Level.cpp Level.h
         Item.cpp Item.h
-        Physics.cpp Physics.h
-        pch.h
+        World.cpp World.h
         Score.cpp Score.h
         Scoreboard.cpp Scoreboard.h
+        Obstacle.cpp Obstacle.h
         Consts.h
-        ids.h)
+        ids.h
+        pch.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

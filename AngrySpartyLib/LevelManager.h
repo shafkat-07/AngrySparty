@@ -27,8 +27,8 @@ private:
 public:
     LevelManager();
     void Load(const std::wstring& filename);
-    void ChangeLevel(int desiredlevel);
-    void OnDraw(wxDC * dc);
+    void ChangeLevel(int desiredLevel);
+    void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
 
     /**
      * Returns the currently played/displayed level

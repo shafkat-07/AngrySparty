@@ -13,7 +13,9 @@
  */
 void GameView::Initialize(wxFrame* parent)
 {
-    Create(parent, wxID_ANY);
+    Create(parent, wxID_ANY,
+            wxDefaultPosition, wxDefaultSize,
+            wxFULL_REPAINT_ON_RESIZE);
     SetBackgroundStyle(wxBG_STYLE_PAINT);
     Bind(wxEVT_PAINT, &GameView::OnPaint, this);
 }
@@ -30,5 +32,12 @@ void GameView::OnPaint(wxPaintEvent& event)
     dc.SetBackground(background);
     dc.Clear();
 
-    mGame.OnDraw(&dc);
+    auto size = GetClientSize();
+
+    // Create a graphics context
+    auto graphics =
+            std::shared_ptr<wxGraphicsContext>(wxGraphicsContext::Create( dc ));
+    graphics->SetInterpolationQuality(wxINTERPOLATION_BEST);
+
+    mGame.OnDraw(graphics, size.GetWidth(), size.GetHeight());
 }

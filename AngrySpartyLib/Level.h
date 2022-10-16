@@ -15,8 +15,10 @@
 #include <vector>
 #include <memory>
 
+#include "Item.h"
+#include "World.h"
+
 class b2MouseJoint;
-class Item;
 
 /**
  * This class represents a level with it's own score and item collection
@@ -31,6 +33,9 @@ private:
 
     /// Size of the playing area in meters
     b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
+
+    /// The physics object initialized with the size of the display
+    World mPhysics = World(mSize);
 
     /// Scale we are drawing at
     double mScale = 1;
@@ -61,25 +66,25 @@ public:
     void Load(const std::wstring &);
     void Clear();
     void XmlItem(wxXmlNode* node);
-    void OnDraw(wxDC * dc);
+    void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
 
     /**
      * Getter for the score from this level
      * @return Score
      */
-    int GetScore() const {return mScore;}
+    int GetScore() const { return mScore; }
 
     /**
      * Updates the score by incrementing with the parameter (can be negative)
      * @param score The parameter to increment by (can be negative)
      */
-    void UpdateScore(int score) {mScore += score;}
+    void UpdateScore(int score) { mScore += score; }
 
     /**
      * Get the Box2D World object
      * @return b2World object
      */
-    b2World *GetWorld() {return &mWorld;}
+    b2World *GetWorld() { return &mWorld; }
 };
 
 #endif //ANGRYSPARTY_LEVEL_H

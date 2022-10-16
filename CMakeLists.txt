@@ -32,4 +32,7 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/images/
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images/)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/levels/
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/levels/)
+
 add_subdirectory(Tests)
