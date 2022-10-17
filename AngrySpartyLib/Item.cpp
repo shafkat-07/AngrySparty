@@ -149,6 +149,7 @@ void Item::XmlLoad(wxXmlNode* node)
     mBodyDef->type = b2_staticBody;
     mBodyDef->position.Set(mX, mY);
     mBodyDef->angle = (float) mAngle;
+    mBodyDef->angularDamping = 1.0f;
 
     mWidth = mItemImage->GetWidth();
     mHeight = mItemImage->GetHeight();
