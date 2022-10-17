@@ -18,6 +18,7 @@ const double StandardRadius = 0.3f;
 /**
  * Constructor with a body definition.
  * @param level The level this item is contained in
+ * @param bodyDef The body definition for this item
  */
 Item::Item(Level* level) : mLevel(level)
 {
@@ -108,7 +109,7 @@ void Item::SetTransform(const b2Vec2& location, double angle)
 
 /**
  * Draw the item.
- * @param graphics The drawing context to draw on.
+ * @param dc The drawing context to draw on.
  */
 void Item::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {

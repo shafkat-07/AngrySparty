@@ -1,8 +1,9 @@
 /**
  * @file Obstacle.h
- * @author Western Tanager
+ * @author Brendan Bushbaker
  *
  * The class of an obstacle in the Angry Sparty game.
+ *
  */
 
 #ifndef ANGRYSPARTY_OBSTACLE_H
