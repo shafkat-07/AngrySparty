@@ -1,6 +1,6 @@
 /**
  * @file gtest_main.cpp
- * @author Brendan Bushbaker
+ * @author Western Tanager
  */
 
 #include <pch.h>

@@ -150,12 +150,12 @@ Level::Level(const std::wstring &filename) :mWorld(b2Vec2(0.0f, Gravity))
 
 /**
  * Handles drawing the items from the level on GameView
- * @param dc The wxDC object to write to
+ * @param graphics The wxGraphicsContext object to write to
  */
 void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     std::cout << "The item received the pointer to Level" << '\n';
-    for(auto each_item : mItems){
-        each_item->OnDraw(graphics);
+    for(auto item : mItems){
+        item->OnDraw(graphics);
     }
 }
