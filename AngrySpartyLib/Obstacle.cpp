@@ -1,10 +1,11 @@
 /**
  * @file Obstacle.cpp
- * @author Brendan Bushbaker
+ * @author Western Tanager
  *
  * The class of an obstacle in the Angry Sparty game.
  */
 
+#include "pch.h"
 #include "Obstacle.h"
 
 /// Filename for image.

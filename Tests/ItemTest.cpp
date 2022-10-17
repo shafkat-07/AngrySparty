@@ -10,7 +10,7 @@
 #include <Item.h>
 #include <Level.h>
 
-const std::wstring filename = L"../levels/level0.xml";
+const std::wstring filename = L"levels/level0.xml";
 
 const std::wstring image = L"images/elementWood015.png";
 
@@ -20,7 +20,7 @@ class ItemMock : public Item
 private:
     Level *mLevel;
 public:
-    ItemMock(Level *level) : Item(level, image) { mLevel = level; }
+    ItemMock(Level *level) : Item(level) { mLevel = level; }
 
     void Update(double elapsed) override {}
 };
