@@ -64,13 +64,13 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     //
 
     // Draw a Background bitmap (inverting first) and size equal to the size of playing arena
-    graphics->PushState();
-    graphics->Scale(1, -1);	// Negate Y
-    graphics->DrawBitmap(*mBackground, -mSize.x/2 * Consts::MtoCM, -mSize.y * Consts::MtoCM,
-                                        mSize.x * Consts::MtoCM, mSize.y * Consts::MtoCM);
-    graphics->PopState();
+//    graphics->PushState();
+//    graphics->Scale(1, -1);	// Negate Y
+//    graphics->DrawBitmap(*mBackground, -mSize.x/2 * Consts::MtoCM, -mSize.y * Consts::MtoCM,
+//                                        mSize.x * Consts::MtoCM, mSize.y * Consts::MtoCM);
+//    graphics->PopState();
 
-    graphics->PopState();
+//    graphics->PopState();
 
     mLevelManager->OnDraw(graphics);
 }

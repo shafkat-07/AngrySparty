@@ -3,7 +3,6 @@
  * @author Western Tanager
  *
  * Loads and manages all of the levels in the game
- *
  */
 
 #ifndef ANGRYSPARTY_LEVELMANAGER_H

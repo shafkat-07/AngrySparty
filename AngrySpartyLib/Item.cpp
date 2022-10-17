@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "Item.h"
 #include "Level.h"
+#include "Consts.h"
 
 #include <b2_fixture.h>
 #include <b2_circle_shape.h>
@@ -18,9 +19,12 @@ const double StandardRadius = 0.3f;
 /**
  * Constructor with a body definition.
  * @param level The level this item is contained in
+ * @param filename The filename of the item we want to construct
  */
-Item::Item(Level* level) : mLevel(level)
+Item::Item(Level* level, const std::wstring &filename) : mLevel(level)
 {
+    mItemImage = std::make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
+
     b2BodyDef bodyDef;
     mBodyDef = &bodyDef;
     mBodyDef->type = b2_staticBody;
@@ -110,20 +114,50 @@ void Item::SetTransform(const b2Vec2& location, double angle)
  * Draw the item.
  * @param graphics The drawing context to draw on.
  */
-void Item::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
+void Item::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    if (mItemBitmap == nullptr)
+//    if (mItemBitmap == nullptr)
+//    {
+//        return;
+//    }
+//
+//    b2Vec2 position = mBody->GetPosition();
+//    double angle = mBody->GetAngle();
+//
+//    graphics->Translate(position.x, position.y);
+//    graphics->Rotate(angle);
+//
+//    graphics->DrawBitmap(*mItemBitmap, -mWidth / 2, -mHeight / 2, mWidth, mHeight);
+    graphics->PushState();
+
+    graphics->Translate(GetX() * Consts::MtoCM,
+            GetY() * Consts::MtoCM);
+    graphics->Rotate(GetAngle() * Consts::DtoR);
+
+    // Make this is left side of the rectangle
+    double x = -GetWidth()/2 * Consts::MtoCM;
+
+    // And the top
+    double y = GetHeight()/2 * Consts::MtoCM;
+
+    // The width of each repeated block
+    double xw = GetWidth() / mRepeat * Consts::MtoCM;
+
+    std::shared_ptr<wxBitmap> bitmap = std::make_shared<wxBitmap>(*GetPicture());
+
+    graphics->Translate(0, y);
+    graphics->Scale(1, -1);
+    for(int ix=0; ix<mRepeat;  ix++)
     {
-        return;
+        graphics->DrawBitmap(*bitmap,
+                x,
+                0,
+                xw, GetHeight() * Consts::MtoCM);
+
+        x += xw;
     }
 
-    b2Vec2 position = mBody->GetPosition();
-    double angle = mBody->GetAngle();
-
-    graphics->Translate(position.x, position.y);
-    graphics->Rotate(angle);
-
-    graphics->DrawBitmap(*mItemBitmap, -mWidth / 2, -mHeight / 2, mWidth, mHeight);
+    graphics->PopState();
 }
 
 /**
@@ -146,13 +180,17 @@ void Item::XmlLoad(wxXmlNode* node)
     mFriction = std::stof(node->GetAttribute(L"friction", "0.5").ToStdWstring());
     mRestitution = std::stof(node->GetAttribute(L"restitution", "0.5").ToStdWstring());
 
+    node->GetAttribute(L"x", L"0").ToDouble(&mX);
+    node->GetAttribute(L"y", L"0").ToDouble(&mY);
+    node->GetAttribute(L"width", L"0").ToDouble(&mWidth);
+    node->GetAttribute(L"height", L"0").ToDouble(&mHeight);
+    node->GetAttribute(L"angle", L"0").ToDouble(&mAngle);
+    node->GetAttribute(L"repeat-x", L"1").ToInt(&mRepeat);
+
     mBodyDef->type = b2_staticBody;
     mBodyDef->position.Set(mX, mY);
     mBodyDef->angle = (float) mAngle;
     mBodyDef->angularDamping = 1.0f;
-
-    mWidth = mItemImage->GetWidth();
-    mHeight = mItemImage->GetHeight();
 
     b2CircleShape shape;
     shape.m_radius = StandardRadius;

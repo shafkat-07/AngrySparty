@@ -9,13 +9,13 @@
 #include "Obstacle.h"
 
 /// Filename for image.
-const std::wstring ObstacleImageName = L"elementWood015.png";
+const std::wstring ObstacleImageName = L"images/elementWood015.png";
 
 /**
  * Constructor for Obstacle
  * @param level The level this obstacle is in.
  */
-Obstacle::Obstacle(Level* level) : Item(level)
+Obstacle::Obstacle(Level* level) : Item(level, ObstacleImageName)
 {
 }
 

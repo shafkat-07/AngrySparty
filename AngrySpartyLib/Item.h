@@ -39,15 +39,17 @@ private:
     double mWidth; ///< Width of the item
     double mHeight; ///< Height of the item
     double mAngle; ///< Angle of the item
+    int mRepeat; ///< Times this item repeats
     double mFriction; ///< Friction of the item
     double mRestitution; ///< Restitution of the item
     double mRadius; ///< Radius of the item
 
 protected:
 
-    std::unique_ptr<wxImage> mItemImage; ///< The underlying item image
+    std::shared_ptr<wxImage> mItemImage; ///< The underlying item image
 
     std::unique_ptr<wxBitmap> mItemBitmap; ///< The bitmap that can be displayed for an item
+
 public:
     /// Default constructor (disabled)
     Item() = delete;
@@ -56,7 +58,7 @@ public:
     Item(const Item &) = delete;
 
 
-    Item(Level* level);
+    Item(Level* level, const std::wstring &filename);
 
 
     /// Assignment operator (disabled)
@@ -81,7 +83,7 @@ public:
      * Handle updates for animation
      * @param elapsed The time since the last update in seconds
      */
-    virtual void Update(double elapsed) = 0;
+    virtual void Update(double elapsed) {}
 
     void SetTransform(const b2Vec2& location, double angle);
 
@@ -118,7 +120,19 @@ public:
      */
     double GetHeight() const { return mHeight; }
 
-    virtual void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
+    /**
+     * The height of the item.
+     * @return Height in pixels.
+     */
+    double GetAngle() const { return mAngle; }
+
+    /**
+     * The picture for this item
+     * @return The wxImage for this item
+     */
+    std::shared_ptr<wxImage> GetPicture() const { return mItemImage; }
+
+    virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
     virtual wxXmlNode* XmlSave(wxXmlNode* node);
 

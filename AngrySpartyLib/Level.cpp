@@ -11,6 +11,7 @@
 #include <b2_mouse_joint.h>
 #include "Level.h"
 #include "Obstacle.h"
+#include "Background.h"
 
 class Item;
 
@@ -74,8 +75,8 @@ void Level::XmlItem(wxXmlNode *node)
 
     // We have an item. What type?
     auto type = node->GetName();
-    if (type == "obstacle") {
-        item = std::make_shared<Obstacle>(this);
+    if (type == "background") {
+        item = std::make_shared<Background>(this);
     }
 //    TODO Comment this back in when the other item types are created.
 //    else if (type == "block")
@@ -98,7 +99,7 @@ void Level::XmlItem(wxXmlNode *node)
     {
 //        wxMessageBox(L"Unknown item type: " + type);
 //        return;
-        item = std::make_shared<Obstacle>(this);
+        item = std::make_shared<Item>(this, L"images/elementWood015.png");
     }
     item->XmlLoad(node);
 
@@ -155,6 +156,6 @@ Level::Level(const std::wstring &filename) :mWorld(b2Vec2(0.0f, Gravity))
 void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     for(auto item : mItems){
-        item->OnDraw(graphics);
+        item->Draw(graphics);
     }
 }

@@ -12,7 +12,7 @@ set(SOURCE_FILES MainFrame.cpp MainFrame.h
         Obstacle.cpp Obstacle.h
         Consts.h
         ids.h
-        pch.h)
+        pch.h Background.cpp Background.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)
