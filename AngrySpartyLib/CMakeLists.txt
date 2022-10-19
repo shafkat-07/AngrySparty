@@ -1,6 +1,7 @@
 project(AngrySpartyLib)
 
-set(SOURCE_FILES MainFrame.cpp MainFrame.h
+set(SOURCE_FILES Consts.h ids.h pch.h
+        MainFrame.cpp MainFrame.h
         GameView.cpp GameView.h
         Game.cpp Game.h
         LevelManager.cpp LevelManager.h
@@ -10,9 +11,11 @@ set(SOURCE_FILES MainFrame.cpp MainFrame.h
         Score.cpp Score.h
         Scoreboard.cpp Scoreboard.h
         Obstacle.cpp Obstacle.h
-        Consts.h
-        ids.h
-        pch.h Background.cpp Background.h)
+        Background.cpp Background.h
+        PhysicalObject.cpp PhysicalObject.h
+        Block.cpp Block.h
+        DebugDraw.cpp DebugDraw.h
+        Foe.cpp Foe.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

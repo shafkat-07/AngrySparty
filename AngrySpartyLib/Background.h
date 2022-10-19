@@ -15,11 +15,13 @@
  */
 class Background : public Item {
 private:
+    double mWidth = 0; ///< Width of the item
+    double mHeight = 0; ///< Height of the item
 
 public:
     Background(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
-
+    void XmlLoad(wxXmlNode* node);
 };
 
 #endif //ANGRYSPARTY_BACKGROUND_H
