@@ -15,8 +15,6 @@ using namespace std;
  */
 Game::Game()
 {
-    mBackground = make_unique<wxBitmap>(
-            L"images/background1.png", wxBITMAP_TYPE_ANY);
     mLevelManager = make_unique<LevelManager>();
 }
 
@@ -62,15 +60,6 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     // From here we are dealing with centimeter pixels
     // and Y up being increase values
     //
-
-    // Draw a Background bitmap (inverting first) and size equal to the size of playing arena
-//    graphics->PushState();
-//    graphics->Scale(1, -1);	// Negate Y
-//    graphics->DrawBitmap(*mBackground, -mSize.x/2 * Consts::MtoCM, -mSize.y * Consts::MtoCM,
-//                                        mSize.x * Consts::MtoCM, mSize.y * Consts::MtoCM);
-//    graphics->PopState();
-
-//    graphics->PopState();
 
     mLevelManager->OnDraw(graphics);
     mGraphics = graphics;
