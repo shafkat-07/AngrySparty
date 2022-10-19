@@ -1,6 +1,6 @@
 /**
  * @file Game.h
- * @author Juan Camilo Sabogal Olarte
+ * @author Western Tanager
  *
  * The class for our Game
  */
@@ -17,12 +17,8 @@
  */
 class Game {
 private:
-    /// Background image to use
-    std::unique_ptr<wxBitmap> mBackground;
-
     /// Level manager containing levels
     std::unique_ptr<LevelManager> mLevelManager;  
-
 
     /// Size of the playing area in meters. TODO: Move this to level since each level has width and height?
     b2Vec2 mSize = b2Vec2(14.22f, 8.0f);

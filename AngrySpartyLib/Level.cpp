@@ -12,6 +12,9 @@
 #include "Level.h"
 #include "Obstacle.h"
 #include "Background.h"
+#include "Block.h"
+#include "DebugDraw.h"
+#include "Foe.h"
 
 class Item;
 
@@ -46,26 +49,27 @@ void Level::Load(const std::wstring &filename)
     // Traverse the children of the root
     // node of the XML document in memory!!!!
     //
-    auto child = root->GetChildren();
-    for( ; child; child=child->GetNext())
-    {
-        auto name = child->GetName();
 
-        // TODO change this to each of item's derived classes when completed
-        if(name == L"items")
-        {
-            auto grandChild = child->GetChildren();
-            for ( ; grandChild; grandChild = grandChild->GetNext())
-            {
-                XmlItem(grandChild);
-            }
-        }
+    // Traverse the items tag first
+    auto child = root->GetChildren();
+    auto grandChild = child->GetChildren();
+    for ( ; grandChild; grandChild = grandChild->GetNext())
+    {
+        XmlItem(grandChild);
+    }
+
+    // Traverse the angry tag
+    child = child->GetNext();
+    grandChild = child->GetChildren();
+    for ( ; grandChild; grandChild = grandChild->GetNext())
+    {
+        XmlItem(grandChild);
     }
 }
 
 /**
  * Handle a node of type item.
- * TODO create seperate functions for each of the item types (block, poly, foe, sling)
+ * TODO create separate functions for each of the item types (block, poly, foe, sling)
  * @param node XML node
  */
 void Level::XmlItem(wxXmlNode *node)
@@ -75,21 +79,23 @@ void Level::XmlItem(wxXmlNode *node)
 
     // We have an item. What type?
     auto type = node->GetName();
-    if (type == "background") {
+    if (type == "background")
+    {
         item = std::make_shared<Background>(this);
     }
-//    TODO Comment this back in when the other item types are created.
-//    else if (type == "block")
-//    {
-//        item = std::make_shared<Block>(this);
-//    }
+    else if (type == "block")
+    {
+        //item = std::make_shared<Item>(this, L"images/elementWood015.png");
+        item = std::make_shared<Block>(this);
+    }
+    else if (type == "foe")
+    {
+        item = std::make_shared<Foe>(this);
+    }
+        //    TODO Uncomment this back in when the other item types are created.
 //    else if (type == "poly")
 //    {
 //        item = std::make_shared<Poly>(this);
-//    }
-//    else if (type == "foe")
-//    {
-//        item = std::make_shared<Foe>(this);
 //    }
 //    else if (type == "sling")
 //    {
@@ -97,16 +103,15 @@ void Level::XmlItem(wxXmlNode *node)
 //    }
     else
     {
-//        wxMessageBox(L"Unknown item type: " + type);
-//        return;
-        item = std::make_shared<Item>(this, L"images/elementWood015.png");
+        //wxMessageBox(L"Unknown item type: " + type);
+        return;
     }
-    item->XmlLoad(node);
-
 
     if (item != nullptr)
     {
         mItems.push_back(item);
+        item->XmlLoad(node);
+        item->InstallPhysics();
     }
 }
 
@@ -122,7 +127,7 @@ void Level::Clear()
  * Constructor for the level, requires an XML file path
  * @param filename Path to the XML file
  */
-Level::Level(const std::wstring &filename) :mWorld(b2Vec2(0.0f, Gravity))
+Level::Level(const std::wstring &filename) : mWorld(b2Vec2(0.0f, Gravity))
 {
     // The size of the playing area in meters
     auto size = mSize;
@@ -155,7 +160,14 @@ Level::Level(const std::wstring &filename) :mWorld(b2Vec2(0.0f, Gravity))
  */
 void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    for(auto item : mItems){
+    for(auto item : mItems)
+    {
         item->Draw(graphics);
     }
+    // Uncomment and run for debug view
+    // TODO Implement menu option to activate debug view
+//    DebugDraw debugDraw(graphics);
+//    debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
+//    mWorld.SetDebugDraw(&debugDraw);
+//    mWorld.DebugDraw();
 }
