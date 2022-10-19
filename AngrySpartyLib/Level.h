@@ -85,6 +85,8 @@ public:
      * @return b2World object
      */
     b2World *GetWorld() { return &mWorld; }
+
+    bool HitTest(double x, double y);
 };
 
 #endif //ANGRYSPARTY_LEVEL_H

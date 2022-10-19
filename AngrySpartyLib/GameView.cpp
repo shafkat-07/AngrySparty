@@ -6,6 +6,7 @@
 #include "pch.h"
 #include <wx/dcbuffer.h>
 #include "GameView.h"
+#include "ids.h"
 
 /**
  * Initialize the game view class.
@@ -18,6 +19,9 @@ void GameView::Initialize(wxFrame* parent)
             wxFULL_REPAINT_ON_RESIZE);
     SetBackgroundStyle(wxBG_STYLE_PAINT);
     Bind(wxEVT_PAINT, &GameView::OnPaint, this);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel1,this, LEVEL_1);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
 }
 
 /**
@@ -40,4 +44,31 @@ void GameView::OnPaint(wxPaintEvent& event)
     graphics->SetInterpolationQuality(wxINTERPOLATION_BEST);
 
     mGame.OnDraw(graphics, size.GetWidth(), size.GetHeight());
+}
+
+/**
+ * Changes the level to lvl1
+ * @param event Paint event object
+ */
+void GameView::OnLevel1(wxCommandEvent& event)
+{
+    mGame.SetLevel(1);
+}
+
+/**
+ * Changes the level to lvl2
+ * @param event Paint event object
+ */
+void GameView::OnLevel2(wxCommandEvent& event)
+{
+    mGame.SetLevel(2);
+}
+
+/**
+ * Changes the level to lvl3
+ * @param event Paint event object
+ */
+void GameView::OnLevel3(wxCommandEvent& event)
+{
+    mGame.SetLevel(3);
 }

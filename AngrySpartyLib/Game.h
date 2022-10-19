@@ -18,6 +18,9 @@
 class Game {
 private:
     /// Background image to use
+    std::shared_ptr<wxGraphicsContext> mGraphics;
+
+    /// Background image to use
     std::unique_ptr<wxBitmap> mBackground;
 
     /// Level manager containing levels
@@ -39,6 +42,7 @@ private:
 public:
     Game();
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height);
+    void SetLevel(int Level);
 };
 
 #endif //ANGRYSPARTY_GAME_H

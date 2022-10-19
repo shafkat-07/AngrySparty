@@ -159,3 +159,19 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
         item->Draw(graphics);
     }
 }
+
+
+/**
+ * Handles drawing the items from the level on GameView
+ * @param graphics The wxGraphicsContext object to write to
+ */
+bool Level::HitTest(double x, double y)
+{
+    for(auto item : mItems){
+        if(item->HitTest(x,y))
+        {
+            return true;
+        }
+    }
+    return false;
+}

@@ -73,4 +73,12 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
 //    graphics->PopState();
 
     mLevelManager->OnDraw(graphics);
+    mGraphics = graphics;
+}
+
+void Game::SetLevel(int Level)
+{
+    mLevelManager->ChangeLevel(Level);
+    mLevelManager->OnDraw(mGraphics);
+    std::cout << "Changed Level" << '\n';
 }

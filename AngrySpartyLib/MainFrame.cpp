@@ -41,9 +41,9 @@ void MainFrame::Initialize()
     auto helpMenu = new wxMenu();
 
     fileMenu->Append(wxID_EXIT, "&Exit\tAlt-X", "Quit this program");
-    levelMenu->Append(wxID_OPEN, "&Level 1", "Go to level 1");
-    levelMenu->Append(wxID_OPEN, "&Level 2", "Go to level 2");
-    levelMenu->Append(wxID_OPEN, "&Level 3", "Go to level 3");
+    levelMenu->Append(LEVEL_1, "&Level 1", "Go to level 1");
+    levelMenu->Append(LEVEL_2, "&Level 2", "Go to level 2");
+    levelMenu->Append(LEVEL_3, "&Level 3", "Go to level 3");
     viewMenu->Append(IDM_DEBUG_VIEW, "&Debug View", "Enable to see box2d outlines", wxITEM_CHECK);
     helpMenu->Append(wxID_ABOUT, "&About\tF1", "Show about dialog");
 

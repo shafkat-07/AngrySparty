@@ -23,6 +23,9 @@ private:
 public:
     void Initialize(wxFrame* parent);
 
+    void OnLevel1(wxCommandEvent& event);
+    void OnLevel2(wxCommandEvent& event);
+    void OnLevel3(wxCommandEvent& event);
 };
 
 #endif //ANGRYSPARTY_GAMEVIEW_H
