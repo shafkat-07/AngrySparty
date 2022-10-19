@@ -17,15 +17,19 @@ class GameView : public wxWindow {
 private:
     /// An object that describes our game
     Game mGame;
+    /// The timer that allows for animation
+    wxTimer mTimer;
 
     void OnPaint(wxPaintEvent& event);
+    void OnTimer(wxTimerEvent& event);
+    void OnLevel1(wxCommandEvent& event);
+    void OnLevel2(wxCommandEvent& event);
+    void OnLevel3(wxCommandEvent& event);
 
 public:
     void Initialize(wxFrame* parent);
 
-    void OnLevel1(wxCommandEvent& event);
-    void OnLevel2(wxCommandEvent& event);
-    void OnLevel3(wxCommandEvent& event);
+
 };
 
 #endif //ANGRYSPARTY_GAMEVIEW_H

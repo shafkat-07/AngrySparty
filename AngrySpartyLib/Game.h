@@ -17,6 +17,9 @@
  */
 class Game {
 private:
+    /// The graphics object
+    std::shared_ptr<wxGraphicsContext> mGraphics;
+
     /// Level manager containing levels
     std::unique_ptr<LevelManager> mLevelManager;  
 
@@ -35,6 +38,7 @@ private:
 public:
     Game();
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height);
+    void SetLevel(int Level);
 };
 
 #endif //ANGRYSPARTY_GAME_H

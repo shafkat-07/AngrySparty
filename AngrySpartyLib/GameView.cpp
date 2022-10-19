@@ -8,6 +8,9 @@
 #include "GameView.h"
 #include "ids.h"
 
+/// Frame duration in milliseconds
+const int FrameDuration = 30;
+
 /**
  * Initialize the game view class.
  * @param parent The parent window for this class
@@ -22,6 +25,11 @@ void GameView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel1,this, LEVEL_1);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
+
+    Bind(wxEVT_TIMER, &GameView::OnTimer, this);
+
+    mTimer.SetOwner(this);
+    mTimer.Start(FrameDuration);
 }
 
 /**
@@ -71,4 +79,9 @@ void GameView::OnLevel2(wxCommandEvent& event)
 void GameView::OnLevel3(wxCommandEvent& event)
 {
     mGame.SetLevel(3);
+}
+
+void GameView::OnTimer(wxTimerEvent &event)
+{
+    Refresh();
 }
