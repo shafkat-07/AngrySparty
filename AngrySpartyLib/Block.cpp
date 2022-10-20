@@ -48,7 +48,7 @@ void Block::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     // The width of each repeated block
     double xw = mSize.x / mRepeatX * Consts::MtoCM;
 
-    std::shared_ptr<wxBitmap> bitmap = std::make_shared<wxBitmap>(*GetPicture());
+    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Translate(0, y);
     graphics->Scale(1, -1);

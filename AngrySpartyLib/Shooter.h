@@ -21,7 +21,9 @@ class Shooter : public Item {
 private:
     double mWidth = 0; ///< Width of the shooter
     double mHeight = 0; ///< Height of the shooter
-    b2Vec2 mPosition = b2Vec2(0, 0); ///< Position of the shooter
+    double mX = 0;
+    double mY = 0;
+
 public:
     Shooter(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;

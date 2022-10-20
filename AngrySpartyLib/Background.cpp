@@ -29,7 +29,7 @@ void Background::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     auto wid = mWidth * Consts::MtoCM;
     auto hit = mHeight * Consts::MtoCM;
 
-    std::shared_ptr<wxBitmap> bitmap = std::make_shared<wxBitmap>(*GetPicture());
+    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->PushState();
     graphics->Scale(1, -1);

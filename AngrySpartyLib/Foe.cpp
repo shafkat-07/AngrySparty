@@ -41,7 +41,7 @@ void Foe::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     graphics->Translate(x, y);
     graphics->Rotate(mAngle * Consts::DtoR); // TODO Change this to angle ?
 
-    std::shared_ptr<wxBitmap> bitmap = std::make_shared<wxBitmap>(*GetPicture());
+    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,
