@@ -31,7 +31,6 @@ private:
     b2Vec2 mPosition;                      ///< The position vector of the shooter
     bool mStatic = true;                   ///< Whether or not the shooter is static
     std::vector<b2Vec2> mVertices;         ///< Vertices that denote this shooter
-    b2Vec2 mSize = b2Vec2(0.0f, 0.0f);     ///< The dimensions of the shooter
 
 public:
     Shooter(Level* level);
@@ -50,13 +49,15 @@ public:
      * @param shape A polygon shape.
      * @return Fixture of the shooter.
      */
-    b2Fixture* CreateFixture(b2Shape* shape);
+    b2Fixture* CreateFixture(b2Shape* shape) { return nullptr; }
 
     /**
      * Returns the fixture of the shooter
      * @return the fixture of the shooter
      */
     b2Fixture* GetFixture() { return mFixture; }
+
+    void InstallPhysics() override;
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

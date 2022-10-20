@@ -114,9 +114,9 @@ void Level::XmlItem(wxXmlNode *node)
 
     if (item != nullptr)
     {
-        mItems.push_back(item);
         item->XmlLoad(node);
         item->InstallPhysics();
+        mItems.push_back(item);
     }
 }
 

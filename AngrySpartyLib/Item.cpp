@@ -61,7 +61,17 @@ void Item::XmlLoad(wxXmlNode* node)
     // Get the attributes for this item
     auto  filename = "images/" +
             node->GetAttribute(L"image", L"");
-    mItemImage = std::make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
+    if (filename != "images/")
+    {
+        mItemImage = std::make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
+    }
+    else
+    {
+        filename = "images/" +
+                node->GetName() + ".png";
+        mItemImage = std::make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
+    }
+    mItemBitmap = std::make_shared<wxBitmap>(*mItemImage);
 }
 
 /**
