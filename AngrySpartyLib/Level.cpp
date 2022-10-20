@@ -179,11 +179,11 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
  */
 bool Level::HitTest(double x, double y)
 {
-//    for(auto item : mItems){
-//        if(item->HitTest(x,y))
-//        {
-//            return true;
-//        }
-//    }
+    for(auto item : mItems){
+        if(item->HitTest(x,y))
+        {
+            return true;
+        }
+    }
     return false;
 }

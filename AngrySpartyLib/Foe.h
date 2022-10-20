@@ -62,9 +62,9 @@ public:
 
     void SetTransform(const b2Vec2& location, double angle);
 
-    bool HitTest(double x, double y);
-
     void InstallPhysics() override;
+
+    bool HitTest(double x, double y) override;
 };
 
 #endif //ANGRYSPARTY_FOE_H
