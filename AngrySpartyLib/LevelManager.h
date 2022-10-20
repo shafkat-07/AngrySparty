@@ -18,11 +18,11 @@ private:
     /// Collection of levels to be managed
     std::vector<std::shared_ptr<Level>> mLevels;
 
-    /// The total number of levels on the game
+    /// The total number of levels on the game. Indexing from 1
     int mLevelCount = 0;
 
-    /// The index of the currently displayed level
-    int mDisplayedLevel = 0;
+    /// The index of the currently displayed level. Indexing from 1
+    int mDisplayedLevel = 2;
 public:
     LevelManager();
     void Load(const std::wstring& filename);
@@ -34,6 +34,7 @@ public:
      * @return The index of the displayed level
      */
     int GetDisplayedLevel() const {return mDisplayedLevel;}
+    int GetLevelCount() const {return mLevelCount;}
 };
 
 #endif //ANGRYSPARTY_LEVELMANAGER_H

@@ -32,6 +32,7 @@ void LevelManager::Load(const std::wstring& filename)
     auto newLevel = std::make_shared<Level>(filename);
     mLevels.push_back(newLevel);
     ++mLevelCount;
+    std::cout << "Just loaded level " << mLevelCount << '\n';
 }
 
 /**
@@ -50,5 +51,6 @@ void LevelManager::ChangeLevel(int desiredLevel)
  */
 void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    mLevels[mDisplayedLevel]->OnDraw(graphics);
+    mLevels[mDisplayedLevel-1]->OnDraw(graphics);
+    graphics->Flush();
 }

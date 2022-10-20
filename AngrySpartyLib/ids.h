@@ -13,6 +13,9 @@
 */
 enum IDs {
     IDM_DEBUG_VIEW = wxID_HIGHEST + 1,
+    LEVEL_1,
+    LEVEL_2,
+    LEVEL_3,
 };
 
 #endif //ANGRYSPARTY_IDS_H
