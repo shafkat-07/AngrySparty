@@ -1,6 +1,6 @@
 /**
  * @file Slingshot.cpp
- * @author brend
+ * @author Western Tanager
  */
 
 #include "pch.h"
@@ -34,8 +34,14 @@ const int SlingshotBandWidth = 15;
 const wxColour SlingshotBandColor = wxColour(55, 18, 1);
 
 
-Slingshot::Slingshot(Level* level)
+Slingshot::Slingshot(Level* level) : Shooter(level)
+{
+}
 
+/**
+ * Draw the slingshot components.
+ * @param graphics The graphics context to draw on
+ */
 void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
@@ -44,7 +50,8 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     auto hgt = GetHeight();
     auto pos = GetPosition();
 
-    auto bitmap = std::make_shared<wxBitmap>(*GetPicture());
+    auto image = std::make_shared<wxImage>(slingFront);
+    auto bitmap = std::make_shared<wxBitmap>(*image);
 
     graphics->PushState();
     graphics->Scale(1, -1);
@@ -53,5 +60,14 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             -pos.y,
             wid, hgt);
     graphics->PopState();
+}
+
+/**
+ * Load the slingshot from an XML node.
+ * @param node XML node to load from
+ */
+void Slingshot::XmlLoad(wxXmlNode* node)
+{
+    Shooter::XmlLoad(node);
 }
 

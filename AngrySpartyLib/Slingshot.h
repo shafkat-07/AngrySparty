@@ -1,6 +1,6 @@
 /**
  * @file Slingshot.h
- * @author brend
+ * @author Western Tanager
  *
  *
  */
@@ -17,8 +17,7 @@ private:
 
 public:
     Slingshot(Level* level);
-};
-
+    void XmlLoad(wxXmlNode* node) override;
 };
 
 #endif //ANGRYSPARTY_SLINGSHOT_H

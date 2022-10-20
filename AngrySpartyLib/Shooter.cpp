@@ -42,21 +42,37 @@ const wxColour SlingshotBandColor = wxColour(55, 18, 1);
 
 Shooter::Shooter(Level* level) : Item(level)
 {
-    mHeight = WoodSlingshotSize.y * Consts::MtoCM;
-    mWidth = WoodSlingshotSize.x * Consts::MtoCM;
+    mHeight = WoodSlingshotSize.y;
+    mWidth = WoodSlingshotSize.x;
 }
 
+/**
+ * Draw a shooter
+ *
+ * @param graphics
+ */
 void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    // Draw the slingshot
-    std::shared_ptr<wxBitmap> bitmap = std::make_shared<wxBitmap>(*GetPicture());
-
     graphics->PushState();
+
+    graphics->Translate(mX * Consts::MtoCM,
+            mY * Consts::MtoCM); // TODO change to position.x and position.y ?
+
+    // Make this is left side of the rectangle
+    double x = -mWidth/2 * Consts::MtoCM;
+
+    // And the top
+    double y = mHeight * Consts::MtoCM;
+
+    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+
+    graphics->Translate(0, y);
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,
-            mPosition.x,
-            -mPosition.y,
-            mWidth, mHeight);
+            x,
+            0,
+            mWidth * Consts::MtoCM, mHeight * Consts::MtoCM);
+
     graphics->PopState();
 }
 
@@ -64,14 +80,9 @@ void Shooter::XmlLoad(wxXmlNode* node)
 {
     Item::XmlLoad(node);
 
-    double x;
-    double y;
-
     // Get the attributes for this item
-    node->GetAttribute(L"x", L"0.0").ToDouble(&x);
-    node->GetAttribute(L"y", L"0.0").ToDouble(&y);
-    mPosition.x = (x * Consts::MtoCM) - mWidth/2;
-    mPosition.y = (y * Consts::MtoCM) + mHeight;
+    node->GetAttribute(L"x", L"0.0").ToDouble(&mX);
+    node->GetAttribute(L"y", L"0.0").ToDouble(&mY);
 }
 
 

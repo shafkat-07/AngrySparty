@@ -16,6 +16,7 @@
 #include "DebugDraw.h"
 #include "Foe.h"
 #include "Shooter.h"
+#include "Slingshot.h"
 
 class Item;
 
@@ -95,7 +96,7 @@ void Level::XmlItem(wxXmlNode *node)
     }
     else if (type == "slingshot" || type == "goalposts")
     {
-        item = std::make_shared<Shooter>(this);
+        item = std::make_shared<Slingshot>(this);
     }
 //    TODO Uncomment this back in when the other item types are created.
 //    else if (type == "poly")

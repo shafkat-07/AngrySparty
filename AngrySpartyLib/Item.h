@@ -72,6 +72,6 @@ public:
     /** Installs physics for an item */
     virtual void InstallPhysics() {}
 
-    /** Pure virtual function for hit testing **/
-    virtual bool HitTest(double x, double y) = 0;
+    /** Virtual function for hit testing **/
+    virtual bool HitTest(double x, double y) { return false; }
 };
