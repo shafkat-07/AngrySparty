@@ -40,6 +40,7 @@ public:
 
     void XmlLoad(wxXmlNode* node) override;
 
+    bool HitTest(double x, double y) override;
 };
 
 #endif //ANGRYSPARTY_OBSTACLE_H

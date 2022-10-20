@@ -47,3 +47,8 @@ void Obstacle::XmlLoad(wxXmlNode* node)
     Item::XmlLoad(node);
 
 }
+
+bool Obstacle::HitTest(double x, double y)
+{
+    return false;
+}
