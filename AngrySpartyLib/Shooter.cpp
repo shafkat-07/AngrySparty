@@ -70,7 +70,7 @@ void Shooter::XmlLoad(wxXmlNode* node)
     // Get the attributes for this item
     node->GetAttribute(L"x", L"0.0").ToDouble(&x);
     node->GetAttribute(L"y", L"0.0").ToDouble(&y);
-    mPosition.x = (x * Consts::MtoCM) + mWidth;
+    mPosition.x = (x * Consts::MtoCM) - mWidth/2;
     mPosition.y = (y * Consts::MtoCM) + mHeight;
 }
 
