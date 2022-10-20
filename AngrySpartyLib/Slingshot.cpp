@@ -1,6 +1,8 @@
 /**
  * @file Slingshot.cpp
  * @author Western Tanager
+ *
+ * The function definitions of a SlingShot.
  */
 
 #include "pch.h"
@@ -34,7 +36,10 @@ const int SlingshotBandWidth = 15;
 /// The slingshot band colour
 const wxColour SlingshotBandColor = wxColour(55, 18, 1);
 
-
+/**
+ * Constructor
+ * @param level The level we are in
+ */
 Slingshot::Slingshot(Level* level) : Shooter(level)
 {
 }
@@ -47,10 +52,7 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-// Hex for dark brown
-    wxColour color = wxColour(55, 18, 1);
-
-    wxPen pen(color, 15);
+    wxPen pen(SlingshotBandColor, 15);
     graphics->PushState();
 
     graphics->Translate(GetX() * Consts::MtoCM,
@@ -62,9 +64,7 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     // And the top
     double y = GetHeight() * Consts::MtoCM;
 
-    auto image = std::make_shared<wxImage>(slingFront);
-    auto bitmap = std::make_shared<wxBitmap>(*image);
-
+    // Draw the band of the slingshot.
     graphics->Translate(0, y);
     graphics->Scale(1, -1);
     graphics->Translate(0, y);
@@ -75,13 +75,14 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             WoodSlingshotBandAttachFront.x * Consts::MtoCM,
             -WoodSlingshotBandAttachFront.y * Consts::MtoCM
     );
+    auto image = std::make_shared<wxImage>(slingFront);
+    auto bitmap = std::make_shared<wxBitmap>(*image);
+    // Draw the front of the slingshot.
     graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,
             x,
             0,
             GetWidth() * Consts::MtoCM, GetHeight() * Consts::MtoCM);
-
-
 
     graphics->PopState();
 }
