@@ -4,6 +4,7 @@
  */
 
 #include "pch.h"
+#include "Consts.h"
 #include "Slingshot.h"
 
 /// The front image of the slingshot.
@@ -46,18 +47,23 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-    auto wid = GetWidth();
-    auto hgt = GetHeight();
-    auto pos = GetPosition();
+    // Draw the front image
+    graphics->PushState();
+    graphics->Translate(GetX() * Consts::MtoCM,GetY() * Consts::MtoCM);
+
+    auto wid = GetWidth() * Consts::MtoCM;
+    auto hgt = GetHeight() * Consts::MtoCM;
+    auto x = -GetWidth()/2 * Consts::MtoCM;
+    auto y = GetHeight() * Consts::MtoCM;
 
     auto image = std::make_shared<wxImage>(slingFront);
     auto bitmap = std::make_shared<wxBitmap>(*image);
 
-    graphics->PushState();
+    graphics->Translate(0,y);
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,
-            pos.x,
-            -pos.y,
+            x,
+            0,
             wid, hgt);
     graphics->PopState();
 }

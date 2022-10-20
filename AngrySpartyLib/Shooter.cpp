@@ -56,7 +56,7 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     graphics->PushState();
 
     graphics->Translate(mX * Consts::MtoCM,
-            mY * Consts::MtoCM); // TODO change to position.x and position.y ?
+            mY * Consts::MtoCM);
 
     // Make this is left side of the rectangle
     double x = -mWidth/2 * Consts::MtoCM;

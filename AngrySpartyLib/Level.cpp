@@ -98,15 +98,7 @@ void Level::XmlItem(wxXmlNode *node)
     {
         item = std::make_shared<Slingshot>(this);
     }
-//    TODO Uncomment this back in when the other item types are created.
-//    else if (type == "poly")
-//    {
-//        item = std::make_shared<Poly>(this);
-//    }
-//    else if (type == "sling")
-//    {
-//        item = std::make_shared<Sling>(this);
-//    }
+//    TODO Create more classes as they are built out
     else
     {
         //wxMessageBox(L"Unknown item type: " + type);
