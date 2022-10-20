@@ -23,6 +23,12 @@ private:
     /// The underlying item image
     std::shared_ptr<wxImage> mItemImage;
 
+protected:
+    wxImage* SetImage(std::wstring filename)
+    {
+        mItemImage = std::make_shared<wxImage>(filename);
+        return mItemImage.get();
+    }
 public:
     /// Default constructor (disabled)
     Item() = delete;
@@ -53,7 +59,7 @@ public:
      * The picture for this item
      * @return The wxImage for this item
      */
-    std::shared_ptr<wxImage> GetPicture() const { return mItemImage; }
+    std::shared_ptr<wxImage> GetPicture()  { return mItemImage; }
 
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
