@@ -15,6 +15,7 @@
 #include "Block.h"
 #include "DebugDraw.h"
 #include "Foe.h"
+#include "Shooter.h"
 
 class Item;
 
@@ -92,7 +93,11 @@ void Level::XmlItem(wxXmlNode *node)
     {
         item = std::make_shared<Foe>(this);
     }
-        //    TODO Uncomment this back in when the other item types are created.
+    else if (type == "slingshot" || type == "goalposts")
+    {
+        item = std::make_shared<Shooter>(this);
+    }
+//    TODO Uncomment this back in when the other item types are created.
 //    else if (type == "poly")
 //    {
 //        item = std::make_shared<Poly>(this);
@@ -109,9 +114,9 @@ void Level::XmlItem(wxXmlNode *node)
 
     if (item != nullptr)
     {
-        mItems.push_back(item);
         item->XmlLoad(node);
         item->InstallPhysics();
+        mItems.push_back(item);
     }
 }
 

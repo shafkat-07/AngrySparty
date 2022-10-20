@@ -23,6 +23,8 @@ private:
     /// The underlying item image
     std::shared_ptr<wxImage> mItemImage;
 
+    /// The underlying bitmap for the image.
+    std::shared_ptr<wxBitmap> mItemBitmap;
 public:
     /// Default constructor (disabled)
     Item() = delete;
@@ -53,7 +55,13 @@ public:
      * The picture for this item
      * @return The wxImage for this item
      */
-    std::shared_ptr<wxImage> GetPicture() const { return mItemImage; }
+    std::shared_ptr<wxImage> GetPicture()  { return mItemImage; }
+
+    /**
+     * The bitmap for this item
+     * @return The wxBitmap for this item
+     */
+    std::shared_ptr<wxBitmap> GetBitmap() { return mItemBitmap; }
 
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
@@ -65,5 +73,5 @@ public:
     virtual void InstallPhysics() {}
 
     /** Pure virtual function for hit testing **/
-    virtual bool HitTest(double x, double y) = 0;
+    virtual bool HitTest(double x, double y) { return false; };
 };
