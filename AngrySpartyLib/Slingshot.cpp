@@ -47,24 +47,42 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-    // Draw the front image
-    graphics->PushState();
-    graphics->Translate(GetX() * Consts::MtoCM,GetY() * Consts::MtoCM);
+// Hex for dark brown
+    wxColour color = wxColour(55, 18, 1);
 
-    auto wid = GetWidth() * Consts::MtoCM;
-    auto hgt = GetHeight() * Consts::MtoCM;
-    auto x = -GetWidth()/2 * Consts::MtoCM;
-    auto y = GetHeight() * Consts::MtoCM;
+    wxPen pen(color, 15);
+    graphics->PushState();
+
+    graphics->Translate(GetX() * Consts::MtoCM,
+            GetY() * Consts::MtoCM);
+
+    // Make this is left side of the rectangle
+    double x = -GetWidth()/2 * Consts::MtoCM;
+
+    // And the top
+    double y = GetHeight() * Consts::MtoCM;
 
     auto image = std::make_shared<wxImage>(slingFront);
     auto bitmap = std::make_shared<wxBitmap>(*image);
 
-    graphics->Translate(0,y);
+    graphics->Translate(0, y);
     graphics->Scale(1, -1);
+    graphics->Translate(0, y);
+    graphics->SetPen(pen);
+    graphics->StrokeLine(
+            WoodSlingshotBandAttachBack.x * Consts::MtoCM,
+            -WoodSlingshotBandAttachBack.y * Consts::MtoCM,
+            WoodSlingshotBandAttachFront.x * Consts::MtoCM,
+            -WoodSlingshotBandAttachFront.y * Consts::MtoCM
+    );
+    graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,
             x,
             0,
-            wid, hgt);
+            GetWidth() * Consts::MtoCM, GetHeight() * Consts::MtoCM);
+
+
+
     graphics->PopState();
 }
 
@@ -76,4 +94,3 @@ void Slingshot::XmlLoad(wxXmlNode* node)
 {
     Shooter::XmlLoad(node);
 }
-

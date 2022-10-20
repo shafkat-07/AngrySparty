@@ -53,6 +53,7 @@ Shooter::Shooter(Level* level) : Item(level)
  */
 void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
+
     graphics->PushState();
 
     graphics->Translate(mX * Consts::MtoCM,
@@ -84,5 +85,3 @@ void Shooter::XmlLoad(wxXmlNode* node)
     node->GetAttribute(L"x", L"0.0").ToDouble(&mX);
     node->GetAttribute(L"y", L"0.0").ToDouble(&mY);
 }
-
-
