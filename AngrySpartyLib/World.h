@@ -25,6 +25,11 @@ public:
     /// Assignment operator
     void operator=(const World &) = delete;
 
+    /**
+     * Returns the box2d world
+     * @return The box2d world
+     */
+    b2World* GetWorld() { return &mWorld; }
 
 private:
     /// The box2d world
