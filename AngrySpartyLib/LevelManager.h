@@ -22,7 +22,7 @@ private:
     int mLevelCount = 0;
 
     /// The index of the currently displayed level. Indexing from 1
-    int mDisplayedLevel = 1;
+    int mDisplayedLevel = 2;
 public:
     LevelManager();
     void Load(const std::wstring& filename);
