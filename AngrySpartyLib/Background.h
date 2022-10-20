@@ -22,6 +22,7 @@ public:
     Background(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void XmlLoad(wxXmlNode* node);
+    bool HitTest(double x, double y) override;
 };
 
 #endif //ANGRYSPARTY_BACKGROUND_H

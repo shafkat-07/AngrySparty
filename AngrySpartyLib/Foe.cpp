@@ -106,6 +106,8 @@ b2Fixture* Foe::CreateFixture(b2Shape* shape)
  */
 bool Foe::HitTest(double x, double y)
 {
+    return false;
+    // TODO There is a nullptr error on the following line. Try debugging here
     b2Fixture* fixture = mBody->GetFixtureList();
     for ( ; fixture !=nullptr; fixture = fixture->GetNext())
     {

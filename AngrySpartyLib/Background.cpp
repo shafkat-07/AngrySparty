@@ -54,3 +54,8 @@ void Background::XmlLoad(wxXmlNode* node)
     node->GetAttribute(L"width", L"0").ToDouble(&mWidth);
     node->GetAttribute(L"height", L"0").ToDouble(&mHeight);
 }
+
+bool Background::HitTest(double x, double y)
+{
+    return false;
+}
