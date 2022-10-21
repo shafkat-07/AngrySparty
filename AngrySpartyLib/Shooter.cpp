@@ -27,8 +27,6 @@ const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
  */
 Shooter::Shooter(Level* level) : Item(level)
 {
-    mHeight = WoodSlingshotSize.y;
-    mWidth = WoodSlingshotSize.x;
 }
 
 /**
