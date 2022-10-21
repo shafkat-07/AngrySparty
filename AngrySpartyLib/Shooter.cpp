@@ -7,17 +7,9 @@
 
 #include "pch.h"
 #include <b2_world.h>
-#include <b2_circle_shape.h>
-#include <b2_polygon_shape.h>
 #include <b2_fixture.h>
 #include "Shooter.h"
 #include "Consts.h"
-
-/// File pointer to the image for the shooter
-const std::wstring imageFilename = L"images/slingshot.png";
-
-/// Size of the slingshot image in meters
-const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
 
 /**
  * Constructor for a shooter object
@@ -71,4 +63,8 @@ void Shooter::XmlLoad(wxXmlNode* node)
     // Get the attributes for this item
     node->GetAttribute(L"x", L"0.0").ToDouble(&mX);
     node->GetAttribute(L"y", L"0.0").ToDouble(&mY);
+
+    auto name = "images/" + node->GetName() + "-front.png";
+    mFrontImage = std::make_shared<wxImage>(name);
+    mFrontBitmap = std::make_shared<wxBitmap>(*mFrontImage);
 }

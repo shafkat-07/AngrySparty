@@ -9,9 +9,6 @@
 #include "Consts.h"
 #include "Goalpost.h"
 
-/// The front image of the goalpost.
-const std::wstring goalFront = L"images/goalposts-front.png";
-
 /// Size of the Goalpost image in meters
 const b2Vec2 GoalpostsSize = b2Vec2(1, 2.649);
 
@@ -31,7 +28,7 @@ const double GoalpostMaximumNegativePullAngle = -1.7;
 const double GoalpostMinimumPositivePullAngle = 2.42;
 
 /// Width of the goalpost band in centimeters
-const int GoalpostBandWidth = 15;
+const int GoalpostBandWidth = 5;
 
 /// The goalpost green band colour
 const wxColour GoalpostsBandColor = wxColour(0, 255, 0);
@@ -42,8 +39,8 @@ const wxColour GoalpostsBandColor = wxColour(0, 255, 0);
  */
 Goalpost::Goalpost(Level* level) : Shooter(level)
 {
-    mHeight = GoalpostsSize.y;
-    mWidth = GoalpostsSize.x;
+    SetHeight(GoalpostsSize.y);
+    SetWidth(GoalpostsSize.x);
 }
 
 /**
@@ -54,7 +51,7 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-    wxPen pen(GoalpostsBandColor, 5);
+    wxPen pen(GoalpostsBandColor, GoalpostBandWidth);
     graphics->PushState();
 
     graphics->Translate(GetX() * Consts::MtoCM,
@@ -67,9 +64,7 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     double y = GoalpostsSize.y * Consts::MtoCM;
 
     // Draw the band of the goalpost.
-    graphics->Translate(0, y);
     graphics->Scale(1, -1);
-    graphics->Translate(0, y);
     graphics->SetPen(pen);
     graphics->StrokeLine(
             GoalpostsBandAttachBack.x * Consts::MtoCM,
@@ -77,8 +72,8 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             GoalpostsBandAttachFront.x * Consts::MtoCM,
             -GoalpostsBandAttachFront.y * Consts::MtoCM
     );
-    auto image = std::make_shared<wxImage>(goalFront);
-    auto bitmap = std::make_shared<wxBitmap>(*image);
+
+    auto bitmap = GetFrontBitmap();
     // Draw the front of the slingshot.
     graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,

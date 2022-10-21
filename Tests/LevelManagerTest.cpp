@@ -16,11 +16,11 @@ TEST(LevelManagerTest, Construct)
     LevelManager level_manager;
     ASSERT_TRUE(level_manager.GetDisplayedLevel() == 0);
 
-    level_manager.Load(filename0);
-    level_manager.Load(filename1);
-    level_manager.Load(filename2);
     ASSERT_TRUE(level_manager.GetDisplayedLevel() == 0);
 
     level_manager.ChangeLevel(2);
     ASSERT_TRUE(level_manager.GetDisplayedLevel() == 2);
+
+    level_manager.ChangeLevel(1);
+    ASSERT_TRUE(level_manager.GetDisplayedLevel() == 1);
 }

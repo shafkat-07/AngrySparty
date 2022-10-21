@@ -22,10 +22,10 @@ void GameView::Initialize(wxFrame* parent)
             wxFULL_REPAINT_ON_RESIZE);
     SetBackgroundStyle(wxBG_STYLE_PAINT);
     Bind(wxEVT_PAINT, &GameView::OnPaint, this);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel0,this, LEVEL_0);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel1,this, LEVEL_1);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
-
     Bind(wxEVT_TIMER, &GameView::OnTimer, this);
 
     mTimer.SetOwner(this);
@@ -55,6 +55,15 @@ void GameView::OnPaint(wxPaintEvent& event)
 }
 
 /**
+ * Changes the level to lvl0
+ * @param event Paint event object
+ */
+void GameView::OnLevel0(wxCommandEvent& event)
+{
+    mGame.SetLevel(0);
+}
+
+/**
  * Changes the level to lvl1
  * @param event Paint event object
  */
@@ -78,7 +87,7 @@ void GameView::OnLevel2(wxCommandEvent& event)
  */
 void GameView::OnLevel3(wxCommandEvent& event)
 {
-    mGame.SetLevel(3);
+    // mGame.SetLevel(3); TODO Uncomment this after XML for level 3 is created logic for loading it is added
 }
 
 /**

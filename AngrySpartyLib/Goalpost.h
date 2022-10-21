@@ -21,10 +21,11 @@
 class Goalpost : public Shooter
 {
 private:
-    void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
+
 
 public:
     Goalpost(Level* level);
+    void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void XmlLoad(wxXmlNode* node) override;
 };
 

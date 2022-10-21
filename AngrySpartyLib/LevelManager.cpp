@@ -51,6 +51,6 @@ void LevelManager::ChangeLevel(int desiredLevel)
  */
 void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-    mLevels[mDisplayedLevel-1]->OnDraw(graphics);
+    mLevels[mDisplayedLevel]->OnDraw(graphics);
     graphics->Flush();
 }

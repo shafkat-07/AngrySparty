@@ -9,9 +9,6 @@
 #include "Consts.h"
 #include "Slingshot.h"
 
-/// The front image of the slingshot.
-const std::wstring slingFront = L"images/slingshot-front.png";
-
 /// Size of the slingshot image in meters
 const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
 
@@ -42,8 +39,8 @@ const wxColour SlingshotBandColor = wxColour(55, 18, 1);
  */
 Slingshot::Slingshot(Level* level) : Shooter(level)
 {
-    mHeight = WoodSlingshotSize.y;
-    mWidth = WoodSlingshotSize.x;
+    SetHeight(WoodSlingshotSize.y);
+    SetWidth(WoodSlingshotSize.x);
 }
 
 /**
@@ -54,7 +51,7 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-    wxPen pen(SlingshotBandColor, 15);
+    wxPen pen(SlingshotBandColor, SlingshotBandWidth);
     graphics->PushState();
 
     graphics->Translate(GetX() * Consts::MtoCM,
@@ -67,9 +64,7 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     double y = GetHeight() * Consts::MtoCM;
 
     // Draw the band of the slingshot.
-    graphics->Translate(0, y);
     graphics->Scale(1, -1);
-    graphics->Translate(0, y);
     graphics->SetPen(pen);
     graphics->StrokeLine(
             WoodSlingshotBandAttachBack.x * Consts::MtoCM,
@@ -77,8 +72,8 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             WoodSlingshotBandAttachFront.x * Consts::MtoCM,
             -WoodSlingshotBandAttachFront.y * Consts::MtoCM
     );
-    auto image = std::make_shared<wxImage>(slingFront);
-    auto bitmap = std::make_shared<wxBitmap>(*image);
+
+    auto bitmap = GetFrontBitmap();
     // Draw the front of the slingshot.
     graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,

@@ -18,11 +18,12 @@ private:
     /// Collection of levels to be managed
     std::vector<std::shared_ptr<Level>> mLevels;
 
-    /// The total number of levels on the game. Indexing from 1
+    /// The total number of levels on the game
     int mLevelCount = 0;
 
-    /// The index of the currently displayed level. Indexing from 1
-    int mDisplayedLevel = 2;
+    /// The index of the currently displayed level. Indexing from 0
+    int mDisplayedLevel = 0;
+
 public:
     LevelManager();
     void Load(const std::wstring& filename);

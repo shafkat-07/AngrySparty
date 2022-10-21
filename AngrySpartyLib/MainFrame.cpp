@@ -14,7 +14,7 @@
 void MainFrame::Initialize()
 {
     Create(nullptr, wxID_ANY, L"Game",
-            wxDefaultPosition,  wxSize( 1000,800 ));
+            wxDefaultPosition,  wxSize( 1100,700 ));
 
     // Create a sizer that will lay out child windows vertically
     // one above each other
@@ -41,6 +41,7 @@ void MainFrame::Initialize()
     auto helpMenu = new wxMenu();
 
     fileMenu->Append(wxID_EXIT, "&Exit\tAlt-X", "Quit this program");
+    levelMenu->Append(LEVEL_0, "&Level 0", "Go to level 0");
     levelMenu->Append(LEVEL_1, "&Level 1", "Go to level 1");
     levelMenu->Append(LEVEL_2, "&Level 2", "Go to level 2");
     levelMenu->Append(LEVEL_3, "&Level 3", "Go to level 3");
