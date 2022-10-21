@@ -7,6 +7,7 @@
 #include <wx/dcbuffer.h>
 #include "GameView.h"
 #include "ids.h"
+#include "Scoreboard.h"
 
 /// Frame duration in milliseconds
 const int FrameDuration = 30;
