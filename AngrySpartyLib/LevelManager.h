@@ -34,6 +34,11 @@ public:
      * @return The index of the displayed level
      */
     int GetDisplayedLevel() const {return mDisplayedLevel;}
+
+    /**
+     * Returns the total number of levels in the game
+     * @return The total number of levels in the game
+     */
     int GetLevelCount() const {return mLevelCount;}
 };
 

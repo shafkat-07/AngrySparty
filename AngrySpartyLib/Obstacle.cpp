@@ -48,6 +48,12 @@ void Obstacle::XmlLoad(wxXmlNode* node)
 
 }
 
+/**
+ * Determine if the obstacle was hit.
+ * @param x X location to test
+ * @param y Y location to test
+ * @return true if hit.
+ */
 bool Obstacle::HitTest(double x, double y)
 {
     return false;

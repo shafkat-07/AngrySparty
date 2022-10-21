@@ -172,8 +172,10 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 
 
 /**
- * Handles drawing the items from the level on GameView
- * @param graphics The wxGraphicsContext object to write to
+ * Handles the mouse down event
+ * @param x X coordinate of the mouse
+ * @param y Y coordinate of the mouse
+ * @return True if the mouse down event hit anything.
  */
 bool Level::HitTest(double x, double y)
 {

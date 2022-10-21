@@ -19,6 +19,12 @@ const std::wstring imageFilename = L"images/slingshot.png";
 /// Size of the slingshot image in meters
 const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
 
+/**
+ * Constructor for a shooter object
+ *
+ * Initiates the shooter.
+ * @param level The level this item is contained in
+ */
 Shooter::Shooter(Level* level) : Item(level)
 {
     mHeight = WoodSlingshotSize.y;

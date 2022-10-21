@@ -21,8 +21,8 @@ class Shooter : public Item {
 private:
     double mWidth = 0; ///< Width of the shooter
     double mHeight = 0; ///< Height of the shooter
-    double mX = 0;
-    double mY = 0;
+    double mX = 0; ///< X location of the shooter
+    double mY = 0; ///< Y location of the shooter
 
 public:
     Shooter(Level* level);
