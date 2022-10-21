@@ -9,13 +9,12 @@
 #ifndef ANGRYSPARTY_OBSTACLE_H
 #define ANGRYSPARTY_OBSTACLE_H
 
-#include "Item.h"
-
+#include "PhysicalObject.h"
 
 /**
  * An obstacle in the game
  */
-class Obstacle : public Item
+class Obstacle : public PhysicalObject
 {
 private:
 
@@ -32,7 +31,7 @@ public:
     void operator=(const Obstacle &) = delete;
 
     /// Constructor for Obstacle
-    Obstacle(Level *level);
+    Obstacle(Level *level, const std::wstring& filename);
 
     void Update(double elapsed) override;
 

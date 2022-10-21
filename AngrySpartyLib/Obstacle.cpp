@@ -12,7 +12,7 @@
  * Constructor for Obstacle
  * @param level The level this obstacle is in.
  */
-Obstacle::Obstacle(Level* level) : Item(level)
+Obstacle::Obstacle(Level* level, const std::wstring &filename) : PhysicalObject(level, filename)
 {
 }
 
