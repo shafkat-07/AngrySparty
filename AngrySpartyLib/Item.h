@@ -72,6 +72,11 @@ public:
     /** Installs physics for an item */
     virtual void InstallPhysics() {}
 
-    /** Pure virtual function for hit testing **/
-    virtual bool HitTest(double x, double y) { return false; };
+    /**
+     * Test to see if an item is hit by a mouse click
+     * @param x x location of the mouse click
+     * @param y y location of the mouse click
+     * @return if the hit test is positive
+     */
+    virtual bool HitTest(double x, double y) { return false; }
 };

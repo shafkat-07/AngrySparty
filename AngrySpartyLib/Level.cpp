@@ -16,6 +16,7 @@
 #include "DebugDraw.h"
 #include "Foe.h"
 #include "Shooter.h"
+#include "Slingshot.h"
 
 class Item;
 
@@ -95,17 +96,9 @@ void Level::XmlItem(wxXmlNode *node)
     }
     else if (type == "slingshot" || type == "goalposts")
     {
-        item = std::make_shared<Shooter>(this);
+        item = std::make_shared<Slingshot>(this);
     }
-//    TODO Uncomment this back in when the other item types are created.
-//    else if (type == "poly")
-//    {
-//        item = std::make_shared<Poly>(this);
-//    }
-//    else if (type == "sling")
-//    {
-//        item = std::make_shared<Sling>(this);
-//    }
+//    TODO Create more classes as they are built out
     else
     {
         //wxMessageBox(L"Unknown item type: " + type);
@@ -179,8 +172,10 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
 
 
 /**
- * Handles drawing the items from the level on GameView
- * @param graphics The wxGraphicsContext object to write to
+ * Handles the mouse down event
+ * @param x X coordinate of the mouse
+ * @param y Y coordinate of the mouse
+ * @return True if the mouse down event hit anything.
  */
 bool Level::HitTest(double x, double y)
 {

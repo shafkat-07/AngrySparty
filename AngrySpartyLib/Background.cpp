@@ -55,6 +55,12 @@ void Background::XmlLoad(wxXmlNode* node)
     node->GetAttribute(L"height", L"0").ToDouble(&mHeight);
 }
 
+/**
+ * Hit test for the background.
+ * @param x x position to test.
+ * @param y y position to test.
+ * @return if the background was hit.
+ */
 bool Background::HitTest(double x, double y)
 {
     return false;

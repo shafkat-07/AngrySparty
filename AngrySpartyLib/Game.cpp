@@ -65,9 +65,13 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     mGraphics = graphics;
 }
 
-void Game::SetLevel(int Level)
+/**
+ * Set the current level
+ * @param level Level to set
+ */
+void Game::SetLevel(int level)
 {
-    mLevelManager->ChangeLevel(Level);
+    mLevelManager->ChangeLevel(level);
     mLevelManager->OnDraw(mGraphics);
     std::cout << "Changed Level" << '\n';
 }

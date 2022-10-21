@@ -81,6 +81,10 @@ void GameView::OnLevel3(wxCommandEvent& event)
     mGame.SetLevel(3);
 }
 
+/**
+ * Timer event, updates the game.
+ * @param event Timer event object
+ */
 void GameView::OnTimer(wxTimerEvent &event)
 {
     Refresh();
