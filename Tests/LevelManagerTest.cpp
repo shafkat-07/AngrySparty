@@ -13,14 +13,12 @@ const std::wstring filename2 = L"levels/level2.xml";
 
 TEST(LevelManagerTest, Construct)
 {
-    LevelManager level_manager;
-    ASSERT_TRUE(level_manager.GetDisplayedLevel() == 0);
+    LevelManager levelManager;
+    ASSERT_TRUE(levelManager.GetDisplayedLevel() == 1);
 
-    ASSERT_TRUE(level_manager.GetDisplayedLevel() == 0);
+    levelManager.ChangeLevel(2);
+    ASSERT_TRUE(levelManager.GetDisplayedLevel() == 2);
 
-    level_manager.ChangeLevel(2);
-    ASSERT_TRUE(level_manager.GetDisplayedLevel() == 2);
-
-    level_manager.ChangeLevel(1);
-    ASSERT_TRUE(level_manager.GetDisplayedLevel() == 1);
+    levelManager.ChangeLevel(1);
+    ASSERT_TRUE(levelManager.GetDisplayedLevel() == 1);
 }

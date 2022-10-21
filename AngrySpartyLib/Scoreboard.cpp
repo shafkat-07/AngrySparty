@@ -33,7 +33,7 @@ void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics) {
     // Measuring text and drawing centered
     //
     graphics->PushState();
-    wxFont bigFont(wxSize(0, 50),
+    wxFont bigFont(wxSize(0, 60),
                    wxFONTFAMILY_SWISS,
                    wxFONTSTYLE_NORMAL,
                    wxFONTWEIGHT_BOLD);
@@ -41,9 +41,9 @@ void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics) {
 
     double wid, hit;
     graphics->GetTextExtent(L"0", &wid, &hit);
-    graphics->DrawText(L"0", 650, hit + 700);
+    graphics->DrawText(L"0", 600, hit + 650);
     graphics->GetTextExtent(L"0", &wid, &hit);
-    graphics->DrawText(L"0", -650, hit + 700);
+    graphics->DrawText(L"0", -600, hit + 650);
 
     graphics->PopState();
 }

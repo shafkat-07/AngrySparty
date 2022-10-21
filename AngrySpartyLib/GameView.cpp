@@ -97,5 +97,5 @@ void GameView::OnLevel3(wxCommandEvent& event)
  */
 void GameView::OnTimer(wxTimerEvent &event)
 {
-    Refresh();
+    //Refresh();
 }
