@@ -21,19 +21,7 @@ private:
     std::shared_ptr<wxGraphicsContext> mGraphics;
 
     /// Level manager containing levels
-    std::unique_ptr<LevelManager> mLevelManager;  
-
-    /// Size of the playing area in meters. TODO: Move this to level since each level has width and height?
-    b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
-
-    /// Scale we are drawing at
-    double mScale = 1;
-
-    /// X offset when we draw
-    double mXOffset = 0;
-
-    /// Y offset when we draw
-    double mYOffset = 0;
+    std::unique_ptr<LevelManager> mLevelManager;
 
 public:
     Game();

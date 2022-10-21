@@ -24,11 +24,20 @@ private:
     /// The index of the currently displayed level. Indexing from 0
     int mDisplayedLevel = 0;
 
+    /// Scale we are drawing at
+    double mScale = 1;
+
+    /// X offset when we draw
+    double mXOffset = 0;
+
+    /// Y offset when we draw
+    double mYOffset = 0;
+
 public:
     LevelManager();
     void Load(const std::wstring& filename);
     void ChangeLevel(int desiredLevel);
-    void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
+    void OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height);
 
     /**
      * Returns the currently played/displayed level

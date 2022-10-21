@@ -7,7 +7,6 @@
 
 #include "pch.h"
 #include <b2_polygon_shape.h>
-#include <b2_circle_shape.h>
 #include <b2_mouse_joint.h>
 #include "Level.h"
 #include "Obstacle.h"
@@ -15,7 +14,6 @@
 #include "Block.h"
 #include "DebugDraw.h"
 #include "Foe.h"
-#include "Shooter.h"
 #include "Slingshot.h"
 #include "Goalpost.h"
 
@@ -47,6 +45,8 @@ void Level::Load(const std::wstring &filename)
 
     // Get the XML document root node
     auto root = xmlDoc.GetRoot();
+    mSize.x = std::stof(root->GetAttribute(L"width", "0.0").ToStdWstring());
+    mSize.y = std::stof(root->GetAttribute(L"height", "0.0").ToStdWstring());
 
     //
     // Traverse the children of the root
@@ -132,6 +132,8 @@ void Level::Clear()
  */
 Level::Level(const std::wstring &filename) : mWorld(b2Vec2(0.0f, Gravity))
 {
+    Load(filename); // Load from XML first to have playing area dimensions
+
     // The size of the playing area in meters
     auto size = mSize;
 
@@ -153,8 +155,6 @@ Level::Level(const std::wstring &filename) : mWorld(b2Vec2(0.0f, Gravity))
     // Left side
     box.SetAsBox(0.1, size.y, b2Vec2(-size.x, size.y), 0);
     mGround->CreateFixture(&box, 0.0f);
-
-    Load(filename);
 }
 
 /**

@@ -37,15 +37,6 @@ private:
     /// The physics object initialized with the size of the display
     World mPhysics = World(mSize);
 
-    /// Scale we are drawing at
-    double mScale = 1;
-
-    /// X offset when we draw
-    double mXOffset = 0;
-
-    /// Y offset when we draw
-    double mYOffset = 0;
-
     /// Mouse location
     b2Vec2 mMouseLocation;
 
@@ -73,6 +64,12 @@ public:
      * @return Score
      */
     int GetScore() const { return mScore; }
+
+    /**
+     * Getter for the score from this level
+     * @return Score
+     */
+    b2Vec2 GetSize() const { return mSize; }
 
     /**
      * Updates the score by incrementing with the parameter (can be negative)

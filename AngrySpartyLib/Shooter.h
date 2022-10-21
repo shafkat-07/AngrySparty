@@ -39,6 +39,7 @@ public:
 
     /**
      * Set the width of the shooter
+     * @param width The width of the shooter
      */
     void SetWidth(double width) { mWidth = width;}
 
@@ -50,6 +51,7 @@ public:
 
     /**
      * Set the height of the shooter
+     * @param height The height of the shooter
      */
     void SetHeight(double height) { mHeight = height;}
 
