@@ -17,6 +17,7 @@
 #include "Foe.h"
 #include "Shooter.h"
 #include "Slingshot.h"
+#include "Goalpost.h"
 
 class Item;
 
@@ -94,9 +95,13 @@ void Level::XmlItem(wxXmlNode *node)
     {
         item = std::make_shared<Foe>(this);
     }
-    else if (type == "slingshot" || type == "goalposts")
+    else if (type == "slingshot")
     {
         item = std::make_shared<Slingshot>(this);
+    }
+    else if (type == "goalposts")
+    {
+        item = std::make_shared<Goalpost>(this);
     }
 //    TODO Create more classes as they are built out
     else
