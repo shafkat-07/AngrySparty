@@ -22,7 +22,7 @@ private:
     int mLevelCount = 0;
 
     /// The index of the currently displayed level. Indexing from 0
-    int mDisplayedLevel = 0;
+    int mDisplayedLevel = 1;
 
     /// Scale we are drawing at
     double mScale = 1;

@@ -33,7 +33,7 @@ void LevelManager::Load(const std::wstring& filename)
     auto newLevel = std::make_shared<Level>(filename);
     mLevels.push_back(newLevel);
     ++mLevelCount;
-    std::cout << "Just loaded level " << mLevelCount << '\n';
+//    std::cout << "Just loaded level " << mLevelCount << '\n';
 }
 
 /**
