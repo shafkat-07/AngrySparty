@@ -9,6 +9,7 @@
 #define ANGRYSPARTY_SCOREBOARD_H
 
 class Score;
+class Game;
 
 /**
  * Class to represent the Scoreboard
@@ -25,8 +26,10 @@ private:
     int mCurrentScore;
 
 public:
-    void getCurrentScore();
-    void addScores(Score* score);
+    Scoreboard(Game* game);
+    int getCurrentScore();
+    int addScores(Score* score);
+    void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
 
 };

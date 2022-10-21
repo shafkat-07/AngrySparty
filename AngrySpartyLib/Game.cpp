@@ -6,6 +6,7 @@
 #include "pch.h"
 #include <memory>
 #include "Game.h"
+#include "Scoreboard.h"
 
 using namespace std;
 
@@ -30,9 +31,9 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     graphics->DrawRectangle(0, 0, width, height);
 
     mLevelManager->OnDraw(graphics, width, height);
+    auto scoreboard = std::make_shared<Scoreboard>(this);
+    scoreboard->Draw(graphics);
     mGraphics = graphics;
-
-
 }
 
 /**
