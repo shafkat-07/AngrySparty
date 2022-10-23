@@ -9,25 +9,29 @@
 
 /**
  * Add a score
- *
  * @param score The score to add
+ * @return The sum of the scores
  */
-int Scoreboard::addScores(Score *score)
+int Scoreboard::AddScores(Score *score)
 {
-    int new_score;
-    new_score = mCurrentScore+mTotalScore;
-    return new_score;
+    int newScore;
+    newScore = mCurrentScore+mTotalScore;
+    return newScore;
 }
 
 /**
  * Get the current score
+ * @return The value of the current score
  */
-int Scoreboard::getCurrentScore()
+int Scoreboard::GetCurrentScore()
 {
     return mCurrentScore;
 }
 
-
+/**
+ * Draw the score board.
+ * @param graphics The drawing context to draw on.
+ */
 void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics) {
     //
     // Measuring text and drawing centered
@@ -48,6 +52,10 @@ void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics) {
     graphics->PopState();
 }
 
+/**
+ * Constructor for a Scoreboard
+ * @param game The game this scoreboard belongs to
+ */
 Scoreboard::Scoreboard(Game *game) {
 
 }

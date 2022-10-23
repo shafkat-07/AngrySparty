@@ -21,25 +21,53 @@
  */
 class PhysicalObject : public Item {
 private:
-    std::shared_ptr<wxImage> mPicture; ///< The image for this object
-    std::shared_ptr<wxBitmap> mBitmap; ///< The bitmap for this item
-    b2Body* mBody = nullptr; ///< The physics system body
-    b2Vec2 mPosition = b2Vec2(0.0f, 0.0f); ///< The position vector of the foe
-    double mAngle = 0; ///< Angle of the item
-    double mDown = 0; ///< Times this item repeats
-    double mDensity = 0; ///< Density of the item
-    double mFriction = 0; ///< Friction of the item
-    double mRestitution = 0; ///< Restitution of the item
-    int mRepeatX = 0; ///< Times this item repeats
-public:
-    PhysicalObject(Level* level, const std::wstring& filename);
-    void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
+    b2Body* mBody = nullptr; ///< The Box2D body of the object
+    b2Vec2 mPosition = b2Vec2(0.0f, 0.0f); ///< The position vector of the object
+    double mAngle = 0; ///< Angle of the object
+    double mDensity = 0; ///< Density of the object
+    double mFriction = 0; ///< Friction of the object
+    double mRestitution = 0; ///< Restitution of the object
+    bool mStatic = false; ///< Whether or not the object is static
 
-    b2Body* GetBody() { return mBody; }
+public:
+    PhysicalObject(Level* level);
+    void Draw(std::shared_ptr<wxGraphicsContext> graphics) override = 0;
+    void InstallPhysics() override;
     void Update(double elapsed) override;
     wxXmlNode* XmlSave(wxXmlNode* node) override;
     void XmlLoad(wxXmlNode* node) override;
+    b2Body* DefineBody(b2PolygonShape* shape, b2World* world);
+    bool HitTest(double x, double y) override;
 
+    /**
+     * Creates a shape for a physical body
+     * @return The b2PolygonShape for the body
+     */
+    virtual b2PolygonShape CreateShape() = 0;
+
+    /**
+     * The angle of the item.
+     * @return Angle in degrees.
+     */
+    double GetAngle() const { return mAngle; }
+
+    /**
+     * Get the physical object's body
+     * @return The physical object's body
+     */
+    b2Body* GetBody() { return mBody; }
+
+    /**
+     * Set the x position of this physical object
+     * @param x The x position in meters
+     */
+    void SetXPosition(float x) { mPosition.x = x; }
+
+    /**
+     * Set the y position of this physical object
+     * @param y The x position in meters
+     */
+    void SetYPosition(float y) { mPosition.y = y; }
 };
 
 #endif //ANGRYSPARTY_PHYSICALOBJECT_H

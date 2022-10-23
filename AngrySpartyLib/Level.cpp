@@ -9,13 +9,13 @@
 #include <b2_polygon_shape.h>
 #include <b2_mouse_joint.h>
 #include "Level.h"
-#include "Obstacle.h"
 #include "Background.h"
 #include "Block.h"
 #include "DebugDraw.h"
 #include "Foe.h"
 #include "Slingshot.h"
 #include "Goalpost.h"
+#include "Poly.h"
 
 class Item;
 
@@ -88,8 +88,11 @@ void Level::XmlItem(wxXmlNode *node)
     }
     else if (type == "block")
     {
-        //item = std::make_shared<Item>(this, L"images/elementWood015.png");
         item = std::make_shared<Block>(this);
+    }
+    else if (type == "poly")
+    {
+        item = std::make_shared<Poly>(this);
     }
     else if (type == "foe")
     {
