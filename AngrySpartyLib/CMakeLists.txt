@@ -10,12 +10,16 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         World.cpp World.h
         Score.cpp Score.h
         Scoreboard.cpp Scoreboard.h
-        Obstacle.cpp Obstacle.h
         Background.cpp Background.h
         PhysicalObject.cpp PhysicalObject.h
         Block.cpp Block.h
         DebugDraw.cpp DebugDraw.h
-        Foe.cpp Foe.h Shooter.cpp Shooter.h Slingshot.cpp Slingshot.h Goalpost.cpp Goalpost.h Poly.cpp Poly.h)
+        Foe.cpp Foe.h
+        Shooter.cpp Shooter.h
+        Slingshot.cpp Slingshot.h
+        Goalpost.cpp Goalpost.h
+        Poly.cpp Poly.h
+        PolygonBody.cpp PolygonBody.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

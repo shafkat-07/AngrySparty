@@ -27,8 +27,8 @@ private:
 
 public:
     Scoreboard(Game* game);
-    int getCurrentScore();
-    int addScores(Score* score);
+    int GetCurrentScore();
+    int AddScores(Score* score);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
 

@@ -73,8 +73,8 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             -WoodSlingshotBandAttachFront.y * Consts::MtoCM
     );
 
-    auto bitmap = GetFrontBitmap();
     // Draw the front of the slingshot.
+    auto bitmap = GetFrontBitmap();
     graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,
             x,

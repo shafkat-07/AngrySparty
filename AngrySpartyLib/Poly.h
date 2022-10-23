@@ -1,17 +1,26 @@
 /**
  * @file Poly.h
- * @author kabir
+ * @author Western Tanager
  *
- *
+ * Class to represent a poly
  */
 
-#pragma once
+#ifndef ANGRYSPARTY_POLY_H
+#define ANGRYSPARTY_POLY_H
 
-#include "Obstacle.h"
+#include "Item.h"
+#include "PolygonBody.h"
 
-class Poly : public Obstacle {
+/**
+ * Class to represent a poly
+ */
+class Poly : public PolygonBody {
 private:
 
 public:
-    Poly(Level *level, const std::wstring& filename);
+    Poly(Level* level);
+    void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
+    void XmlLoad(wxXmlNode* node) override;
 };
+
+#endif //ANGRYSPARTY_POLY_H

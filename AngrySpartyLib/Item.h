@@ -25,6 +25,7 @@ private:
 
     /// The underlying bitmap for the image.
     std::shared_ptr<wxBitmap> mItemBitmap;
+
 public:
     /// Default constructor (disabled)
     Item() = delete;

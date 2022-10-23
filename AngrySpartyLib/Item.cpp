@@ -10,7 +10,7 @@
 #include "Level.h"
 
 /**
- * Constructor with a body definition.
+ * Constructor for an item
  * @param level The level this item is contained in
  */
 Item::Item(Level* level) : mLevel(level)
@@ -44,7 +44,6 @@ Item::~Item()
  */
 void Item::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
-
 }
 
 /**

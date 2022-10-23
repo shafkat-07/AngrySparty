@@ -73,8 +73,8 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             -GoalpostsBandAttachFront.y * Consts::MtoCM
     );
 
+    // Draw the front of the goalposts.
     auto bitmap = GetFrontBitmap();
-    // Draw the front of the slingshot.
     graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,
             x,
