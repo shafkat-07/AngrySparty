@@ -13,6 +13,8 @@ const std::wstring XML0 = L"levels/level0.xml";
 const std::wstring XML1 = L"levels/level1.xml";
 /// XML3's file location
 const std::wstring XML2 = L"levels/level2.xml";
+/// The first level to display when starting the game
+const int StartingLevel = 1;
 
 /**
  * Constructor for the LevelManager, will load the 3 predefined levels on creation
@@ -22,6 +24,7 @@ LevelManager::LevelManager()
     Load(XML0);
     Load(XML1);
     Load(XML2);
+    ChangeLevel(StartingLevel);
 }
 
 /**
@@ -44,6 +47,7 @@ void LevelManager::ChangeLevel(int desiredLevel)
 {
     // TODO Delete the currently displayed level's object and add the desired ones
     mDisplayedLevel = desiredLevel;
+    mLevels[mDisplayedLevel]->SetLevel();
 }
 
 /**

@@ -9,6 +9,7 @@
 
 #include <b2_body.h>
 #include <memory>
+#include "World.h"
 
 class Level;
 
@@ -71,7 +72,7 @@ public:
     virtual void XmlLoad(wxXmlNode* node);
 
     /** Installs physics for an item */
-    virtual void InstallPhysics() {}
+    virtual void InstallPhysics(std::shared_ptr<World>) {}
 
     /**
      * Test to see if an item is hit by a mouse click
