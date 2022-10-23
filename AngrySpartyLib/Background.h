@@ -23,6 +23,14 @@ public:
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void XmlLoad(wxXmlNode* node) override;
     bool HitTest(double x, double y) override;
+
+    /**
+     * Visit a background
+     * @param visitor The visitor to pass through
+     *
+     * Does nothing.
+     */
+    void Accept(ItemVisitor* visitor) override {  }
 };
 
 #endif //ANGRYSPARTY_BACKGROUND_H

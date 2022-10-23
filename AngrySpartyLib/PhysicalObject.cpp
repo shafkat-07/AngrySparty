@@ -6,7 +6,6 @@
 #include "pch.h"
 #include <b2_body.h>
 #include <b2_fixture.h>
-#include <b2_polygon_shape.h>
 #include "PhysicalObject.h"
 #include "Level.h"
 #include "Consts.h"
@@ -71,17 +70,16 @@ wxXmlNode *PhysicalObject::XmlSave(wxXmlNode* node) { return nullptr; }
 void PhysicalObject::InstallPhysics() // TODO Add physics parameter
 {
     auto world = GetWorld(); // TODO use physics object in the level and get its world
-    auto shape = CreateShape();
-    mBody = DefineBody(&shape, world);
+    mBody = DefineBody(&(*CreateShape()), world);
 }
 
 /**
  * Define the body for a particular physical object
- * @param shape The b2PolygonShape of the body
+ * @param shape The b2Shape of the body
  * @param world The world in which this object resides
  * @return A pointer to a b2Body
  */
-b2Body* PhysicalObject::DefineBody(b2PolygonShape* shape, b2World* world)
+b2Body* PhysicalObject::DefineBody(b2Shape* shape, b2World* world)
 {
     // Create the body definition
     b2BodyDef bodyDefinition;

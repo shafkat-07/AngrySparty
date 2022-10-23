@@ -16,6 +16,7 @@
 #include "Slingshot.h"
 #include "Goalpost.h"
 #include "Poly.h"
+#include "Sparty.h"
 
 class Item;
 
@@ -72,7 +73,6 @@ void Level::Load(const std::wstring &filename)
 
 /**
  * Handle a node of type item.
- * TODO create separate functions for each of the item types (block, poly, foe, sling)
  * @param node XML node
  */
 void Level::XmlItem(wxXmlNode *node)
@@ -106,10 +106,14 @@ void Level::XmlItem(wxXmlNode *node)
     {
         item = std::make_shared<Goalpost>(this);
     }
-//    TODO Create more classes as they are built out
+    else if (type == "gruff-sparty" || type == "helmet-sparty")
+    {
+        item = std::make_shared<Sparty>(this);
+        mSpartyCount++;
+    }
     else
     {
-        //wxMessageBox(L"Unknown item type: " + type);
+        wxMessageBox(L"Unknown item type: " + type);
         return;
     }
 
@@ -120,6 +124,7 @@ void Level::XmlItem(wxXmlNode *node)
         mItems.push_back(item);
     }
 }
+
 
 /**
  * Clears the Items from the level
@@ -194,4 +199,16 @@ bool Level::HitTest(double x, double y)
         }
     }
     return false;
+}
+
+/**
+ * Accept a visitor and handle the visit.
+ * @param visitor The visitor to accept.
+ */
+void Level::Accept(ItemVisitor* visitor)
+{
+    for(auto item : mItems)
+    {
+        item->Accept(visitor);
+    }
 }

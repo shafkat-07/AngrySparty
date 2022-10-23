@@ -27,6 +27,8 @@ public:
     Goalpost(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void XmlLoad(wxXmlNode* node) override;
+
+
 };
 
 #endif //ANGRYSPARTY_GOALPOST_H

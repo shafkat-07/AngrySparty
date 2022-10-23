@@ -24,7 +24,7 @@ private:
 
 public:
     PolygonBody(Level *level);
-    b2PolygonShape CreateShape() override;
+    std::unique_ptr<b2Shape> CreateShape() override;
 
     /**
      * Get the vertices for this polygon body

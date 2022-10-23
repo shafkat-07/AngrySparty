@@ -42,8 +42,8 @@ void Foe::XmlLoad(wxXmlNode* node)
     double degrees = 45;
     for (auto i = 0; i < 8; i++)
     {
-        x = mRadius * cos(degrees*Consts::DtoR*i + GetAngle());
-        y = mRadius * sin(degrees*Consts::DtoR*i + GetAngle());
+        x = mRadius * cos(degrees*Consts::DtoR*i);
+        y = mRadius * sin(degrees*Consts::DtoR*i);
         vertices.push_back(b2Vec2(x,y));
     }
 }
