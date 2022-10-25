@@ -16,6 +16,7 @@ using namespace std;
 Game::Game()
 {
     mLevelManager = make_unique<LevelManager>();
+    mScoreboard = make_unique<Scoreboard>(this);
 }
 
 /**
@@ -31,8 +32,7 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     graphics->DrawRectangle(0, 0, width, height);
 
     mLevelManager->OnDraw(graphics, width, height);
-    auto scoreboard = std::make_shared<Scoreboard>(this);
-    scoreboard->Draw(graphics);
+    mScoreboard->Draw(graphics);
     mGraphics = graphics;
 }
 
