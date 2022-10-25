@@ -19,6 +19,8 @@ TEST(LevelTest, Construct)
     level.UpdateScore(50);
     ASSERT_TRUE(level.GetScore() == 50);
 
+    level.SetLevel(); // Installing physics is required for hit testing on the b2bodies
+
     // Use HitTest to test the locations of items
     ASSERT_FALSE(level.HitTest(1,1));   // Random point, should ignore background
     ASSERT_TRUE(level.HitTest(3.35625,2.06137));   // Block on line 9 of the XML
