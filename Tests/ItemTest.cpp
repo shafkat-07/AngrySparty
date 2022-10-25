@@ -30,3 +30,12 @@ TEST(ItemTest, Construct)
     Level level(filename);
     ItemMock item(&level);
 }
+
+TEST(ItemTest, HitTest)
+{
+    Level level(filename);
+    ItemMock item(&level);
+
+    // Test the hit test function
+    ASSERT_FALSE(item.HitTest(1,1));   // Random point, items should always return false unless overridden.
+}
