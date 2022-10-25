@@ -50,6 +50,18 @@ public:
      * @return The total number of levels in the game
      */
     int GetLevelCount() const {return mLevelCount;}
+
+    /**
+     * Get the current level's score
+     * @return Curren level's score
+     */
+    int GetCurrentLevelScore() const { return mLevels[mDisplayedLevel]->GetScore(); }
+
+    /**
+     * Get the current level's size
+     * @return The current level's size
+     */
+    b2Vec2 GetCurrentLevelSize() const { return mLevels[mDisplayedLevel]->GetSize(); }
 };
 
 #endif //ANGRYSPARTY_LEVELMANAGER_H

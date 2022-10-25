@@ -6,56 +6,53 @@
 #include "pch.h"
 #include "Scoreboard.h"
 #include "Game.h"
+#include "Consts.h"
+
+/// The font size for the scoreboard
+const int FontSize = 80;
+
+/// The horizontal distance to the edge of the screen for the scores
+const int HorizontalMargin = 20;
+
+/// The vertical distance to the edge of the screen for the scores
+const int VerticalMargin = 10;
 
 /**
- * Add a score
- * @param score The score to add
- * @return The sum of the scores
+ * Constructor for a Scoreboard
+ * @param game The game this scoreboard belongs to
  */
-int Scoreboard::AddScores(Score *score)
+Scoreboard::Scoreboard(Game* game) : mGame(game)
 {
-    int newScore;
-    newScore = mCurrentScore+mTotalScore;
-    return newScore;
-}
-
-/**
- * Get the current score
- * @return The value of the current score
- */
-int Scoreboard::GetCurrentScore()
-{
-    return mCurrentScore;
 }
 
 /**
  * Draw the score board.
  * @param graphics The drawing context to draw on.
  */
-void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics) {
-    //
-    // Measuring text and drawing centered
-    //
+void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+{
+    // Get score values and dimensions of the current level
+    wxString totalScore = wxString::Format(wxT("%i"),mGame->GetTotalScore());
+    wxString currentLevelScore = wxString::Format(wxT("%i"),mGame->GetCurrentLevelScore());
+    b2Vec2 currentLevelSize = mGame->GetCurrentLevelSize();
+    double wid = currentLevelSize.x * Consts::MtoCM;
+    double hit = currentLevelSize.y * Consts::MtoCM;
+
     graphics->PushState();
-    wxFont bigFont(wxSize(0, 60),
+    wxFont bigFont(wxSize(0, FontSize),
                    wxFONTFAMILY_SWISS,
                    wxFONTSTYLE_NORMAL,
                    wxFONTWEIGHT_BOLD);
-    graphics->SetFont(bigFont, wxColour(250, 0, 0));
+    graphics->SetFont(bigFont, wxColour(255, 0, 0));
 
-    double wid, hit;
-    graphics->GetTextExtent(L"0", &wid, &hit);
-    graphics->DrawText(L"0", 600, hit + 650);
-    graphics->GetTextExtent(L"0", &wid, &hit);
-    graphics->DrawText(L"0", -600, hit + 650);
+    // Store the width of the score to fit it to the screen accordingly
+    double currScoreWidth;
+    double currScoreHeight;
+    graphics->GetTextExtent(currentLevelScore, &currScoreWidth, &currScoreHeight);
+
+    graphics->Scale(1, -1);
+    graphics->DrawText(totalScore, -wid/2 + HorizontalMargin, -hit + VerticalMargin);
+    graphics->DrawText(currentLevelScore, wid/2 - (currScoreWidth + HorizontalMargin), -hit + VerticalMargin);
 
     graphics->PopState();
-}
-
-/**
- * Constructor for a Scoreboard
- * @param game The game this scoreboard belongs to
- */
-Scoreboard::Scoreboard(Game *game) {
-
 }
