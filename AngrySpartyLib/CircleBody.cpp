@@ -14,13 +14,15 @@
 #include "Level.h"
 #include "Consts.h"
 
+const double DefaultRadius = 0.25f;
+
 /**
  * Constructor for a circle body
  * @param level The level this item is contained in
  */
 CircleBody::CircleBody(Level* level) : PhysicalObject(level)
 {
-    mRadius = 0.25f;
+    mRadius = DefaultRadius;
 }
 
 /**
