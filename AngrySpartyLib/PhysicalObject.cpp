@@ -67,8 +67,9 @@ wxXmlNode *PhysicalObject::XmlSave(wxXmlNode* node) { return nullptr; }
 
 /**
  * Install physics for a physical object
+ * @param physicsWorld
  */
-void PhysicalObject::InstallPhysics(std::shared_ptr<World> mPhysicsWorld) // TODO Add physics parameter
+void PhysicalObject::InstallPhysics(std::shared_ptr<World> physicsWorld) // TODO Add physics parameter
 {
     auto world = GetWorld(); // TODO use physics object in the level and get its world
     auto shape = CreateShape();
