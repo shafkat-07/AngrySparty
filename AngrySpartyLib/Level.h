@@ -19,6 +19,7 @@
 #include "World.h"
 
 class b2MouseJoint;
+class ItemVisitor;
 
 /**
  * This class represents a level with it's own score and item collection
@@ -52,6 +53,11 @@ private:
      /// Score tracking for each level
      int mScore = 0;
 
+     /// The number of sparties in the world.
+     /// The game starts with -1 sparties to account for the initial sparty location.
+     /// Sparty 0 means there is one sparty in the world. Will work well for indexing.
+     int mSpartyCount = -1;
+
 public:
     Level(const std::wstring &);
     void Load(const std::wstring &);
@@ -72,6 +78,12 @@ public:
     b2Vec2 GetSize() const { return mSize; }
 
     /**
+     * Getter for the number of sparties in the world.
+     * @return Number of sparties.
+     */
+    int GetSpartyCount() const { return mSpartyCount; }
+
+    /**
      * Updates the score by incrementing with the parameter (can be negative)
      * @param score The parameter to increment by (can be negative)
      */
@@ -84,6 +96,8 @@ public:
     b2World *GetWorld() { return &mWorld; }
 
     bool HitTest(double x, double y);
+
+    void Accept(ItemVisitor* visitor);
 
     void SetLevel();
 };

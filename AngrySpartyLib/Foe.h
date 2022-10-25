@@ -8,8 +8,8 @@
 #ifndef ANGRYSPARTY_FOE_H
 #define ANGRYSPARTY_FOE_H
 
-#include "Item.h"
 #include "PolygonBody.h"
+#include "ItemVisitor.h"
 
 /**
  * Class to represent a foe
@@ -23,6 +23,13 @@ public:
     Foe(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void XmlLoad(wxXmlNode* node) override;
+
+    /**
+     * Accept a visitor to this item
+     * @param visitor The visitor we accept
+     */
+    void Accept(ItemVisitor* visitor) override { visitor->VisitFoe(this); }
+
 };
 
 #endif //ANGRYSPARTY_FOE_H

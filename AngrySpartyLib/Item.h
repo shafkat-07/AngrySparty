@@ -11,6 +11,7 @@
 #include <memory>
 #include "World.h"
 
+class ItemVisitor;
 class Level;
 
 /**
@@ -54,6 +55,12 @@ public:
     b2World* GetWorld();
 
     /**
+     * Get the level this item is contained in.
+     * @return The level this item is contained in.
+     */
+    Level* GetLevel() { return mLevel; }
+
+    /**
      * The picture for this item
      * @return The wxImage for this item
      */
@@ -81,4 +88,10 @@ public:
      * @return if the hit test is positive
      */
     virtual bool HitTest(double x, double y) { return false; }
+
+    /**
+     * Accept a visitor to the item.
+     * @param visitor The visitor to accept.
+     */
+    virtual void Accept(ItemVisitor *visitor) = 0;
 };

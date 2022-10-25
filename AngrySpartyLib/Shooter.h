@@ -11,6 +11,7 @@
 #define ANGRYSPARTY_SHOOTER_H
 
 #include "Item.h"
+#include "ItemVisitor.h"
 
 /**
  * The shooter class of the game.
@@ -71,6 +72,14 @@ public:
      * @return The front wxBitmap for this shooter
      */
     std::shared_ptr<wxBitmap> GetFrontBitmap() { return mFrontBitmap; }
+
+    /**
+     * Accept a visitor to this item
+     * @param visitor The visitor we accept
+     *
+     * Does nothing.
+     */
+    virtual void Accept(ItemVisitor* visitor) { }
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

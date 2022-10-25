@@ -36,14 +36,14 @@ public:
     void Update(double elapsed) override;
     wxXmlNode* XmlSave(wxXmlNode* node) override;
     void XmlLoad(wxXmlNode* node) override;
-    b2Body* DefineBody(b2PolygonShape* shape, b2World* world);
+    b2Body* DefineBody(b2Shape* shape, b2World* world);
     bool HitTest(double x, double y) override;
 
     /**
      * Creates a shape for a physical body
-     * @return The b2PolygonShape for the body
+     * @return The b2Shape for the body
      */
-    virtual b2PolygonShape CreateShape() = 0;
+    virtual std::unique_ptr<b2Shape> CreateShape() = 0;
 
     /**
      * The angle of the item.
@@ -68,6 +68,12 @@ public:
      * @param y The x position in meters
      */
     void SetYPosition(float y) { mPosition.y = y; }
+
+    /**
+     * Get the position of the physical object.
+     * @return The postion of the object.
+     */
+    b2Vec2 GetPosition() { return mPosition; }
 };
 
 #endif //ANGRYSPARTY_PHYSICALOBJECT_H

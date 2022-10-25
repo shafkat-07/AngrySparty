@@ -8,6 +8,7 @@
 #include <b2_world.h>
 #include <b2_polygon_shape.h>
 #include <b2_fixture.h>
+
 #include "Block.h"
 #include "Consts.h"
 
@@ -41,10 +42,10 @@ void Block::XmlLoad(wxXmlNode* node)
  *
  * @return The b2PolygonShape for a block
  */
-b2PolygonShape Block::CreateShape()
+std::unique_ptr<b2Shape> Block::CreateShape()
 {
-    b2PolygonShape box;
-    box.SetAsBox(mSize.x/2, mSize.y/2);
+    std::unique_ptr<b2PolygonShape> box = std::make_unique<b2PolygonShape>();
+    box->SetAsBox(mSize.x/2, mSize.y/2);
     return box;
 }
 

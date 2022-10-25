@@ -22,9 +22,9 @@ PolygonBody::PolygonBody(Level *level) : PhysicalObject(level)
  *
  * @return The b2PolygonShape for a polygon body
  */
-b2PolygonShape PolygonBody::CreateShape()
+std::unique_ptr<b2Shape> PolygonBody::CreateShape()
 {
-    b2PolygonShape poly;
-    poly.Set(&mVertices[0], mVertices.size());
+    std::unique_ptr<b2PolygonShape> poly = std::make_unique<b2PolygonShape>();
+    poly->Set(&mVertices[0], mVertices.size());
     return poly;
 }
