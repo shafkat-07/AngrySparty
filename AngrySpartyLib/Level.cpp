@@ -213,6 +213,9 @@ void Level::Accept(ItemVisitor* visitor)
     }
 }
 
+/**
+ * Sets up a level and its items in a physics world
+ */
 void Level::SetLevel()
 {
     mPhysics = std::make_shared<World>(mSize);

@@ -7,12 +7,18 @@
 #include "LevelManager.h"
 #include "Consts.h"
 
-/// XML1's file location
+/// XML0's file location
 const std::wstring XML0 = L"levels/level0.xml";
-/// XML2's file location
+
+/// XML1's file location
 const std::wstring XML1 = L"levels/level1.xml";
-/// XML3's file location
+
+/// XML2's file location
 const std::wstring XML2 = L"levels/level2.xml";
+
+/// XML3's file location
+const std::wstring XML3 = L"levels/level3.xml";
+
 /// The first level to display when starting the game
 const int StartingLevel = 1;
 
@@ -61,7 +67,7 @@ void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width
     graphics->PushState();
 
     // Get the playing area size in centimeters
-    auto playingAreaSize = mLevels[mDisplayedLevel]->GetSize();
+    auto playingAreaSize = GetCurrentLevelSize();
     playingAreaSize *= Consts::MtoCM;
 
     //

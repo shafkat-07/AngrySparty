@@ -8,30 +8,21 @@
 #ifndef ANGRYSPARTY_SCOREBOARD_H
 #define ANGRYSPARTY_SCOREBOARD_H
 
-class Score;
 class Game;
 
 /**
  * Class to represent the Scoreboard
  *
- * Holds the total score for the game
- * and the score for the current level
+ * Accesses the game's scores and handles the drawing
  */
 class Scoreboard {
 private:
-    /// The value of the total score
-    int mTotalScore;
-
-    /// The value of the current level's score
-    int mCurrentScore;
+    /// The game this Scoreboard belongs to
+    Game* mGame;
 
 public:
     Scoreboard(Game* game);
-    int GetCurrentScore();
-    int AddScores(Score* score);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics);
-
-
 };
 
 

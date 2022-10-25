@@ -8,7 +8,6 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         Level.cpp Level.h
         Item.cpp Item.h
         World.cpp World.h
-        Score.cpp Score.h
         Scoreboard.cpp Scoreboard.h
         Background.cpp Background.h
         PhysicalObject.cpp PhysicalObject.h
