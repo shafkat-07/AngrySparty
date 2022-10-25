@@ -120,7 +120,7 @@ void Level::XmlItem(wxXmlNode *node)
     if (item != nullptr)
     {
         item->XmlLoad(node);
-        item->InstallPhysics();
+//        item->InstallPhysics();
         mItems.push_back(item);
     }
 }
@@ -211,4 +211,18 @@ void Level::Accept(ItemVisitor* visitor)
     {
         item->Accept(visitor);
     }
+}
+
+void Level::SetLevel()
+{
+    mPhysics = std::make_shared<World>(mSize);
+
+    // Install in all the items
+    for(auto item: mItems)
+    {
+        item->InstallPhysics(mPhysics);
+    }
+
+
+    // Anything else needed to start the level
 }
