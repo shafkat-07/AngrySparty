@@ -35,7 +35,7 @@ private:
     b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
 
     /// The physics object initialized with the size of the display
-    World mPhysics = World(mSize);
+    std::shared_ptr<World> mPhysics;
 
     /// Mouse location
     b2Vec2 mMouseLocation;
@@ -84,6 +84,8 @@ public:
     b2World *GetWorld() { return &mWorld; }
 
     bool HitTest(double x, double y);
+
+    void SetLevel();
 };
 
 #endif //ANGRYSPARTY_LEVEL_H
