@@ -108,5 +108,9 @@ public:
      */
     virtual void Clear() {}
 
-    virtual b2Body *GetBody(){ return nullptr; }
+    /**
+     * Get the body for an item
+     * @return This item's body (nullptr if no body)
+     */
+    virtual b2Body* GetBody() { return nullptr; }
 };

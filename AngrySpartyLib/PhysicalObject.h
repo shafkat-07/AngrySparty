@@ -83,8 +83,10 @@ public:
 
     /**
      * Get the static boolean.
+     * @return Whether or not this object is static
      */
     bool IsStatic() { return mStatic; }
+
     /**
      * Set if the object is static.
      * @param isStatic True for static, false for dynamic.

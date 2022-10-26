@@ -18,7 +18,10 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         Slingshot.cpp Slingshot.h
         Goalpost.cpp Goalpost.h
         Poly.cpp Poly.h
-        PolygonBody.cpp PolygonBody.h CircleBody.cpp CircleBody.h Sparty.cpp Sparty.h ItemVisitor.cpp ItemVisitor.h)
+        PolygonBody.cpp PolygonBody.h
+        CircleBody.cpp CircleBody.h
+        Sparty.cpp Sparty.h
+        ItemVisitor.cpp ItemVisitor.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

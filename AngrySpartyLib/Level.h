@@ -95,10 +95,10 @@ public:
     b2World *GetWorld() { return mPhysics->GetWorld(); }
 
     /**
-     * Get the Box2D ground object
+     * Get the Box2D ground object for this level's physics environment
      * @return b2Body ground object
      */
-    b2Body *GetGround() { return mPhysics->GetGround(); }
+    b2Body* GetGround() { return mPhysics->GetGround(); }
 
     std::shared_ptr<Item> HitTest(double x, double y);
 

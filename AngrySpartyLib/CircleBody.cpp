@@ -14,6 +14,7 @@
 #include "Level.h"
 #include "Consts.h"
 
+/// Default radius for a circular body
 const double DefaultRadius = 0.25f;
 
 /**
@@ -56,6 +57,10 @@ void CircleBody::XmlLoad(wxXmlNode* node)
 
 }
 
+/**
+ * Draw a circular body.
+ * @param graphics The graphics context to draw on
+ */
 void CircleBody::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     auto body = GetBody();

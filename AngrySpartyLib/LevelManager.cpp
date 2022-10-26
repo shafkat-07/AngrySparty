@@ -68,6 +68,10 @@ void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width
     graphics->Flush();
 }
 
+/**
+ * Handle updates for animation
+ * @param elapsed The time since the last update
+ */
 void LevelManager::Update(double elapsed)
 {
     mLevels[mDisplayedLevel]->Update(elapsed);

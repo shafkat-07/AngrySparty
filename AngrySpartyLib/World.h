@@ -31,6 +31,10 @@ public:
      */
     b2World* GetWorld() { return &mWorld; }
 
+    /**
+     * Get the Box2D ground object
+     * @return b2Body ground object
+     */
     b2Body* GetGround() { return mGround; }
 
 private:

@@ -88,6 +88,12 @@ public:
 //    void OnMouseUp(wxMouseEvent& event);
 
     void OnLeftDown(wxMouseEvent& event);
+
+    /**
+     * Get the current level object
+     * @return Get the current level object
+     */
+    std::shared_ptr<Level> GetCurrentLevel() { return mLevelManager->GetCurrentLevel(); }
 };
 
 #endif //ANGRYSPARTY_GAME_H

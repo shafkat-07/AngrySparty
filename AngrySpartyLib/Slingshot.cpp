@@ -130,6 +130,11 @@ void Slingshot::XmlLoad(wxXmlNode* node)
     Shooter::XmlLoad(node);
 }
 
+/**
+ * Handle updates in time of the slingshot
+ *
+ * @param elapsed Time elapsed since the class call
+ */
 void Slingshot::Update(double elapsed)
 {
     Shooter::Update(elapsed);

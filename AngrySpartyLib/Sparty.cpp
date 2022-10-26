@@ -52,6 +52,10 @@ void Sparty::XmlLoad(wxXmlNode* node)
     // dust... for now.
 }
 
+/**
+ * Destroy the current sparty's body and give it a
+ * new dynamic one
+ */
 void Sparty::ModifyBodyToDynamic()
 {
     SetStatic(false);
@@ -61,6 +65,12 @@ void Sparty::ModifyBodyToDynamic()
     SetBody(body);
 }
 
+/**
+ * Define the body for a Sparty
+ * @param shape The b2Shape of the sparty
+ * @param world The world in which this sparty resides
+ * @return A pointer to a b2Body
+ */
 b2Body* Sparty::DefineBody(b2Shape* shape, b2World* world)
 {
     if (IsStatic())

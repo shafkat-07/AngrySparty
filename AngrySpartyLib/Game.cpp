@@ -96,7 +96,7 @@ void Game::OnLeftDown(wxMouseEvent &event)
     auto y = (event.m_y / -mScale - mYOffset) / Consts::MtoCM;
     mMouseLocation = b2Vec2(x, y);
 
-    mGrabbedItem = mLevelManager->GetCurrentLevel()->HitTest(x, y);
+    mGrabbedItem = GetCurrentLevel()->HitTest(x, y);
 
     if (mGrabbedItem != nullptr)
     {

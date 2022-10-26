@@ -135,6 +135,11 @@ bool PhysicalObject::HitTest(double x, double y)
     return false;
 }
 
+/**
+ * Set a transfrom for this physical object's b2body
+ * @param location The location for the transform
+ * @param angle The angle of the transform
+ */
 void PhysicalObject::SetTransform(const b2Vec2& location, double angle)
 {
     mBody->SetTransform(location, (float)angle);

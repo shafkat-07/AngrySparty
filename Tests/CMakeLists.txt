@@ -1,6 +1,13 @@
 project(Tests)
 
-set(TEST_FILES gtest_main.cpp ItemTest.cpp LevelTest.cpp LevelManagerTest.cpp SlingshotTest.cpp GoalpostTest.cpp SpartyTest.cpp)
+set(TEST_FILES gtest_main.cpp
+        ItemTest.cpp
+        LevelTest.cpp
+        LevelManagerTest.cpp
+        SlingshotTest.cpp
+        GoalpostTest.cpp
+        SpartyTest.cpp
+        GameTest.cpp)
 
 # Get Google Tests
 include(FetchContent)

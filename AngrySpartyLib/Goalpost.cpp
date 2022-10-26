@@ -132,7 +132,11 @@ void Goalpost::XmlLoad(wxXmlNode* node)
     Shooter::XmlLoad(node);
 }
 
-
+/**
+ * Handle updates in time of the goalposts
+ *
+ * @param elapsed Time elapsed since the class call
+ */
 void Goalpost::Update(double elapsed)
 {
     Shooter::Update(elapsed);

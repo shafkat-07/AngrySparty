@@ -73,6 +73,7 @@ public:
 
     /**
      * Get the pointer to the sparty currently being shot.
+     * @return Pointer to the current sparty
      */
     std::shared_ptr<Sparty> GetSparty() {return mSparty;}
 
