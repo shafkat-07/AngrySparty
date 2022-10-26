@@ -30,6 +30,7 @@ LevelManager::LevelManager()
     Load(XML0);
     Load(XML1);
     Load(XML2);
+    Load(XML3);
     ChangeLevel(StartingLevel);
 }
 
@@ -52,8 +53,9 @@ void LevelManager::Load(const std::wstring& filename)
 void LevelManager::ChangeLevel(int desiredLevel)
 {
     // TODO Delete the currently displayed level's object and add the desired ones
+    GetCurrentLevel()->ResetLevel(); // Reset its objects and scores
     mDisplayedLevel = desiredLevel;
-    mLevels[mDisplayedLevel]->SetLevel();
+    GetCurrentLevel()->SetLevel();
 }
 
 /**
@@ -64,7 +66,7 @@ void LevelManager::ChangeLevel(int desiredLevel)
  */
 void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height)
 {
-    mLevels[mDisplayedLevel]->OnDraw(graphics);
+    GetCurrentLevel()->OnDraw(graphics);
     graphics->Flush();
 }
 
@@ -74,5 +76,5 @@ void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width
  */
 void LevelManager::Update(double elapsed)
 {
-    mLevels[mDisplayedLevel]->Update(elapsed);
+    GetCurrentLevel()->Update(elapsed);
 }

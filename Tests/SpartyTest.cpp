@@ -8,7 +8,7 @@
 #include <Sparty.h>
 #include <Level.h>
 
-TEST(SpartyTest, Constructor)
+TEST(SpartyTest, Construct)
 {
     Level level(L"levels/level0.xml");
     Sparty sparty(&level);

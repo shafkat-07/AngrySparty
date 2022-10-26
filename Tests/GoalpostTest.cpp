@@ -10,7 +10,7 @@
 #include <Goalpost.h>
 #include <Level.h>
 
-TEST(GoalpostTest, Constructor)
+TEST(GoalpostTest, Construct)
 {
     Level level(L"levels/level0.xml");
     Goalpost goalpost(&level);

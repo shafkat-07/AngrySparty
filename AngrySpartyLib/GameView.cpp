@@ -97,7 +97,7 @@ void GameView::OnLevel2(wxCommandEvent& event)
  */
 void GameView::OnLevel3(wxCommandEvent& event)
 {
-    // mGame.SetLevel(3); TODO Uncomment this after XML for level 3 is created logic for loading it is added
+    mGame.SetLevel(3);
 }
 
 void GameView::OnLeftDown(wxMouseEvent& event)

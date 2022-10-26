@@ -34,8 +34,6 @@ private:
     /// The physics object initialized with the size of the display
     std::shared_ptr<World> mPhysics = nullptr;
 
-
-
      /// The main vector of pointers to the items for each level
      std::vector<std::shared_ptr<Item>> mItems;
 
@@ -103,6 +101,8 @@ public:
     std::shared_ptr<Item> HitTest(double x, double y);
 
     void SetLevel();
+
+    void ResetLevel();
 
     void Accept(ItemVisitor* visitor);
 

@@ -255,6 +255,19 @@ void Level::SetLevel()
 }
 
 /**
+ * Resets a level to its default state
+ *
+ * Resets each item to be "alive", uninstalls physics
+ * for each item, and resets the score
+ */
+void Level::ResetLevel()
+{
+    mPhysics = nullptr; // TODO Delete each item from the physics world
+    // TODO Set each item to be "alive"
+    mScore = 0;
+}
+
+/**
  * Update the level
  * @param elapsed The time elapsed since the last update
  */

@@ -11,7 +11,7 @@
 #include <Slingshot.h>
 #include <Level.h>
 
-TEST(SlingshotTest, Constructor)
+TEST(SlingshotTest, Construct)
 {
     Level level(L"levels/level0.xml");
     Slingshot slingshot(&level);
