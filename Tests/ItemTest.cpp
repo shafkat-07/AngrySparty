@@ -29,6 +29,8 @@ TEST(ItemTest, Construct)
 {
     Level level(filename);
     ItemMock item(&level);
+
+    ASSERT_TRUE(item.GetLevel() == &level);
 }
 
 TEST(ItemTest, HitTest)
