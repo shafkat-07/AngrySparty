@@ -172,9 +172,6 @@ void Level::Clear()
 Level::Level(const std::wstring &filename)
 {
     Load(filename); // Load from XML first to have playing area dimensions
-
-    // The size of the playing area in meters
-    auto size = mSize;
 }
 
 /**
@@ -187,12 +184,6 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
     {
         item->Draw(graphics);
     }
-    // Uncomment and run for debug view
-    // TODO Implement menu option to activate debug view
-    DebugDraw debugDraw(graphics);
-    debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
-    mPhysics->GetWorld()->SetDebugDraw(&debugDraw);
-    mPhysics->GetWorld()->DebugDraw();
 }
 
 

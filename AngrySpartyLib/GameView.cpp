@@ -9,6 +9,7 @@
 #include "GameView.h"
 #include "ids.h"
 #include "Scoreboard.h"
+#include "DebugDraw.h"
 
 /// Frame duration in seconds
 const double FrameDuration = 1.0f/60.0f;
@@ -27,6 +28,8 @@ void GameView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel1,this, LEVEL_1);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnDebugView,this, IDM_DEBUG_VIEW);
+
     Bind(wxEVT_LEFT_DOWN, &GameView::OnLeftDown, this);
 
     mTimer.SetOwner(this);
@@ -61,6 +64,15 @@ void GameView::OnPaint(wxPaintEvent& event)
     graphics->SetInterpolationQuality(wxINTERPOLATION_BEST);
 
     mGame.OnDraw(graphics, size.GetWidth(), size.GetHeight());
+
+    if (mDebugView)
+    {
+        DebugDraw debugDraw(graphics);
+        debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
+        mGame.GetCurrentLevel()->GetWorld()->SetDebugDraw(&debugDraw);
+        mGame.GetCurrentLevel()->GetWorld()->DebugDraw();
+    }
+
     Refresh();
 }
 
@@ -100,6 +112,19 @@ void GameView::OnLevel3(wxCommandEvent& event)
     mGame.SetLevel(3);
 }
 
+/**
+ * Enables/disables debug view
+ * @param event Paint event object
+ */
+void GameView::OnDebugView(wxCommandEvent& event)
+{
+    mDebugView = !mDebugView;
+}
+
+/**
+ * Left mouse button down event.
+ * @param event Mouse event
+ */
 void GameView::OnLeftDown(wxMouseEvent& event)
 {
     mGame.OnLeftDown(event);

@@ -27,11 +27,15 @@ private:
     /// The last stopwatch time
     double mTime = 0;
 
+    /// Debug view enabled?
+    bool mDebugView = false;
+
     void OnPaint(wxPaintEvent& event);
     void OnLevel0(wxCommandEvent& event);
     void OnLevel1(wxCommandEvent& event);
     void OnLevel2(wxCommandEvent& event);
     void OnLevel3(wxCommandEvent& event);
+    void OnDebugView(wxCommandEvent& event);
 
 public:
     void Initialize(wxFrame* parent);
@@ -43,10 +47,6 @@ public:
      */
     void Stop() { mTimer.Stop(); }
 
-    /**
-     * Left mouse button down event.
-     * @param event Mouse event
-     */
     void OnLeftDown(wxMouseEvent& event);
 };
 
