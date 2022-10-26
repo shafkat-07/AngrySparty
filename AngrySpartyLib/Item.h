@@ -13,6 +13,7 @@
 
 class ItemVisitor;
 class Level;
+class Sparty;
 
 /**
  * Base class for all items in the physics system
@@ -60,11 +61,6 @@ public:
      */
     Level* GetLevel() { return mLevel; }
 
-    /**
-     * The picture for this item
-     * @return The wxImage for this item
-     */
-    std::shared_ptr<wxImage> GetPicture()  { return mItemImage; }
 
     /**
      * The bitmap for this item
@@ -94,4 +90,23 @@ public:
      * @param visitor The visitor to accept.
      */
     virtual void Accept(ItemVisitor *visitor) = 0;
+
+    // Shooter pass down methods.
+
+    /**
+     * Set the sparties to shoot inside the shooter.
+     *
+     * When the sparty is inside the shooter, it needs to be drawn by it.
+     * @param sparties The sparties of the current level. These can be shot out of a shooter object.
+     */
+    virtual void SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties) {}
+
+    /**
+     * Clear the Sparties that are in the shooter.
+     *
+     * If there are any sparties left in the shooter, they will be cleared out.
+     */
+    virtual void Clear() {}
+
+    virtual b2Body *GetBody(){ return nullptr; }
 };

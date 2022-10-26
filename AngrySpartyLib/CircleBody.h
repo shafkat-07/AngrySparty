@@ -32,6 +32,14 @@ public:
     void XmlLoad(wxXmlNode* node) override;
 
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
+
+    /**
+     * Get the radius of this circle body
+     * @return The radius of this circle body
+     */
+    double GetRadius() { return mRadius; }
+
+    bool HitTest(double x, double y) override;
 };
 
 #endif //ANGRYSPARTY_CIRCLEBODY_H

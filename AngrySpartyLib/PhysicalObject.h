@@ -27,16 +27,16 @@ private:
     double mDensity = 0; ///< Density of the object
     double mFriction = 0; ///< Friction of the object
     double mRestitution = 0; ///< Restitution of the object
-    bool mStatic = false; ///< Whether or not the object is static
+    bool mStatic; ///< True if the object is static
 
 public:
     PhysicalObject(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override = 0;
     void InstallPhysics(std::shared_ptr<World>) override;
-    void Update(double elapsed) override;
+    virtual void Update(double elapsed) override;
     wxXmlNode* XmlSave(wxXmlNode* node) override;
     void XmlLoad(wxXmlNode* node) override;
-    b2Body* DefineBody(b2Shape* shape, b2World* world);
+    virtual b2Body* DefineBody(b2Shape* shape, b2World* world);
     bool HitTest(double x, double y) override;
 
     /**
@@ -55,7 +55,13 @@ public:
      * Get the physical object's body
      * @return The physical object's body
      */
-    b2Body* GetBody() { return mBody; }
+    b2Body* GetBody() override { return mBody; }
+
+    /**
+     * Set the physical object's body
+     * @param body The body to update to.
+     */
+    void SetBody(b2Body* body) { mBody = body; }
 
     /**
      * Set the x position of this physical object
@@ -70,10 +76,22 @@ public:
     void SetYPosition(float y) { mPosition.y = y; }
 
     /**
-     * Get the position of the physical object.
-     * @return The postion of the object.
+     * Get the position of this physical object.
+     * @return The position of this physical object.
      */
     b2Vec2 GetPosition() { return mPosition; }
+
+    /**
+     * Get the static boolean.
+     */
+    bool IsStatic() { return mStatic; }
+    /**
+     * Set if the object is static.
+     * @param isStatic True for static, false for dynamic.
+     */
+    void SetStatic(bool isStatic) { mStatic = isStatic; }
+
+    void SetTransform(const b2Vec2& location, double angle);
 };
 
 #endif //ANGRYSPARTY_PHYSICALOBJECT_H

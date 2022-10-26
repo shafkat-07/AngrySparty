@@ -4,8 +4,10 @@
  */
 
 #include "pch.h"
+
 #include <b2_body.h>
 #include <b2_fixture.h>
+
 #include "PhysicalObject.h"
 #include "Level.h"
 #include "Consts.h"
@@ -31,7 +33,10 @@ void PhysicalObject::Draw(std::shared_ptr<wxGraphicsContext> graphics)
  * Update the object
  * @param elapsed time since last update
  */
-void PhysicalObject::Update(double elapsed) {}
+void PhysicalObject::Update(double elapsed)
+{
+
+}
 
 /**
  * Load the attributes for a physical object.
@@ -128,4 +133,9 @@ bool PhysicalObject::HitTest(double x, double y)
         }
     }
     return false;
+}
+
+void PhysicalObject::SetTransform(const b2Vec2& location, double angle)
+{
+    mBody->SetTransform(location, (float)angle);
 }

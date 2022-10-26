@@ -31,6 +31,8 @@ public:
      */
     b2World* GetWorld() { return &mWorld; }
 
+    b2Body* GetGround() { return mGround; }
+
 private:
     /// The box2d world
     b2World mWorld;

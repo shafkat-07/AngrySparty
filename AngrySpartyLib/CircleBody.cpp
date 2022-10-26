@@ -46,10 +46,9 @@ void CircleBody::XmlLoad(wxXmlNode* node)
 {
     PhysicalObject::XmlLoad(node);
 
-    double spacing;
     // CircleBody-specific attributes
     auto position = GetPosition();
-    spacing = std::stof(node->GetParent()->GetAttribute(L"spacing", "0.0").ToStdWstring()) * GetLevel()->GetSpartyCount();
+    double spacing = std::stof(node->GetParent()->GetAttribute(L"spacing", "0.0").ToStdWstring()) * GetLevel()->GetSpartyCount();
     position.x = std::stof(node->GetParent()->GetAttribute(L"x", "0.0").ToStdWstring()) + spacing;
     position.y = std::stof(node->GetParent()->GetAttribute(L"y", "0.0").ToStdWstring());
     SetXPosition(position.x);
@@ -79,4 +78,23 @@ void CircleBody::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             -wid/2,
             wid, wid);
     graphics->PopState();
+}
+
+/**
+ * Test items to see if they have been clicked on.
+ * @param x X location in meters to test
+ * @param y Y location in meters to test
+ * @return True if this item was clicked on
+ */
+bool CircleBody::HitTest(double x, double y)
+{
+    auto fixture = GetBody()->GetFixtureList();
+    for( ; fixture != nullptr; fixture = fixture->GetNext())
+    {
+        if(fixture->TestPoint(b2Vec2(x, y)))
+        {
+            return true;
+        }
+    }
+    return false;
 }

@@ -32,10 +32,32 @@ private:
     /// The total score for the game
     int mTotalScore = 0;
 
+    /// Scale we are drawing at
+    double mScale = 1;
+
+    /// X offset when we draw
+    double mXOffset = 0;
+
+    /// Y offset when we draw
+    double mYOffset = 0;
+
+    /// Mouse location
+    b2Vec2 mMouseLocation;
+
+    /// A ground reference object
+    b2Body* mGround;/// A ground reference object
+
+    /// Size of the playing area in meters
+    std::shared_ptr<Item> mGrabbedItem;
+
+    /// Mouse joint for moving things
+    b2MouseJoint* mMouseJoint = nullptr;
+
 public:
     Game();
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height);
     void SetLevel(int Level);
+    void Update(double elapsed);
 
     /**
      * Get the total score for the game
@@ -61,7 +83,11 @@ public:
      */
     b2Vec2 GetCurrentLevelSize() const { return mLevelManager->GetCurrentLevelSize(); }
 
+//    void OnMouseDown(wxMouseEvent& event);
+//
+//    void OnMouseUp(wxMouseEvent& event);
 
+    void OnLeftDown(wxMouseEvent& event);
 };
 
 #endif //ANGRYSPARTY_GAME_H

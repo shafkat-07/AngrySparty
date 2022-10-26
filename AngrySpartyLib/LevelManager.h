@@ -24,15 +24,6 @@ private:
     /// The index of the currently displayed level. Indexing from 0
     int mDisplayedLevel = 1;
 
-    /// Scale we are drawing at
-    double mScale = 1;
-
-    /// X offset when we draw
-    double mXOffset = 0;
-
-    /// Y offset when we draw
-    double mYOffset = 0;
-
 public:
     LevelManager();
     void Load(const std::wstring& filename);
@@ -51,6 +42,8 @@ public:
      */
     int GetLevelCount() const {return mLevelCount;}
 
+    void Update(double elapsed);
+
     /**
      * Get the current level's score
      * @return Curren level's score
@@ -62,6 +55,12 @@ public:
      * @return The current level's size
      */
     b2Vec2 GetCurrentLevelSize() const { return mLevels[mDisplayedLevel]->GetSize(); }
+
+    /**
+     * Get current level
+     * @return current level being displayed
+     */
+    std::shared_ptr<Level> GetCurrentLevel() const { return mLevels[mDisplayedLevel]; }
 };
 
 #endif //ANGRYSPARTY_LEVELMANAGER_H
