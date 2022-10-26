@@ -5,13 +5,13 @@
 
 #include "pch.h"
 #include <wx/dcbuffer.h>
+#include "Consts.h"
 #include "GameView.h"
 #include "ids.h"
 #include "Scoreboard.h"
 
-/// Frame duration in milliseconds
-const int FrameDuration = 30;
-
+/// Frame duration in seconds
+const double FrameDuration = 1.0f/60.0f;
 /**
  * Initialize the game view class.
  * @param parent The parent window for this class
@@ -27,10 +27,11 @@ void GameView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel1,this, LEVEL_1);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
-    Bind(wxEVT_TIMER, &GameView::OnTimer, this);
+    Bind(wxEVT_LEFT_DOWN, &GameView::OnLeftDown, this);
 
     mTimer.SetOwner(this);
     mTimer.Start(FrameDuration);
+    mStopWatch.Start();
 }
 
 /**
@@ -39,6 +40,13 @@ void GameView::Initialize(wxFrame* parent)
  */
 void GameView::OnPaint(wxPaintEvent& event)
 {
+    auto newTime = mStopWatch.Time() * 0.001;
+    while (mTime < newTime)
+    {
+        mTime += FrameDuration;
+        mGame.Update(FrameDuration);
+    }
+
     wxAutoBufferedPaintDC dc(this);
 
     wxBrush background(*wxWHITE);
@@ -53,6 +61,7 @@ void GameView::OnPaint(wxPaintEvent& event)
     graphics->SetInterpolationQuality(wxINTERPOLATION_BEST);
 
     mGame.OnDraw(graphics, size.GetWidth(), size.GetHeight());
+    Refresh();
 }
 
 /**
@@ -91,11 +100,7 @@ void GameView::OnLevel3(wxCommandEvent& event)
     // mGame.SetLevel(3); TODO Uncomment this after XML for level 3 is created logic for loading it is added
 }
 
-/**
- * Timer event, updates the game.
- * @param event Timer event object
- */
-void GameView::OnTimer(wxTimerEvent &event)
+void GameView::OnLeftDown(wxMouseEvent& event)
 {
-    Refresh();
+    mGame.OnLeftDown(event);
 }

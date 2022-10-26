@@ -17,11 +17,17 @@ class GameView : public wxWindow {
 private:
     /// An object that describes our game
     Game mGame;
+
     /// The timer that allows for animation
     wxTimer mTimer;
 
+    /// The stopwatch used to measure elapsed time.
+    wxStopWatch mStopWatch;
+
+    /// The last stopwatch time
+    double mTime = 0;
+
     void OnPaint(wxPaintEvent& event);
-    void OnTimer(wxTimerEvent& event);
     void OnLevel0(wxCommandEvent& event);
     void OnLevel1(wxCommandEvent& event);
     void OnLevel2(wxCommandEvent& event);
@@ -29,6 +35,19 @@ private:
 
 public:
     void Initialize(wxFrame* parent);
+
+    /**
+     * Stop the game.
+     *
+     * Stops the timer which will freeze the game.
+     */
+    void Stop() { mTimer.Stop(); }
+
+    /**
+     * Left mouse button down event.
+     * @param event Mouse event
+     */
+    void OnLeftDown(wxMouseEvent& event);
 };
 
 #endif //ANGRYSPARTY_GAMEVIEW_H

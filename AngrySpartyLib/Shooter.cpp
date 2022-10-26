@@ -6,10 +6,15 @@
  */
 
 #include "pch.h"
+
 #include <b2_world.h>
 #include <b2_fixture.h>
+
+#include <algorithm>
+
 #include "Shooter.h"
 #include "Consts.h"
+#include "Sparty.h"
 
 /**
  * Constructor for a shooter object
@@ -49,7 +54,20 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             0,
             mWidth * Consts::MtoCM, mHeight * Consts::MtoCM);
 
+
+
     graphics->PopState();
+
+    if (mSparty != nullptr)
+    {
+        mSparty->Draw(graphics);
+    }
+
+    for (auto sparty : mSparties)
+    {
+        sparty->Draw(graphics);
+    }
+
 }
 
 /**
@@ -67,4 +85,35 @@ void Shooter::XmlLoad(wxXmlNode* node)
     auto name = "images/" + node->GetName() + "-front.png";
     mFrontImage = std::make_shared<wxImage>(name);
     mFrontBitmap = std::make_shared<wxBitmap>(*mFrontImage);
+}
+/**
+ * Set the sparties in the ready queue.
+ * @param sparties Sparties coming in to be shot for this level.
+ */
+void Shooter::SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties)
+{
+    mSparties = sparties;
+}
+
+/**
+ * Called when resetting the level.
+ * Will remove references to any sparties or currently loaded sparties.
+ */
+void Shooter::Clear()
+{
+    mSparty = nullptr;
+    mSparties.clear();
+}
+
+/**
+ * Update the Shooter.
+ * @param elapsed time elapsed since last clock tick.
+ */
+void Shooter::Update(double elapsed)
+{
+    if (mSparty == nullptr && !mSparties.empty())
+    {
+        mSparty = mSparties[0];
+        mSparties.erase(mSparties.begin(), mSparties.begin() + 1);
+    }
 }

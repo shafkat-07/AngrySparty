@@ -6,8 +6,10 @@
  */
 
 #include "pch.h"
+
 #include <b2_polygon_shape.h>
 #include <b2_mouse_joint.h>
+
 #include "Level.h"
 #include "Background.h"
 #include "Block.h"
@@ -51,7 +53,7 @@ void Level::Load(const std::wstring &filename)
 
     //
     // Traverse the children of the root
-    // node of the XML document in memory!!!!
+    // node of the XML document in memory
     //
 
     // Traverse the items tag first
@@ -69,6 +71,7 @@ void Level::Load(const std::wstring &filename)
     {
         XmlItem(grandChild);
     }
+    TransferSpartiesToShooter();
 }
 
 /**
@@ -101,68 +104,77 @@ void Level::XmlItem(wxXmlNode *node)
     else if (type == "slingshot")
     {
         item = std::make_shared<Slingshot>(this);
+        mShooterIndex = mItems.size();
     }
     else if (type == "goalposts")
     {
         item = std::make_shared<Goalpost>(this);
+        mShooterIndex = mItems.size();
     }
     else if (type == "gruff-sparty" || type == "helmet-sparty")
     {
-        item = std::make_shared<Sparty>(this);
+        auto item = std::make_shared<Sparty>(this);
+        item->XmlLoad(node);
         mSpartyCount++;
+        mSparties.push_back(item);
+        //mItems.push_back(item);
+        return;
     }
     else
     {
-        wxMessageBox(L"Unknown item type: " + type);
+        //wxMessageBox(L"Unknown item type: " + type);
         return;
     }
 
     if (item != nullptr)
     {
         item->XmlLoad(node);
-//        item->InstallPhysics();
-        mItems.push_back(item);
+        // The sand image needs to be behind the shooter for the sparties to load properly.
+        if (node->GetAttribute("image", "") == "sand.png")
+        {
+            mItems.insert(mItems.begin()+1, item);
+            mShooterIndex++;
+        }
+        else
+        {
+            mItems.push_back(item);
+        }
     }
 }
 
+/**
+ * Send the Sparties down to the shooter for handling of drawing and physics
+ */
+void Level::TransferSpartiesToShooter()
+{
+    mItems[mShooterIndex]->SetSparties(mSparties);
+}
 
 /**
  * Clears the Items from the level
  */
 void Level::Clear()
 {
+    // Sync the clear with the Shooter.
+    if (mShooterIndex >= 0)
+    {
+        mItems[mShooterIndex]->Clear();
+    }
+    // Clean up items in this level.
     mItems.clear();
+    mSparties.clear();
 }
 
 /**
  * Constructor for the level, requires an XML file path
  * @param filename Path to the XML file
  */
-Level::Level(const std::wstring &filename) : mWorld(b2Vec2(0.0f, Gravity))
+Level::Level(const std::wstring &filename)
 {
     Load(filename); // Load from XML first to have playing area dimensions
 
     // The size of the playing area in meters
     auto size = mSize;
-
-    // Create a ground body at 0,0 to use as a reference
-    b2BodyDef bodyDefinition;
-    bodyDefinition.position.Set(0, -0.1);
-    bodyDefinition.type = b2_staticBody;
-    mGround = mWorld.CreateBody(&bodyDefinition);
-
-    // Bottom
-    b2PolygonShape box;
-    box.SetAsBox(size.x*2, 0.1);
-    mGround->CreateFixture(&box, 0.0f);
-
-    // Right side
-    box.SetAsBox(0.1, size.y, b2Vec2(size.x, size.y), 0);
-    mGround->CreateFixture(&box, 0.0f);
-
-    // Left side
-    box.SetAsBox(0.1, size.y, b2Vec2(-size.x, size.y), 0);
-    mGround->CreateFixture(&box, 0.0f);
 }
 
 /**
@@ -177,10 +189,10 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
     }
     // Uncomment and run for debug view
     // TODO Implement menu option to activate debug view
-//    DebugDraw debugDraw(graphics);
-//    debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
-//    mWorld.SetDebugDraw(&debugDraw);
-//    mWorld.DebugDraw();
+    DebugDraw debugDraw(graphics);
+    debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
+    mPhysics->GetWorld()->SetDebugDraw(&debugDraw);
+    mPhysics->GetWorld()->DebugDraw();
 }
 
 
@@ -190,15 +202,22 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
  * @param y Y coordinate of the mouse
  * @return True if the mouse down event hit anything.
  */
-bool Level::HitTest(double x, double y)
+std::shared_ptr<Item> Level::HitTest(double x, double y)
 {
     for(auto item : mItems){
         if(item->HitTest(x,y))
         {
-            return true;
+            return item;
         }
     }
-    return false;
+
+    for(auto item : mSparties){
+        if(item->HitTest(x,y))
+        {
+            return item;
+        }
+    }
+    return nullptr;
 }
 
 /**
@@ -225,7 +244,25 @@ void Level::SetLevel()
     {
         item->InstallPhysics(mPhysics);
     }
+    // Do the same for the sparties
+    for (auto sparty : mSparties)
+    {
+        sparty->InstallPhysics(mPhysics);
+    }
 
 
     // Anything else needed to start the level
+}
+
+/**
+ * Update the level
+ * @param elapsed The time elapsed since the last update
+ */
+void Level::Update(double elapsed)
+{
+    for (auto item : mItems)
+    {
+        item->Update(elapsed);
+    }
+    mPhysics->GetWorld()->Step(elapsed, VelocityIterations, PositionIterations);
 }

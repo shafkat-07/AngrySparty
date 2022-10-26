@@ -34,6 +34,10 @@ public:
      * This will install the physics for the sparty.
      */
     void Accept(ItemVisitor* visitor) override { visitor->VisitSparty(this); }
+
+    void ModifyBodyToDynamic();
+
+    b2Body* DefineBody(b2Shape* shape, b2World* world) override;
 };
 
 #endif //ANGRYSPARTY_SPARTY_H

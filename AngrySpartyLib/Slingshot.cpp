@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "Consts.h"
 #include "Slingshot.h"
+#include "Sparty.h"
 
 /// Size of the slingshot image in meters
 const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
@@ -54,24 +55,60 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     wxPen pen(SlingshotBandColor, SlingshotBandWidth);
     graphics->PushState();
 
-    graphics->Translate(GetX() * Consts::MtoCM,
-            GetY() * Consts::MtoCM);
+    graphics->Translate(GetX()*Consts::MtoCM,
+            GetY()*Consts::MtoCM);
 
     // Make this is left side of the rectangle
-    double x = -GetWidth()/2 * Consts::MtoCM;
+    double x = -GetWidth()/2*Consts::MtoCM;
 
     // And the top
-    double y = GetHeight() * Consts::MtoCM;
-
-    // Draw the band of the slingshot.
-    graphics->Scale(1, -1);
-    graphics->SetPen(pen);
-    graphics->StrokeLine(
-            WoodSlingshotBandAttachBack.x * Consts::MtoCM,
-            -WoodSlingshotBandAttachBack.y * Consts::MtoCM,
-            WoodSlingshotBandAttachFront.x * Consts::MtoCM,
-            -WoodSlingshotBandAttachFront.y * Consts::MtoCM
-    );
+    double y = GetHeight()*Consts::MtoCM;
+    auto sparty = GetSparty();
+    if (sparty == nullptr) {
+        // Draw the band of the slingshot.
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+        graphics->StrokeLine(
+                WoodSlingshotBandAttachBack.x*Consts::MtoCM,
+                -WoodSlingshotBandAttachBack.y*Consts::MtoCM,
+                WoodSlingshotBandAttachFront.x*Consts::MtoCM,
+                -WoodSlingshotBandAttachFront.y*Consts::MtoCM
+        );
+    }
+    else
+    {
+        auto position = sparty->GetPosition();
+        // Compensate for graphics translation.
+        position.x -= GetX();
+        position.y -= GetY();
+        // Draw the back of the band
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+        graphics->StrokeLine(
+                WoodSlingshotBandAttachBack.x*Consts::MtoCM,
+                -WoodSlingshotBandAttachBack.y*Consts::MtoCM,
+                position.x * Consts::MtoCM,
+                -position.y * Consts::MtoCM
+        );
+        // Draw the Sparty
+        graphics->PushState();
+        sparty->Draw(graphics);
+        graphics->PopState();
+        // Draw the cross section of the band.
+        graphics->StrokeLine(
+                position.x * Consts::MtoCM,
+                -position.y * Consts::MtoCM,
+                position.x * Consts::MtoCM + ((sparty->GetRadius() * Consts::MtoCM) / 2),
+                -position.y * Consts::MtoCM
+                );
+        // Draw the front of the band
+        graphics->StrokeLine(
+                position.x * Consts::MtoCM + ((sparty->GetRadius() * Consts::MtoCM) / 2),
+                -position.y * Consts::MtoCM,
+                WoodSlingshotBandAttachFront.x * Consts::MtoCM,
+                -WoodSlingshotBandAttachFront.y * Consts::MtoCM
+        );
+    }
 
     // Draw the front of the slingshot.
     auto bitmap = GetFrontBitmap();
@@ -91,4 +128,16 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 void Slingshot::XmlLoad(wxXmlNode* node)
 {
     Shooter::XmlLoad(node);
+}
+
+void Slingshot::Update(double elapsed)
+{
+    Shooter::Update(elapsed);
+    std::shared_ptr<Sparty> sparty = GetSparty();
+    if (sparty != nullptr)
+    {
+        sparty->SetXPosition(GetX());
+        sparty->SetYPosition(WoodSlingshotBandAttachBack.y + (WoodSlingshotBandAttachFront.y - WoodSlingshotBandAttachBack.y) / 2 + sparty->GetRadius());
+        sparty->ModifyBodyToDynamic();
+    }
 }

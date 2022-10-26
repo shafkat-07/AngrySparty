@@ -13,6 +13,8 @@
 #include "Item.h"
 #include "ItemVisitor.h"
 
+class Sparty;
+
 /**
  * The shooter class of the game.
  *
@@ -26,6 +28,8 @@ private:
     double mHeight = 0; ///< Height of the shooter
     std::shared_ptr<wxImage> mFrontImage; ///< The front image for the shooter
     std::shared_ptr<wxBitmap> mFrontBitmap; ///< The front bitmap for the shooter
+    std::vector<std::shared_ptr<Sparty>> mSparties; ///< The sparties in the ready queue for the shooter.
+    std::shared_ptr<Sparty> mSparty; ///< The sparty currently being shot by the shooter.
 
 public:
     Shooter(Level* level);
@@ -68,6 +72,11 @@ public:
     double GetY() const {return mY;}
 
     /**
+     * Get the pointer to the sparty currently being shot.
+     */
+    std::shared_ptr<Sparty> GetSparty() {return mSparty;}
+
+    /**
      * The front bitmap for this shooter
      * @return The front wxBitmap for this shooter
      */
@@ -80,6 +89,12 @@ public:
      * Does nothing.
      */
     virtual void Accept(ItemVisitor* visitor) { }
+
+    void SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties) override;
+
+    void Clear() override;
+
+    void Update(double elapsed) override;
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H
