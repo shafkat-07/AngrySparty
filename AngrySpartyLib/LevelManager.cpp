@@ -77,4 +77,10 @@ void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width
 void LevelManager::Update(double elapsed)
 {
     GetCurrentLevel()->Update(elapsed);
+    FoeVisitor a;
+    mLevels[mDisplayedLevel]->Accept(&a);
+    if(a.GetNumFoes() == 0){
+        ChangeLevel(mDisplayedLevel+1);
+    }
+
 }

@@ -9,6 +9,7 @@
 #define ANGRYSPARTY_LEVELMANAGER_H
 
 #include "Level.h"
+#include "FoeVisitor.h"
 
 /**
  * A manager for the levels in the game
