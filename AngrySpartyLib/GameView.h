@@ -48,6 +48,12 @@ public:
      * @param event Mouse event
      */
     void OnLeftDown(wxMouseEvent& event);
+
+    void OnMouseMove(wxMouseEvent& event);
+
+    void OnLeftUp(wxMouseEvent& event);
+
+    void OnTimer(wxTimerEvent& event);
 };
 
 #endif //ANGRYSPARTY_GAMEVIEW_H

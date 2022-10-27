@@ -83,10 +83,14 @@ public:
      */
     b2Vec2 GetCurrentLevelSize() const { return mLevelManager->GetCurrentLevelSize(); }
 
-//    void OnMouseDown(wxMouseEvent& event);
+    void OnMouseMove(wxMouseEvent& event);
 //
 //    void OnMouseUp(wxMouseEvent& event);
 
+    /**
+     * Left mouse button down event
+     * @param event Mouse event
+     */
     void OnLeftDown(wxMouseEvent& event);
 
     /**

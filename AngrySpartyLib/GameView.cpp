@@ -28,6 +28,8 @@ void GameView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
     Bind(wxEVT_LEFT_DOWN, &GameView::OnLeftDown, this);
+    Bind(wxEVT_MOTION, &GameView::OnMouseMove, this);
+    Bind(wxEVT_LEFT_UP, &GameView::OnLeftUp, this);
 
     mTimer.SetOwner(this);
     mTimer.Start(FrameDuration);
@@ -103,4 +105,20 @@ void GameView::OnLevel3(wxCommandEvent& event)
 void GameView::OnLeftDown(wxMouseEvent& event)
 {
     mGame.OnLeftDown(event);
+}
+
+void GameView::OnLeftUp(wxMouseEvent& event)
+{
+    OnMouseMove(event);
+}
+
+void GameView::OnMouseMove(wxMouseEvent& event)
+{
+    mGame.OnMouseMove(event);
+}
+
+void GameView::OnTimer(wxTimerEvent& event)
+{
+    mGame.Update(FrameDuration);
+    Refresh();
 }
