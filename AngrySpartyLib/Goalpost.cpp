@@ -100,7 +100,7 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
         graphics->StrokeLine(
                 position.x * Consts::MtoCM,
                 -position.y * Consts::MtoCM,
-                position.x * Consts::MtoCM + ((sparty->GetRadius() * Consts::MtoCM) / 2),
+                position.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
                 -position.y * Consts::MtoCM
         );
         // Draw the front of the band

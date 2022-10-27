@@ -98,7 +98,7 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
         graphics->StrokeLine(
                 position.x * Consts::MtoCM,
                 -position.y * Consts::MtoCM,
-                position.x * Consts::MtoCM + ((sparty->GetRadius() * Consts::MtoCM) / 2),
+                position.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
                 -position.y * Consts::MtoCM
                 );
         // Draw the front of the band
@@ -142,7 +142,10 @@ void Slingshot::Update(double elapsed)
     if (sparty != nullptr)
     {
         sparty->SetXPosition(GetX());
-        sparty->SetYPosition(WoodSlingshotBandAttachBack.y + (WoodSlingshotBandAttachFront.y - WoodSlingshotBandAttachBack.y) / 2 + sparty->GetRadius());
+        sparty->SetYPosition(
+                WoodSlingshotBandAttachBack.y +
+                (WoodSlingshotBandAttachFront.y - WoodSlingshotBandAttachBack.y) / 2 +
+                sparty->GetRadius());
         sparty->ModifyBodyToDynamic();
     }
 }
