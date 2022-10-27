@@ -27,7 +27,7 @@ private:
     double mDensity = 0; ///< Density of the object
     double mFriction = 0; ///< Friction of the object
     double mRestitution = 0; ///< Restitution of the object
-    bool mStatic; ///< True if the object is static
+    bool mStatic = false; ///< True if the object is static
 
 public:
     PhysicalObject(Level* level);

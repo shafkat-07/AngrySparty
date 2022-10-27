@@ -122,3 +122,36 @@ void Game::OnLeftDown(wxMouseEvent &event)
         }
     }
 }
+
+void Game::OnMouseMove(wxMouseEvent &event)
+{
+    auto x = (event.m_x / mScale - mXOffset) / Consts::MtoCM;
+    auto y = (event.m_y / -mScale - mYOffset) / Consts::MtoCM;
+    mMouseLocation = b2Vec2(x, y);
+
+    // See if an item is currently being moved by the mouse
+    if (mGrabbedItem != nullptr)
+    {
+        // If an item is being moved, we only continue to
+        // move it while the left button is down.
+        if(event.LeftIsDown())
+        {
+            if(mMouseJoint != nullptr)
+            {
+                mMouseJoint->SetTarget(b2Vec2(x, y));
+            }
+        }
+        else
+        {
+            // When the left button is released, we release the
+            // item.
+            if(mMouseJoint != nullptr)
+            {
+                GetCurrentLevel()->GetWorld()->DestroyJoint(mMouseJoint);
+                mMouseJoint = nullptr;
+            }
+        }
+
+    }
+
+}
