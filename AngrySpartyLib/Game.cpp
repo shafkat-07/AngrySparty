@@ -155,3 +155,23 @@ void Game::OnMouseMove(wxMouseEvent &event)
     }
 
 }
+
+/**
+ * Left mouse button down event
+ * @param event Mouse event
+ */
+void Game::OnLeftUp(wxMouseEvent &event)
+{
+    auto x = (event.m_x / mScale - mXOffset) / Consts::MtoCM;
+    auto y = (event.m_y / -mScale - mYOffset) / Consts::MtoCM;
+    mMouseLocation = b2Vec2(x, y);
+
+    // When the left button is released, we release the
+    // item.
+    if(mMouseJoint != nullptr)
+    {
+        GetCurrentLevel()->GetWorld()->DestroyJoint(mMouseJoint);
+        GetCurrentLevel()->LaunchSparty();
+        mMouseJoint = nullptr;
+    }
+}

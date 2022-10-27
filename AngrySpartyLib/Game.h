@@ -87,11 +87,9 @@ public:
 //
 //    void OnMouseUp(wxMouseEvent& event);
 
-    /**
-     * Left mouse button down event
-     * @param event Mouse event
-     */
     void OnLeftDown(wxMouseEvent& event);
+
+    void OnLeftUp(wxMouseEvent& event);
 
     /**
      * Get the current level object

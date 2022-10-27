@@ -109,6 +109,8 @@ public:
     void Update(double elapsed);
 
     void TransferSpartiesToShooter();
+
+    void LaunchSparty();
 };
 
 #endif //ANGRYSPARTY_LEVEL_H

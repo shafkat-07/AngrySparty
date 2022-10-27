@@ -5,6 +5,8 @@
 
 #include "pch.h"
 
+#include <cmath>
+
 #include <b2_body.h>
 #include <b2_fixture.h>
 
@@ -143,4 +145,28 @@ bool PhysicalObject::HitTest(double x, double y)
 void PhysicalObject::SetTransform(const b2Vec2& location, double angle)
 {
     mBody->SetTransform(location, (float)angle);
+}
+
+/**
+ * Find the distance between this body and another.
+ * @param distantPos The position of the distant object in a vector.
+ * @return The distance in meters of two bodies.
+ */
+double PhysicalObject::DistanceBetweenBodies(b2Vec2 distantPos)
+{
+    auto pos = mBody->GetPosition();
+    auto distance = std::hypot(distantPos.x - pos.x, distantPos.y - pos.y);
+    return distance;
+}
+
+/**
+ * Find the angle between two bodies.
+ * @param distantPos The position of the distant body.
+ * @return The angle between the two bodies.
+ */
+double PhysicalObject::AngleBetweenBodies(b2Vec2 distantPos)
+{
+    auto pos = mBody->GetPosition();
+    auto angle = std::atan2(distantPos.y - pos.y, distantPos.x - pos.x);
+    return angle;
 }

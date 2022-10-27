@@ -80,12 +80,16 @@ b2Body* Sparty::DefineBody(b2Shape* shape, b2World* world)
     {
         // Create the body definition
         b2BodyDef bodyDefinition;
-        bodyDefinition.position = GetPosition();
+        bodyDefinition.position = GetBodyPosition();
         bodyDefinition.angle = GetAngle();
         bodyDefinition.type = b2_dynamicBody;
         bodyDefinition.angularDamping = AngularDamping;
         bodyDefinition.linearDamping = LinearDamping;
         auto body = world->CreateBody(&bodyDefinition);
+
+        // Attributes for prior to launch.
+        body->SetFixedRotation(true);
+        body->SetGravityScale(0.0f);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = shape;

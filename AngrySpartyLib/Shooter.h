@@ -26,6 +26,8 @@ private:
     double mY = 0; ///< Y location of the shooter
     double mWidth = 0; ///< Width of the shooter
     double mHeight = 0; ///< Height of the shooter
+    bool mLoaded = false; ///< If the shooter is currently loaded.
+    bool mLaunched = false; ///< If the shooter has launched its sparty.
     std::shared_ptr<wxImage> mFrontImage; ///< The front image for the shooter
     std::shared_ptr<wxBitmap> mFrontBitmap; ///< The front bitmap for the shooter
     std::vector<std::shared_ptr<Sparty>> mSparties; ///< The sparties in the ready queue for the shooter.
@@ -79,6 +81,12 @@ public:
      */
     double GetY() const {return mY;}
 
+    bool IsLoaded() { return mLoaded; }
+
+    bool IsLaunched() { return mLaunched; }
+
+    void SetLoaded(bool load) { mLoaded = load; }
+
     /**
      * Get the pointer to the sparty currently being shot.
      * @return Pointer to the current sparty
@@ -104,6 +112,8 @@ public:
     void Clear() override;
 
     void Update(double elapsed) override;
+
+    void LaunchSparty() override;
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

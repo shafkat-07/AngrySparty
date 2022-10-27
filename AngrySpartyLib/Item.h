@@ -113,4 +113,6 @@ public:
      * @return This item's body (nullptr if no body)
      */
     virtual b2Body* GetBody() { return nullptr; }
+
+    virtual void LaunchSparty() {};
 };

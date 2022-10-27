@@ -81,11 +81,11 @@ void Goalpost::Update(double elapsed)
     std::shared_ptr<Sparty> sparty = GetSparty();
     if (sparty != nullptr)
     {
-        sparty->SetXPosition(GetX());
-        sparty->SetYPosition(
-                GoalpostsBandAttachBack.y +
-                (GoalpostsBandAttachFront.y - GoalpostsBandAttachBack.y) / 2 +
-                sparty->GetRadius());
-        sparty->ModifyBodyToDynamic();
+        // Find the vector needed to move to center the sparty in the slingshot.
+        auto newPosition = b2Vec2(GetX(),
+                GoalpostsBandAttachBack.y - (GoalpostsBandAttachFront.y - GoalpostsBandAttachBack.y) / 2 +
+                sparty->GetRadius()
+                );
+        sparty->SetTransform(newPosition, 0.0f);
     }
 }

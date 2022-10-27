@@ -38,6 +38,7 @@ public:
     void ModifyBodyToDynamic();
 
     b2Body* DefineBody(b2Shape* shape, b2World* world) override;
+
 };
 
 #endif //ANGRYSPARTY_SPARTY_H

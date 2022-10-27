@@ -134,7 +134,7 @@ void GameView::OnLeftDown(wxMouseEvent& event)
 
 void GameView::OnLeftUp(wxMouseEvent& event)
 {
-    OnMouseMove(event);
+    mGame.OnLeftUp(event);
 }
 
 void GameView::OnMouseMove(wxMouseEvent& event)

@@ -104,9 +104,30 @@ void Shooter::DrawSpecificShooter(
                 -AttachShooterFront.y * Consts::MtoCM
         );
     }
+    else if (mLaunched)
+    {
+        // Draw the band of the slingshot.
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+        graphics->StrokeLine(
+                AttachShooterBack.x * Consts::MtoCM,
+                -AttachShooterBack.y * Consts::MtoCM,
+                AttachShooterFront.x * Consts::MtoCM,
+                -AttachShooterFront.y * Consts::MtoCM
+        );
+        // Draw the sparty
+        graphics->PopState();
+        mSparty->Draw(graphics);
+        graphics->PushState();
+        // Return the graphics context to the state it was in.
+        graphics->Translate(mX*Consts::MtoCM,
+                mY*Consts::MtoCM);
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+    }
     else
     {
-        auto spartyPosition = mSparty->GetPosition();
+        auto spartyPosition = mSparty->GetBodyPosition();
         // Compensate for graphics translation.
         spartyPosition.x -= GetX();
         spartyPosition.y -= GetY();
@@ -203,5 +224,11 @@ void Shooter::Update(double elapsed)
     {
         mSparty = mSparties[0];
         mSparties.erase(mSparties.begin(), mSparties.begin() + 1);
+        mSparty->ModifyBodyToDynamic();
     }
+}
+
+void Shooter::LaunchSparty()
+{
+    mLaunched = true;
 }

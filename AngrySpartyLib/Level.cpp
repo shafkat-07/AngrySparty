@@ -151,6 +151,14 @@ void Level::TransferSpartiesToShooter()
 }
 
 /**
+ * Launch the sparty that was loaded.
+ */
+void Level::LaunchSparty()
+{
+    mItems[mShooterIndex]->LaunchSparty();
+}
+
+/**
  * Clears the Items from the level
  */
 void Level::Clear()
