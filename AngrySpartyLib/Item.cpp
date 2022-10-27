@@ -9,6 +9,8 @@
 #include "Item.h"
 #include "Level.h"
 
+using namespace std;
+
 /**
  * Constructor for an item
  * @param level The level this item is contained in
@@ -42,7 +44,7 @@ Item::~Item()
  * Draw the item.
  * @param graphics The drawing context to draw on.
  */
-void Item::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Item::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
 }
 
@@ -62,23 +64,14 @@ void Item::XmlLoad(wxXmlNode* node)
             node->GetAttribute(L"image", L"");
     if (filename != "images/")
     {
-        mItemImage = std::make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
+        mItemImage = make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
     }
     else
     {
         filename = "images/" +
                 node->GetName() + ".png";
-        mItemImage = std::make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
+        mItemImage = make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
     }
-    mItemBitmap = std::make_shared<wxBitmap>(*mItemImage);
+    mItemBitmap = make_shared<wxBitmap>(*mItemImage);
 }
 
-/**
- * Save this item to an XML node
- * @param node The parent node we are going to be a child of
- * @return wxXmlNode that we saved the item into
- */
-wxXmlNode* Item::XmlSave(wxXmlNode* node)
-{
-    return nullptr;
-}

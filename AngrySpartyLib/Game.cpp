@@ -25,7 +25,7 @@ Game::Game()
  * @param width Width of the window in pixels
  * @param height Height of the window in pixels
  */
-void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height)
+void Game::OnDraw(shared_ptr<wxGraphicsContext> graphics, int width, int height)
 {
     wxBrush background(*wxBLACK);
     graphics->SetBrush(background);
@@ -62,9 +62,8 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
     // and Y up being increase values
     //
 
-    mLevelManager->OnDraw(graphics, width, height);
+    mLevelManager->OnDraw(graphics);
     mScoreboard->Draw(graphics);
-    mGraphics = graphics;
 }
 
 /**
@@ -74,7 +73,7 @@ void Game::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int he
 void Game::SetLevel(int level)
 {
     mLevelManager->ChangeLevel(level);
-//    std::cout << "Changed Level" << '\n';
+//    cout << "Changed Level" << '\n';
 }
 
 /**
@@ -118,11 +117,15 @@ void Game::OnLeftDown(wxMouseEvent &event)
             jointDef.target = b2Vec2(x, y);
 
             mMouseJoint = (b2MouseJoint*)mLevelManager->GetCurrentLevel()->GetWorld()->CreateJoint(&jointDef);
-            mMouseJoint->SetTarget(b2Vec2(x, y));
+            mMouseJoint->SetTarget(mMouseLocation);
         }
     }
 }
 
+/**
+* Handle the mouse move event
+* @param event Mouse event
+*/
 void Game::OnMouseMove(wxMouseEvent &event)
 {
     auto x = (event.m_x / mScale - mXOffset) / Consts::MtoCM;
@@ -138,7 +141,7 @@ void Game::OnMouseMove(wxMouseEvent &event)
         {
             if(mMouseJoint != nullptr)
             {
-                mMouseJoint->SetTarget(b2Vec2(x, y));
+                mMouseJoint->SetTarget(mMouseLocation);
             }
         }
         else

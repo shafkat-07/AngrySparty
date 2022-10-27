@@ -5,12 +5,13 @@
 
 #include "pch.h"
 
-#include <b2_world.h>
 #include <b2_polygon_shape.h>
 #include <b2_fixture.h>
 
 #include "Block.h"
 #include "Consts.h"
+
+using namespace std;
 
 /**
  * Constructor for a block object
@@ -32,8 +33,8 @@ void Block::XmlLoad(wxXmlNode* node)
     PhysicalObject::XmlLoad(node);
 
     // Block-specific attributes
-    mSize.x = std::stof(node->GetAttribute(L"width", "0.0").ToStdWstring());
-    mSize.y = std::stof(node->GetAttribute(L"height", "0.0").ToStdWstring());
+    mSize.x = stof(node->GetAttribute(L"width", "0.0").ToStdWstring());
+    mSize.y = stof(node->GetAttribute(L"height", "0.0").ToStdWstring());
     node->GetAttribute(L"repeat-x", L"1").ToInt(&mRepeatX);
 }
 
@@ -42,9 +43,9 @@ void Block::XmlLoad(wxXmlNode* node)
  *
  * @return The b2PolygonShape for a block
  */
-std::unique_ptr<b2Shape> Block::CreateShape()
+unique_ptr<b2Shape> Block::CreateShape()
 {
-    std::unique_ptr<b2PolygonShape> box = std::make_unique<b2PolygonShape>();
+    unique_ptr<b2PolygonShape> box = make_unique<b2PolygonShape>();
     box->SetAsBox(mSize.x/2, mSize.y/2);
     return box;
 }
@@ -53,7 +54,7 @@ std::unique_ptr<b2Shape> Block::CreateShape()
  * Draw the block.
  * @param graphics The drawing context to draw on.
  */
-void Block::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Block::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     graphics->PushState();
 
@@ -74,7 +75,7 @@ void Block::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     // The width of each repeated block
     double xw = mSize.x / mRepeatX * Consts::MtoCM;
 
-    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+    shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Translate(0, y);
     graphics->Scale(1, -1);

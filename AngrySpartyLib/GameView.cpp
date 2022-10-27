@@ -5,14 +5,14 @@
 
 #include "pch.h"
 #include <wx/dcbuffer.h>
-#include "Consts.h"
 #include "GameView.h"
 #include "ids.h"
-#include "Scoreboard.h"
 #include "DebugDraw.h"
 
+using namespace std;
+
 /// Frame duration in seconds
-const double FrameDuration = 1.0f/60.0f;
+const double FrameDuration = 1.0/60.0;
 /**
  * Initialize the game view class.
  * @param parent The parent window for this class
@@ -36,6 +36,8 @@ void GameView::Initialize(wxFrame* parent)
 
     mTimer.SetOwner(this);
     mTimer.Start(FrameDuration);
+    Bind(wxEVT_TIMER, &GameView::OnTimer, this);
+
     mStopWatch.Start();
 }
 
@@ -62,7 +64,7 @@ void GameView::OnPaint(wxPaintEvent& event)
 
     // Create a graphics context
     auto graphics =
-            std::shared_ptr<wxGraphicsContext>(wxGraphicsContext::Create( dc ));
+            shared_ptr<wxGraphicsContext>(wxGraphicsContext::Create( dc ));
     graphics->SetInterpolationQuality(wxINTERPOLATION_BEST);
 
     mGame.OnDraw(graphics, size.GetWidth(), size.GetHeight());
@@ -74,8 +76,6 @@ void GameView::OnPaint(wxPaintEvent& event)
         mGame.GetCurrentLevel()->GetWorld()->SetDebugDraw(&debugDraw);
         mGame.GetCurrentLevel()->GetWorld()->DebugDraw();
     }
-
-    Refresh();
 }
 
 /**
@@ -132,18 +132,29 @@ void GameView::OnLeftDown(wxMouseEvent& event)
     mGame.OnLeftDown(event);
 }
 
+/**
+* Handle the left mouse button up event
+* @param event Mouse event
+*/
 void GameView::OnLeftUp(wxMouseEvent& event)
 {
     OnMouseMove(event);
 }
 
+/**
+* Handle the mouse move event
+* @param event Mouse event
+*/
 void GameView::OnMouseMove(wxMouseEvent& event)
 {
     mGame.OnMouseMove(event);
 }
 
+/**
+ * Handle timer events
+ * @param event Timer event
+ */
 void GameView::OnTimer(wxTimerEvent& event)
 {
-    mGame.Update(FrameDuration);
     Refresh();
 }

@@ -5,11 +5,11 @@
 
 #include "pch.h"
 
-#include <b2_world.h>
 #include <b2_polygon_shape.h>
-#include <b2_fixture.h>
 #include "Poly.h"
 #include "Consts.h"
+
+using namespace std;
 
 /**
  * Constructor for a poly object
@@ -31,13 +31,13 @@ void Poly::XmlLoad(wxXmlNode* node)
     PolygonBody::XmlLoad(node);
 
     // Create the underlying polygon
-    std::vector<b2Vec2> & vertices = GetVertices();
+    vector<b2Vec2> & vertices = GetVertices();
     auto vertexNode = node->GetChildren();
     for ( ; vertexNode; vertexNode = vertexNode->GetNext())
     {
         b2Vec2 currVertex;
-        currVertex.x = std::stof(vertexNode->GetAttribute(L"x", "0.0").ToStdWstring());
-        currVertex.y = std::stof(vertexNode->GetAttribute(L"y", "0.0").ToStdWstring());
+        currVertex.x = stof(vertexNode->GetAttribute(L"x", "0.0").ToStdWstring());
+        currVertex.y = stof(vertexNode->GetAttribute(L"y", "0.0").ToStdWstring());
         vertices.push_back(currVertex);
     }
 }
@@ -46,14 +46,14 @@ void Poly::XmlLoad(wxXmlNode* node)
  * Draw the poly.
  * @param graphics The drawing context to draw on.
  */
-void Poly::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Poly::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     auto body = GetBody();
     auto position = body->GetPosition();
     auto angle = body->GetAngle();
 
     // Create the octagon to represent the Foe
-    std::vector<b2Vec2> & vertices = GetVertices();
+    vector<b2Vec2> & vertices = GetVertices();
 
     // Find the minimum and maximum x/y values
     b2Vec2 minimums = vertices[0];
@@ -75,7 +75,7 @@ void Poly::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     graphics->Translate(x, y);
     graphics->Rotate(angle);
 
-    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+    shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,

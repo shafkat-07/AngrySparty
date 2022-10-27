@@ -8,6 +8,8 @@
 #include "Game.h"
 #include "Consts.h"
 
+using namespace std;
+
 /// The font size for the scoreboard
 const int FontSize = 80;
 
@@ -29,7 +31,7 @@ Scoreboard::Scoreboard(Game* game) : mGame(game)
  * Draw the score board.
  * @param graphics The drawing context to draw on.
  */
-void Scoreboard::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Scoreboard::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     // Get score values and dimensions of the current level
     wxString totalScore = wxString::Format(wxT("%i"),mGame->GetTotalScore());

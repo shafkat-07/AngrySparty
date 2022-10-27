@@ -21,11 +21,11 @@ void MainFrame::Initialize()
     auto sizer = new wxBoxSizer( wxVERTICAL );
 
     // Create the view class object as a child of MainFrame
-    auto gameView = new GameView();
-    gameView->Initialize(this);
+    mGameView = new GameView();
+    mGameView->Initialize(this);
 
     // Add it to the sizer
-    sizer->Add(gameView,1, wxEXPAND | wxALL );
+    sizer->Add(mGameView,1, wxEXPAND | wxALL );
 
     // Set the sizer for this frame
     SetSizer( sizer );
@@ -60,6 +60,7 @@ void MainFrame::Initialize()
     // Binding Exit and About event handlers
     Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnExit, this, wxID_EXIT);
     Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnClose, this);
 }
 
 /**
@@ -81,4 +82,14 @@ void MainFrame::OnAbout(wxCommandEvent& event)
             L"About Angry Sparty",
             wxOK,
             this);
+}
+
+/**
+ * Handle a close event. Stop the animation and destroy this window.
+ * @param event The Close event
+ */
+void MainFrame::OnClose(wxCloseEvent& event)
+{
+    mGameView->Stop();
+    Destroy();
 }

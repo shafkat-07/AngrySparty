@@ -34,7 +34,6 @@ public:
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override = 0;
     void InstallPhysics(std::shared_ptr<World>) override;
     virtual void Update(double elapsed) override;
-    wxXmlNode* XmlSave(wxXmlNode* node) override;
     void XmlLoad(wxXmlNode* node) override;
     virtual b2Body* DefineBody(b2Shape* shape, b2World* world);
     bool HitTest(double x, double y) override;
@@ -85,7 +84,7 @@ public:
      * Get the static boolean.
      * @return Whether or not this object is static
      */
-    bool IsStatic() { return mStatic; }
+    bool IsStatic() const { return mStatic; }
 
     /**
      * Set if the object is static.

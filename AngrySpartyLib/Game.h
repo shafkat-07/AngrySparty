@@ -13,16 +13,11 @@
 #include "LevelManager.h"
 #include "Scoreboard.h"
 
-class Scoreboard;
-
 /**
  * The class for our Game
  */
 class Game {
 private:
-    /// The graphics object
-    std::shared_ptr<wxGraphicsContext> mGraphics;
-
     /// Level manager containing levels
     std::unique_ptr<LevelManager> mLevelManager;
 
@@ -43,9 +38,6 @@ private:
 
     /// Mouse location
     b2Vec2 mMouseLocation;
-
-    /// A ground reference object
-    b2Body* mGround;/// A ground reference object
 
     /// Size of the playing area in meters
     std::shared_ptr<Item> mGrabbedItem;
@@ -84,13 +76,9 @@ public:
     b2Vec2 GetCurrentLevelSize() const { return mLevelManager->GetCurrentLevelSize(); }
 
     void OnMouseMove(wxMouseEvent& event);
-//
+
 //    void OnMouseUp(wxMouseEvent& event);
 
-    /**
-     * Left mouse button down event
-     * @param event Mouse event
-     */
     void OnLeftDown(wxMouseEvent& event);
 
     /**
