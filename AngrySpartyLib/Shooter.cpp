@@ -58,11 +58,6 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 
     graphics->PopState();
 
-    if (mSparty != nullptr)
-    {
-        mSparty->Draw(graphics);
-    }
-
     for (auto sparty : mSparties)
     {
         sparty->Draw(graphics);
