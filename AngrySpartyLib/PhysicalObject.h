@@ -24,9 +24,9 @@ private:
     b2Body* mBody = nullptr; ///< The Box2D body of the object
     b2Vec2 mPosition = b2Vec2(0.0f, 0.0f); ///< The position vector of the object
     double mAngle = 0; ///< Angle of the object
-    double mDensity = 0; ///< Density of the object
-    double mFriction = 0; ///< Friction of the object
-    double mRestitution = 0; ///< Restitution of the object
+    double mDensity = 1; ///< Density of the object
+    double mFriction = 0.5; ///< Friction of the object
+    double mRestitution = 0.5; ///< Restitution of the object
     bool mStatic = false; ///< True if the object is static
 
 public:

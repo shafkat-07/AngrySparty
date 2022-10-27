@@ -21,7 +21,7 @@ class Level;
 class Sparty : public CircleBody
 {
 private:
-    double mDown = 0;    ///< Velocity at which this sparty disappears
+    double mStopVelocity = 0;    ///< Velocity at which this sparty disappears
 
 public:
     Sparty(Level* level);

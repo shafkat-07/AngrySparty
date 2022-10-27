@@ -59,10 +59,10 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
             GetY() * Consts::MtoCM);
 
     // Make this is left side of the rectangle
-    double x = -GoalpostsSize.x/2 * Consts::MtoCM;
+    double x = -GetWidth()/2*Consts::MtoCM;
 
     // And the top
-    double y = GoalpostsSize.y * Consts::MtoCM;
+    double y = GetHeight()*Consts::MtoCM;
 
     auto sparty = GetSparty();
     if (sparty == nullptr)
@@ -79,34 +79,42 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     }
     else
     {
-        auto position = sparty->GetPosition();
+        auto spartyPosition = sparty->GetPosition();
         // Compensate for graphics translation.
-        position.x -= GetX();
-        position.y -= GetY();
+        spartyPosition.x -= GetX();
+        spartyPosition.y -= GetY();
         // Draw the back of the band
         graphics->Scale(1, -1);
         graphics->SetPen(pen);
         graphics->StrokeLine(
-                GoalpostsBandAttachBack.x*Consts::MtoCM,
-                -GoalpostsBandAttachBack.y*Consts::MtoCM,
-                position.x * Consts::MtoCM,
-                -position.y * Consts::MtoCM
+                GoalpostsBandAttachBack.x * Consts::MtoCM,
+                -GoalpostsBandAttachBack.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM
         );
         // Draw the Sparty
-        graphics->PushState();
-        sparty->Draw(graphics);
+        // Must have a fresh state for graphics or else sparty won't draw.
         graphics->PopState();
+        sparty->Draw(graphics);
+        graphics->PushState();
+
+        // Return the graphics context to the state it was in.
+        graphics->Translate(GetX()*Consts::MtoCM,
+                GetY()*Consts::MtoCM);
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+
         // Draw the cross section of the band.
         graphics->StrokeLine(
-                position.x * Consts::MtoCM,
-                -position.y * Consts::MtoCM,
-                position.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
-                -position.y * Consts::MtoCM
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
+                -spartyPosition.y * Consts::MtoCM
         );
         // Draw the front of the band
         graphics->StrokeLine(
-                position.x * Consts::MtoCM + ((sparty->GetRadius() * Consts::MtoCM) / 2),
-                -position.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM,
                 GoalpostsBandAttachFront.x * Consts::MtoCM,
                 -GoalpostsBandAttachFront.y * Consts::MtoCM
         );
@@ -118,7 +126,7 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     graphics->DrawBitmap(*bitmap,
             x,
             0,
-            GoalpostsSize.x * Consts::MtoCM, GoalpostsSize.y * Consts::MtoCM);
+            GetWidth() * Consts::MtoCM, GetHeight() * Consts::MtoCM);
 
     graphics->PopState();
 }

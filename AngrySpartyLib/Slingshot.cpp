@@ -55,40 +55,42 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     wxPen pen(SlingshotBandColor, SlingshotBandWidth);
     graphics->PushState();
 
-    graphics->Translate(GetX()*Consts::MtoCM,
-            GetY()*Consts::MtoCM);
+    graphics->Translate(GetX() * Consts::MtoCM,
+            GetY() * Consts::MtoCM);
 
     // Make this is left side of the rectangle
     double x = -GetWidth()/2*Consts::MtoCM;
 
     // And the top
     double y = GetHeight()*Consts::MtoCM;
+
     auto sparty = GetSparty();
-    if (sparty == nullptr) {
+    if (sparty == nullptr)
+    {
         // Draw the band of the slingshot.
         graphics->Scale(1, -1);
         graphics->SetPen(pen);
         graphics->StrokeLine(
-                WoodSlingshotBandAttachBack.x*Consts::MtoCM,
-                -WoodSlingshotBandAttachBack.y*Consts::MtoCM,
-                WoodSlingshotBandAttachFront.x*Consts::MtoCM,
-                -WoodSlingshotBandAttachFront.y*Consts::MtoCM
+                WoodSlingshotBandAttachBack.x * Consts::MtoCM,
+                -WoodSlingshotBandAttachBack.y * Consts::MtoCM,
+                WoodSlingshotBandAttachFront.x * Consts::MtoCM,
+                -WoodSlingshotBandAttachFront.y * Consts::MtoCM
         );
     }
     else
     {
-        auto position = sparty->GetPosition();
+        auto spartyPosition = sparty->GetPosition();
         // Compensate for graphics translation.
-        position.x -= GetX();
-        position.y -= GetY();
+        spartyPosition.x -= GetX();
+        spartyPosition.y -= GetY();
         // Draw the back of the band
         graphics->Scale(1, -1);
         graphics->SetPen(pen);
         graphics->StrokeLine(
                 WoodSlingshotBandAttachBack.x * Consts::MtoCM,
                 -WoodSlingshotBandAttachBack.y * Consts::MtoCM,
-                position.x * Consts::MtoCM,
-                -position.y * Consts::MtoCM
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM
         );
         // Draw the Sparty
         // Must have a fresh state for graphics or else sparty won't draw.
@@ -104,15 +106,15 @@ void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 
         // Draw the cross section of the band.
         graphics->StrokeLine(
-                (position.x + sparty->GetRadius()/2) * Consts::MtoCM,
-                -position.y * Consts::MtoCM,
-                position.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
-                -position.y * Consts::MtoCM
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
+                -spartyPosition.y * Consts::MtoCM
                 );
         // Draw the front of the band
         graphics->StrokeLine(
-                position.x * Consts::MtoCM + ((sparty->GetRadius() * Consts::MtoCM) / 2),
-                -position.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM,
                 WoodSlingshotBandAttachFront.x * Consts::MtoCM,
                 -WoodSlingshotBandAttachFront.y * Consts::MtoCM
         );

@@ -35,13 +35,12 @@ const float Restitution = 0.3f;
  */
 Sparty::Sparty(Level* level) : CircleBody(level)
 {
-    SetStatic(true);
 }
 
 /**
  * Load the attributes for a sparty
  *
- * Load radius and down, which are specific to a sparty
+ * Load radius and stop velocity, which are specific to a sparty
  * @param node The Xml node we are loading the sparty from
  */
 void Sparty::XmlLoad(wxXmlNode* node)
@@ -49,7 +48,7 @@ void Sparty::XmlLoad(wxXmlNode* node)
     CircleBody::XmlLoad(node);
 
     // Sparty-specific attributes
-    // dust... for now.
+    SetStatic(true);
 }
 
 /**
