@@ -52,83 +52,13 @@ void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-    wxPen pen(GoalpostsBandColor, GoalpostBandWidth);
-    graphics->PushState();
-
-    graphics->Translate(GetX() * Consts::MtoCM,
-            GetY() * Consts::MtoCM);
-
-    // Make this is left side of the rectangle
-    double x = -GetWidth()/2*Consts::MtoCM;
-
-    // And the top
-    double y = GetHeight()*Consts::MtoCM;
-
-    auto sparty = GetSparty();
-    if (sparty == nullptr)
-    {
-        // Draw the band of the goalpost.
-        graphics->Scale(1, -1);
-        graphics->SetPen(pen);
-        graphics->StrokeLine(
-                GoalpostsBandAttachBack.x * Consts::MtoCM,
-                -GoalpostsBandAttachBack.y * Consts::MtoCM,
-                GoalpostsBandAttachFront.x * Consts::MtoCM,
-                -GoalpostsBandAttachFront.y * Consts::MtoCM
-        );
-    }
-    else
-    {
-        auto spartyPosition = sparty->GetPosition();
-        // Compensate for graphics translation.
-        spartyPosition.x -= GetX();
-        spartyPosition.y -= GetY();
-        // Draw the back of the band
-        graphics->Scale(1, -1);
-        graphics->SetPen(pen);
-        graphics->StrokeLine(
-                GoalpostsBandAttachBack.x * Consts::MtoCM,
-                -GoalpostsBandAttachBack.y * Consts::MtoCM,
-                spartyPosition.x * Consts::MtoCM,
-                -spartyPosition.y * Consts::MtoCM
-        );
-        // Draw the Sparty
-        // Must have a fresh state for graphics or else sparty won't draw.
-        graphics->PopState();
-        sparty->Draw(graphics);
-        graphics->PushState();
-
-        // Return the graphics context to the state it was in.
-        graphics->Translate(GetX()*Consts::MtoCM,
-                GetY()*Consts::MtoCM);
-        graphics->Scale(1, -1);
-        graphics->SetPen(pen);
-
-        // Draw the cross section of the band.
-        graphics->StrokeLine(
-                spartyPosition.x * Consts::MtoCM,
-                -spartyPosition.y * Consts::MtoCM,
-                spartyPosition.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
-                -spartyPosition.y * Consts::MtoCM
-        );
-        // Draw the front of the band
-        graphics->StrokeLine(
-                spartyPosition.x * Consts::MtoCM,
-                -spartyPosition.y * Consts::MtoCM,
-                GoalpostsBandAttachFront.x * Consts::MtoCM,
-                -GoalpostsBandAttachFront.y * Consts::MtoCM
-        );
-    }
-
-    // Draw the front of the goalposts.
-    auto bitmap = GetFrontBitmap();
-    graphics->Translate(0, -y);
-    graphics->DrawBitmap(*bitmap,
-            x,
-            0,
-            GetWidth() * Consts::MtoCM, GetHeight() * Consts::MtoCM);
-
-    graphics->PopState();
+    DrawSpecificShooter(
+            graphics,
+            GoalpostsBandAttachBack,
+            GoalpostsBandAttachFront,
+            GoalpostsBandColor,
+            GoalpostBandWidth
+    );
 }
 
 /**

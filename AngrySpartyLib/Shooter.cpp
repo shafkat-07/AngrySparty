@@ -66,6 +66,99 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 }
 
 /**
+ * Draw the specific shooter.
+ * @param graphics The graphics context to draw with.
+ * @param AttachShooterBack The back position to attach the band to.
+ * @param AttachShooterFront The front position to attach the band to.
+ * @param ShooterBandThickness The thickness of the band being drawn.
+ */
+void Shooter::DrawSpecificShooter(
+        std::shared_ptr<wxGraphicsContext> graphics,
+        const b2Vec2 AttachShooterBack,
+        const b2Vec2 AttachShooterFront,
+        const wxColor BandColor,
+        const int ShooterBandThickness
+        )
+{
+    graphics->PushState();
+    wxPen pen(BandColor, ShooterBandThickness);
+
+    graphics->Translate(mX * Consts::MtoCM,
+            mY * Consts::MtoCM);
+
+    // Make this is left side of the rectangle
+    double x = -mWidth/2 * Consts::MtoCM;
+
+    // And the top
+    double y = mHeight * Consts::MtoCM;
+
+    if (mSparty == nullptr)
+    {
+        // Draw the band of the slingshot.
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+        graphics->StrokeLine(
+                AttachShooterBack.x * Consts::MtoCM,
+                -AttachShooterBack.y * Consts::MtoCM,
+                AttachShooterFront.x * Consts::MtoCM,
+                -AttachShooterFront.y * Consts::MtoCM
+        );
+    }
+    else
+    {
+        auto spartyPosition = mSparty->GetPosition();
+        // Compensate for graphics translation.
+        spartyPosition.x -= GetX();
+        spartyPosition.y -= GetY();
+        // Draw the back of the band
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+        graphics->StrokeLine(
+                AttachShooterBack.x * Consts::MtoCM,
+                -AttachShooterBack.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM
+        );
+        // Draw the Sparty
+        // Must have a fresh state for graphics or else sparty won't draw.
+        graphics->PopState();
+        mSparty->Draw(graphics);
+        graphics->PushState();
+
+        // Return the graphics context to the state it was in.
+        graphics->Translate(mX*Consts::MtoCM,
+                mY*Consts::MtoCM);
+        graphics->Scale(1, -1);
+        graphics->SetPen(pen);
+
+        // Draw the cross section of the band.
+        graphics->StrokeLine(
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM,
+                spartyPosition.x * Consts::MtoCM - ((mSparty->GetRadius() * Consts::MtoCM) / 2),
+                -spartyPosition.y * Consts::MtoCM
+        );
+        // Draw the front of the band
+        graphics->StrokeLine(
+                spartyPosition.x * Consts::MtoCM,
+                -spartyPosition.y * Consts::MtoCM,
+                AttachShooterFront.x * Consts::MtoCM,
+                -AttachShooterFront.y * Consts::MtoCM
+        );
+    }
+
+    // Draw the front of the slingshot.
+    auto bitmap = mFrontBitmap;
+    graphics->Translate(0, -y);
+    graphics->DrawBitmap(*bitmap,
+            x,
+            0,
+            mWidth * Consts::MtoCM, mHeight * Consts::MtoCM);
+
+    graphics->PopState();
+}
+
+/**
  * Load the XML according to the shooter type.
  * @param node XML node to load from.
  */

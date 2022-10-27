@@ -36,6 +36,14 @@ public:
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
     virtual void XmlLoad(wxXmlNode* node);
 
+    void DrawSpecificShooter(
+            std::shared_ptr<wxGraphicsContext> graphics,
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const wxColor BandColor,
+            const int ShooterBandThickness
+            );
+
     /**
      * Get the width of the shooter
      * @return Width of the shooter
