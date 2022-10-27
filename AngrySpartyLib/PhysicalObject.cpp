@@ -14,6 +14,8 @@
 #include "Level.h"
 #include "Consts.h"
 
+using namespace std;
+
 /**
  * Constructor for a physical object
  * @param level The level this object is in
@@ -26,7 +28,7 @@ PhysicalObject::PhysicalObject(Level* level) : Item(level)
  * Draw the physical body.
  * @param graphics The drawing context to draw on.
  */
-void PhysicalObject::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void PhysicalObject::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
 }
 
@@ -54,8 +56,8 @@ void PhysicalObject::XmlLoad(wxXmlNode* node)
     Item::XmlLoad(node);
 
     // Physical object common attributes
-    mPosition.x = std::stof(node->GetAttribute(L"x", "0.0").ToStdWstring());
-    mPosition.y = std::stof(node->GetAttribute(L"y", "0.0").ToStdWstring());
+    mPosition.x = stof(node->GetAttribute(L"x", "0.0").ToStdWstring());
+    mPosition.y = stof(node->GetAttribute(L"y", "0.0").ToStdWstring());
 
     node->GetAttribute(L"angle", "0.0").ToDouble( &mAngle);
     mAngle *= Consts::DtoR;
@@ -65,15 +67,8 @@ void PhysicalObject::XmlLoad(wxXmlNode* node)
 }
 
 /**
- * Save this physical object to an XML node
- * @param node The node we are going to be a child of
- * @return Allocated node
- */
-wxXmlNode *PhysicalObject::XmlSave(wxXmlNode* node) { return nullptr; }
-
-/**
  * Install physics for a physical object
- * @param physicsWorld
+ * @param physicsWorld The physics world in which to install the object
  */
 void PhysicalObject::InstallPhysics(std::shared_ptr<World> physicsWorld) // TODO Add physics parameter
 {

@@ -31,29 +31,26 @@ private:
     bool mDebugView = false;
 
     void OnPaint(wxPaintEvent& event);
+
     void OnLevel0(wxCommandEvent& event);
     void OnLevel1(wxCommandEvent& event);
     void OnLevel2(wxCommandEvent& event);
     void OnLevel3(wxCommandEvent& event);
     void OnDebugView(wxCommandEvent& event);
 
+    void OnTimer(wxTimerEvent& event);
+
+    void OnLeftDown(wxMouseEvent& event);
+    void OnLeftUp(wxMouseEvent& event);
+    void OnMouseMove(wxMouseEvent& event);
+
 public:
     void Initialize(wxFrame* parent);
 
     /**
-     * Stop the game.
-     *
-     * Stops the timer which will freeze the game.
+     * Stop the timer so the window can close
      */
     void Stop() { mTimer.Stop(); }
-
-    void OnLeftDown(wxMouseEvent& event);
-
-    void OnMouseMove(wxMouseEvent& event);
-
-    void OnLeftUp(wxMouseEvent& event);
-
-    void OnTimer(wxTimerEvent& event);
 };
 
 #endif //ANGRYSPARTY_GAMEVIEW_H

@@ -8,6 +8,8 @@
 #include <b2_polygon_shape.h>
 #include "PolygonBody.h"
 
+using namespace std;
+
 /**
  * Constructor for a polygon body
  *
@@ -22,9 +24,9 @@ PolygonBody::PolygonBody(Level *level) : PhysicalObject(level)
  *
  * @return The b2PolygonShape for a polygon body
  */
-std::unique_ptr<b2Shape> PolygonBody::CreateShape()
+unique_ptr<b2Shape> PolygonBody::CreateShape()
 {
-    std::unique_ptr<b2PolygonShape> poly = std::make_unique<b2PolygonShape>();
+    unique_ptr<b2PolygonShape> poly = make_unique<b2PolygonShape>();
     poly->Set(&mVertices[0], mVertices.size());
     return poly;
 }

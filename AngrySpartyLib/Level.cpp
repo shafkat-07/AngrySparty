@@ -7,20 +7,16 @@
 
 #include "pch.h"
 
-#include <b2_polygon_shape.h>
-#include <b2_mouse_joint.h>
-
 #include "Level.h"
 #include "Background.h"
 #include "Block.h"
-#include "DebugDraw.h"
 #include "Foe.h"
 #include "Slingshot.h"
 #include "Goalpost.h"
 #include "Poly.h"
 #include "Sparty.h"
 
-class Item;
+using namespace std;
 
 /// Gravity in meters per second per second
 const float Gravity = -9.8f;
@@ -48,8 +44,8 @@ void Level::Load(const std::wstring &filename)
 
     // Get the XML document root node
     auto root = xmlDoc.GetRoot();
-    mSize.x = std::stof(root->GetAttribute(L"width", "0.0").ToStdWstring());
-    mSize.y = std::stof(root->GetAttribute(L"height", "0.0").ToStdWstring());
+    mSize.x = stof(root->GetAttribute(L"width", "0.0").ToStdWstring());
+    mSize.y = stof(root->GetAttribute(L"height", "0.0").ToStdWstring());
 
     //
     // Traverse the children of the root
@@ -81,43 +77,42 @@ void Level::Load(const std::wstring &filename)
 void Level::XmlItem(wxXmlNode *node)
 {
     // A pointer for the item we are loading
-    std::shared_ptr<Item> item;
+    shared_ptr<Item> item;
 
     // We have an item. What type?
     auto type = node->GetName();
     if (type == "background")
     {
-        item = std::make_shared<Background>(this);
+        item = make_shared<Background>(this);
     }
     else if (type == "block")
     {
-        item = std::make_shared<Block>(this);
+        item = make_shared<Block>(this);
     }
     else if (type == "poly")
     {
-        item = std::make_shared<Poly>(this);
+        item = make_shared<Poly>(this);
     }
     else if (type == "foe")
     {
-        item = std::make_shared<Foe>(this);
+        item = make_shared<Foe>(this);
     }
     else if (type == "slingshot")
     {
-        item = std::make_shared<Slingshot>(this);
+        item = make_shared<Slingshot>(this);
         mShooterIndex = mItems.size();
     }
     else if (type == "goalposts")
     {
-        item = std::make_shared<Goalpost>(this);
+        item = make_shared<Goalpost>(this);
         mShooterIndex = mItems.size();
     }
     else if (type == "gruff-sparty" || type == "helmet-sparty")
     {
-        auto item = std::make_shared<Sparty>(this);
-        item->XmlLoad(node);
+        auto spartyItem = make_shared<Sparty>(this);
+        spartyItem->XmlLoad(node);
         mSpartyCount++;
-        mSparties.push_back(item);
-        //mItems.push_back(item);
+        mSparties.push_back(spartyItem);
         return;
     }
     else
@@ -186,7 +181,7 @@ Level::Level(const std::wstring &filename)
  * Handles drawing the items from the level on GameView
  * @param graphics The wxGraphicsContext object to write to
  */
-void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
+void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 {
     for(auto item : mItems)
     {
@@ -201,7 +196,7 @@ void Level::OnDraw(std::shared_ptr<wxGraphicsContext> graphics)
  * @param y Y coordinate of the mouse
  * @return True if the mouse down event hit anything.
  */
-std::shared_ptr<Item> Level::HitTest(double x, double y)
+shared_ptr<Item> Level::HitTest(double x, double y)
 {
     for(auto item : mItems){
         if(item->HitTest(x,y))
@@ -236,7 +231,7 @@ void Level::Accept(ItemVisitor* visitor)
  */
 void Level::SetLevel()
 {
-    mPhysics = std::make_shared<World>(mSize);
+    mPhysics = make_shared<World>(mSize);
 
     // Install in all the items
     for(auto item: mItems)

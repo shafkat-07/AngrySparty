@@ -8,6 +8,8 @@
 #include "Consts.h"
 #include "Level.h"
 
+using namespace std;
+
 /**
  * Constructor for a background item
  *
@@ -23,13 +25,13 @@ Background::Background(Level* level) : Item(level)
  * Draw the background.
  * @param graphics The drawing context to draw on.
  */
-void Background::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Background::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
 
     auto wid = mWidth * Consts::MtoCM;
     auto hit = mHeight * Consts::MtoCM;
 
-    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+    shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->PushState();
     graphics->Scale(1, -1);

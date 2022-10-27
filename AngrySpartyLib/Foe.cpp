@@ -5,11 +5,12 @@
 
 #include "pch.h"
 
-#include <b2_world.h>
 #include <b2_polygon_shape.h>
-#include <b2_fixture.h>
+
 #include "Foe.h"
 #include "Consts.h"
+
+using namespace std;
 
 /**
  * Constructor for a foe object
@@ -36,7 +37,7 @@ void Foe::XmlLoad(wxXmlNode* node)
     node->GetAttribute(L"down", L"0").ToDouble(&mDown);
 
     // Create the octagon to represent the Foe
-    std::vector<b2Vec2> & vertices = GetVertices();
+    vector<b2Vec2> & vertices = GetVertices();
     float x;
     float y;
     double degrees = 45;
@@ -52,7 +53,7 @@ void Foe::XmlLoad(wxXmlNode* node)
  * Draw the foe.
  * @param graphics The drawing context to draw on.
  */
-void Foe::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Foe::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     auto body = GetBody();
     auto position = body->GetPosition();
@@ -66,7 +67,7 @@ void Foe::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     graphics->Translate(x, y);
     graphics->Rotate(angle);
 
-    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+    shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,

@@ -5,19 +5,20 @@
 
 #include "pch.h"
 #include "LevelManager.h"
-#include "Consts.h"
+
+using namespace std;
 
 /// XML0's file location
-const std::wstring XML0 = L"levels/level0.xml";
+const wstring XML0 = L"levels/level0.xml";
 
 /// XML1's file location
-const std::wstring XML1 = L"levels/level1.xml";
+const wstring XML1 = L"levels/level1.xml";
 
 /// XML2's file location
-const std::wstring XML2 = L"levels/level2.xml";
+const wstring XML2 = L"levels/level2.xml";
 
 /// XML3's file location
-const std::wstring XML3 = L"levels/level3.xml";
+const wstring XML3 = L"levels/level3.xml";
 
 /// The first level to display when starting the game
 const int StartingLevel = 1;
@@ -38,12 +39,12 @@ LevelManager::LevelManager()
  * Loads a Level XML file into the game
  * @param filename Path of the XML file on disk
  */
-void LevelManager::Load(const std::wstring& filename)
+void LevelManager::Load(const wstring& filename)
 {
-    auto newLevel = std::make_shared<Level>(filename);
+    auto newLevel = make_shared<Level>(filename);
     mLevels.push_back(newLevel);
     ++mLevelCount;
-//    std::cout << "Just loaded level " << mLevelCount << '\n';
+//    cout << "Just loaded level " << mLevelCount << '\n';
 }
 
 /**
@@ -61,10 +62,8 @@ void LevelManager::ChangeLevel(int desiredLevel)
 /**
  * Passes on the wxGraphicsContext draw pointer to the Items
  * @param graphics The wxGraphicsContext pointer
- * @param width Width of the window in pixels
- * @param height Height of the window in pixels
  */
-void LevelManager::OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height)
+void LevelManager::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 {
     GetCurrentLevel()->OnDraw(graphics);
     graphics->Flush();

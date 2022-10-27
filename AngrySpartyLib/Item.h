@@ -70,8 +70,6 @@ public:
 
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
-    virtual wxXmlNode* XmlSave(wxXmlNode* node);
-
     virtual void XmlLoad(wxXmlNode* node);
 
     /** Installs physics for an item */
