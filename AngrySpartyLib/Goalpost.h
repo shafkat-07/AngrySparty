@@ -29,6 +29,7 @@ public:
     void XmlLoad(wxXmlNode* node) override;
     void Update(double elapsed) override;
 
+    void LaunchSparty() override;
 };
 
 #endif //ANGRYSPARTY_GOALPOST_H

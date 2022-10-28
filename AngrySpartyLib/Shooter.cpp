@@ -228,7 +228,91 @@ void Shooter::Update(double elapsed)
     }
 }
 
-void Shooter::LaunchSparty()
+void Shooter::LaunchSpecificSparty(
+        const b2Vec2 AttachShooterBack,
+        const b2Vec2 AttachShooterFront,
+        const double MaxNegativePullAngle,
+        const double MaxPositivePullAngle,
+        const double MaxPull
+        )
 {
-    mLaunched = true;
+    const b2Vec2 centerPos = b2Vec2(GetX(),
+            AttachShooterBack.y -
+                    (AttachShooterFront.y - AttachShooterBack.y) / 2 +
+                    mSparty->GetRadius()
+    );
+    auto distance = mSparty->DistanceBetweenBodies(centerPos);
+    if (mSparty != nullptr)
+    {
+        // Get the angle between the slingshot and the mouse
+        double angle = mSparty->AngleBetweenBodies(centerPos);
+
+        // If the distance is too small, do nothing
+        if (distance < 0.1)
+        {
+            return;
+        }
+
+        // If the distance is too large, set it to the maximum
+        if (distance > MaxPull)
+        {
+            distance = MaxPull;
+        }
+
+        // If the angle is too small, set it to the minimum
+        if (angle < MaxNegativePullAngle)
+        {
+            angle = MaxNegativePullAngle;
+        }
+
+        // If the angle is too large, set it to the maximum
+        if (angle > MaxPositivePullAngle)
+        {
+            angle = MaxPositivePullAngle;
+        }
+
+        // Make the sparty movable
+        mSparty->GetBody()->SetFixedRotation(false);
+        mSparty->GetBody()->SetGravityScale(1.0f);
+        // Set the sparty's velocity based on the angle and distance
+        auto velocityFactor = mSparty->GetVelocityFactor();
+        mSparty->GetBody()->SetLinearVelocity(b2Vec2(cos(angle) * distance * velocityFactor, sin(angle) * distance * velocityFactor));
+
+        // Set the sparty to not be loaded, but launched.
+        mLoaded = false;
+        mLaunched = true;
+    }
 }
+
+void Shooter::UpdateSpecificShooter(
+        const b2Vec2 AttachShooterBack,
+        const b2Vec2 AttachShooterFront,
+        const double MaxNegativePullAngle,
+        const double MaxPositivePullAngle,
+        const double MaxPull
+        )
+{
+    const b2Vec2 centerPos = b2Vec2(GetX(),
+            AttachShooterBack.y -
+                    (AttachShooterFront.y - AttachShooterBack.y) / 2 +
+                    mSparty->GetRadius()
+    );
+    if (mSparty != nullptr && !mLoaded)
+    {
+        // Set the sparty position to the center of the slingshot.
+        mSparty->SetTransform(centerPos, 0.0f);
+        SetLoaded(true);
+    }
+    else if (mLoaded && !mLaunched)
+    {
+        auto distance = mSparty->DistanceBetweenBodies(centerPos);
+        auto angle = mSparty->AngleBetweenBodies(centerPos);
+        if (distance > MaxPull)
+        {
+            // Adjust the Mouse position to be the maximum pull distance
+            // from the slingshot center.
+            // TODO logic to stop mouse from pulling sparty any further.
+        }
+    }
+}
+

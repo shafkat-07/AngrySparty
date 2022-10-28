@@ -22,6 +22,7 @@ class Sparty : public CircleBody
 {
 private:
     double mStopVelocity = 0;    ///< Velocity at which this sparty disappears
+    float mVelocityFactor = 0; ///< Velocity factor for this sparty
 
 public:
     Sparty(Level* level);
@@ -38,6 +39,18 @@ public:
     void ModifyBodyToDynamic();
 
     b2Body* DefineBody(b2Shape* shape, b2World* world) override;
+
+    /**
+     * Set the velocity factor of this sparty.
+     * @param factor The velocity factor of this sparty.
+     */
+    void SetVelocityFactor(double factor) { mVelocityFactor = factor; }
+
+    /**
+     * Get the velocity factor of this sparty.
+     * @return The velocity factor of this sparty.
+     */
+    double GetVelocityFactor() { return mVelocityFactor; }
 
 };
 

@@ -113,7 +113,21 @@ public:
 
     void Update(double elapsed) override;
 
-    void LaunchSparty() override;
+    void LaunchSpecificSparty(
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MaxPositivePullAngle,
+            const double MaxPull
+            );
+
+    void UpdateSpecificShooter(
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MaxPositivePullAngle,
+            const double MaxPull
+            );
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

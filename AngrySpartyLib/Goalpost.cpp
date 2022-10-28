@@ -78,14 +78,26 @@ void Goalpost::XmlLoad(wxXmlNode* node)
 void Goalpost::Update(double elapsed)
 {
     Shooter::Update(elapsed);
-    std::shared_ptr<Sparty> sparty = GetSparty();
-    if (sparty != nullptr)
-    {
-        // Find the vector needed to move to center the sparty in the slingshot.
-        auto newPosition = b2Vec2(GetX(),
-                GoalpostsBandAttachBack.y - (GoalpostsBandAttachFront.y - GoalpostsBandAttachBack.y) / 2 +
-                sparty->GetRadius()
-                );
-        sparty->SetTransform(newPosition, 0.0f);
-    }
+
+    UpdateSpecificShooter(
+            GoalpostsBandAttachBack,
+            GoalpostsBandAttachFront,
+            GoalpostMaximumNegativePullAngle,
+            GoalpostMinimumPositivePullAngle,
+            GoalpostsMaximumPull
+            );
+}
+
+/**
+ * Launch a sparty from the goalpost.
+ */
+void Goalpost::LaunchSparty()
+{
+    LaunchSpecificSparty(
+            GoalpostsBandAttachBack,
+            GoalpostsBandAttachFront,
+            GoalpostMaximumNegativePullAngle,
+            GoalpostMinimumPositivePullAngle,
+            GoalpostsMaximumPull
+    );
 }
