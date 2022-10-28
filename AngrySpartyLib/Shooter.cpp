@@ -236,9 +236,12 @@ void Shooter::Update(double elapsed)
         auto velocity = mSparty->GetBody()->GetLinearVelocity();
         if (std::abs(velocity.x) < VelocityTolerance && std::abs(velocity.y) < VelocityTolerance)
         {
-            mSparty->GetWorld()->DestroyBody(mSparty->GetBody());
+            GetWorld()->DestroyBody(mSparty->GetBody());
+            mSparty->SetBody(nullptr);
+            mSparty.reset();
             mSparty = nullptr;
             mLaunched = false;
+            mLoaded = false;
             Shooter::Update(elapsed);
         }
     }
