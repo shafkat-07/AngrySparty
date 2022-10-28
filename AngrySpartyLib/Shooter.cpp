@@ -11,10 +11,14 @@
 #include <b2_fixture.h>
 
 #include <algorithm>
+#include <cmath>
 
 #include "Shooter.h"
 #include "Consts.h"
 #include "Sparty.h"
+
+
+const float VelocityTolerance = 0.0001f;
 
 /**
  * Constructor for a shooter object
@@ -226,8 +230,28 @@ void Shooter::Update(double elapsed)
         mSparties.erase(mSparties.begin(), mSparties.begin() + 1);
         mSparty->ModifyBodyToDynamic();
     }
+    else if (mLaunched)
+    {
+        // Get the current velocity from the launched sparty
+        auto velocity = mSparty->GetBody()->GetLinearVelocity();
+        if (std::abs(velocity.x) < VelocityTolerance && std::abs(velocity.y) < VelocityTolerance)
+        {
+            mSparty->GetWorld()->DestroyBody(mSparty->GetBody());
+            mSparty = nullptr;
+            mLaunched = false;
+            Shooter::Update(elapsed);
+        }
+    }
 }
 
+/**
+ * Launch a sparty according to which type it is and what shooter is being used.
+ * @param AttachShooterBack The vector of the back of the slingshot.
+ * @param AttachShooterFront The vector of the front of the slingshot.
+ * @param MaxNegativePullAngle The maximum negative angle the slingshot can pull back.
+ * @param MaxPositivePullAngle The maximum positive angle the slingshot can pull back.
+ * @param MaxPull The maximum distance the slingshot can pull back.
+ */
 void Shooter::LaunchSpecificSparty(
         const b2Vec2 AttachShooterBack,
         const b2Vec2 AttachShooterFront,
@@ -301,7 +325,7 @@ void Shooter::UpdateSpecificShooter(
     {
         // Set the sparty position to the center of the slingshot.
         mSparty->SetTransform(centerPos, 0.0f);
-        SetLoaded(true);
+        mLoaded = true;
     }
     else if (mLoaded && !mLaunched)
     {
