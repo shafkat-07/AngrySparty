@@ -96,7 +96,7 @@ b2Body* Sparty::DefineBody(b2Shape* shape, b2World* world)
     {
         // Create the body definition
         b2BodyDef bodyDefinition;
-        bodyDefinition.position = GetPosition();
+        bodyDefinition.position = GetBodyPosition();
         bodyDefinition.angle = GetAngle();
         bodyDefinition.type = b2_dynamicBody;
         bodyDefinition.angularDamping = AngularDamping;
