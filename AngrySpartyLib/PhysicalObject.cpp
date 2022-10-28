@@ -6,7 +6,6 @@
 #include "pch.h"
 
 #include <cmath>
-
 #include <b2_body.h>
 #include <b2_fixture.h>
 
@@ -164,4 +163,17 @@ double PhysicalObject::AngleBetweenBodies(b2Vec2 distantPos)
     auto pos = mBody->GetPosition();
     auto angle = std::atan2(distantPos.y - pos.y, distantPos.x - pos.x);
     return angle;
+}
+
+/**
+ * Deletes this item from the physical item
+ * if it was still alive
+ */
+void PhysicalObject::Reset()
+{
+    if (IsAlive())
+    {
+        GetWorld()->DestroyBody(mBody);
+    }
+    Item::Reset();
 }

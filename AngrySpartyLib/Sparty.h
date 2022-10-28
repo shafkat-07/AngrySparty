@@ -52,6 +52,8 @@ public:
      */
     double GetVelocityFactor() { return mVelocityFactor; }
 
+    void Reset() override;
+
 };
 
 #endif //ANGRYSPARTY_SPARTY_H

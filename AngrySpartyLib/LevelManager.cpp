@@ -53,10 +53,9 @@ void LevelManager::Load(const wstring& filename)
  */
 void LevelManager::ChangeLevel(int desiredLevel)
 {
-    // TODO Delete the currently displayed level's object and add the desired ones
-    GetCurrentLevel()->ResetLevel(); // Reset its objects and scores
+    GetCurrentLevel()->ResetLevel(); // Reset previous level to default state
     mDisplayedLevel = desiredLevel;
-    GetCurrentLevel()->SetLevel();
+    GetCurrentLevel()->SetLevel(); // Install new level
 }
 
 /**

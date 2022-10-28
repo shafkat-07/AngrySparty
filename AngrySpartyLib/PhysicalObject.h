@@ -37,6 +37,7 @@ public:
     void XmlLoad(wxXmlNode* node) override;
     virtual b2Body* DefineBody(b2Shape* shape, b2World* world);
     bool HitTest(double x, double y) override;
+    void Reset() override;
 
     /**
      * Creates a shape for a physical body

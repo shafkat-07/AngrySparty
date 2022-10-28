@@ -6,7 +6,6 @@
  */
 
 #include "pch.h"
-#include "Consts.h"
 #include "Slingshot.h"
 #include "Sparty.h"
 #include <iostream>

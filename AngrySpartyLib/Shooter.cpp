@@ -7,17 +7,17 @@
 
 #include "pch.h"
 
-#include <b2_world.h>
 #include <b2_fixture.h>
-
-#include <algorithm>
 #include <cmath>
 
 #include "Shooter.h"
 #include "Consts.h"
 #include "Sparty.h"
+#include "Level.h"
 
+using namespace std;
 
+/// Velocity below which a Sparty is considered as still
 const float VelocityTolerance = 0.0001f;
 
 /**
@@ -62,18 +62,22 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
 
     graphics->PopState();
 
-    for (auto sparty : mSparties)
+    for (auto sparty : GetSparties())
     {
-        sparty->Draw(graphics);
+        if (sparty->IsAlive())
+        {
+            sparty->Draw(graphics);
+        }
     }
 
 }
 
 /**
- * Draw the specific shooter.
+ *  * Draw the specific shooter.
  * @param graphics The graphics context to draw with.
  * @param AttachShooterBack The back position to attach the band to.
  * @param AttachShooterFront The front position to attach the band to.
+ * @param BandColor The color of the band being drawn.
  * @param ShooterBandThickness The thickness of the band being drawn.
  */
 void Shooter::DrawSpecificShooter(
@@ -199,14 +203,6 @@ void Shooter::XmlLoad(wxXmlNode* node)
     mFrontImage = std::make_shared<wxImage>(name);
     mFrontBitmap = std::make_shared<wxBitmap>(*mFrontImage);
 }
-/**
- * Set the sparties in the ready queue.
- * @param sparties Sparties coming in to be shot for this level.
- */
-void Shooter::SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties)
-{
-    mSparties = sparties;
-}
 
 /**
  * Called when resetting the level.
@@ -215,7 +211,7 @@ void Shooter::SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties)
 void Shooter::Clear()
 {
     mSparty = nullptr;
-    mSparties.clear();
+    GetSparties().clear();
 }
 
 /**
@@ -224,10 +220,10 @@ void Shooter::Clear()
  */
 void Shooter::Update(double elapsed)
 {
-    if (mSparty == nullptr && !mSparties.empty())
+    if (mSparty == nullptr && !GetSparties().empty())
     {
-        mSparty = mSparties[0];
-        mSparties.erase(mSparties.begin(), mSparties.begin() + 1);
+        mSparty = GetSparties()[mSpartyIndex];
+        mSpartyIndex += 1;
         mSparty->ModifyBodyToDynamic();
     }
     else if (mLaunched)
@@ -237,6 +233,7 @@ void Shooter::Update(double elapsed)
         if (std::abs(velocity.x) < VelocityTolerance && std::abs(velocity.y) < VelocityTolerance)
         {
             GetWorld()->DestroyBody(mSparty->GetBody());
+            mSparty->SetAlive(false);
             mSparty->SetBody(nullptr);
             mSparty.reset();
             mSparty = nullptr;
@@ -311,6 +308,7 @@ void Shooter::LaunchSpecificSparty(
     }
 }
 
+
 void Shooter::UpdateSpecificShooter(
         const b2Vec2 AttachShooterBack,
         const b2Vec2 AttachShooterFront,
@@ -341,5 +339,18 @@ void Shooter::UpdateSpecificShooter(
             // TODO logic to stop mouse from pulling sparty any further.
         }
     }
+}
+
+/**
+ * Resets the shooter to its default state
+ */
+void Shooter::Reset()
+{
+    mLoaded = false;
+    mLaunched = false;
+    mSpartyIndex = 0;
+    mSparty = nullptr;
+
+    Item::Reset();
 }
 

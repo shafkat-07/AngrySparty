@@ -29,6 +29,9 @@ private:
     /// The underlying bitmap for the image.
     std::shared_ptr<wxBitmap> mItemBitmap;
 
+    /// Is this item alive?
+    bool mAlive = false;
+
 public:
     /// Default constructor (disabled)
     Item() = delete;
@@ -60,7 +63,6 @@ public:
      * @return The level this item is contained in.
      */
     Level* GetLevel() { return mLevel; }
-
 
     /**
      * The bitmap for this item
@@ -112,5 +114,30 @@ public:
      */
     virtual b2Body* GetBody() { return nullptr; }
 
+    /**
+     * Handles launching a sparty
+     *
+     * Empty for everything except shooters
+     */
     virtual void LaunchSparty() {};
+
+    /**
+     * Whether or not this item is to be considered in the game
+     * @return True if this item should still exist in the game
+     */
+    bool IsAlive() const { return mAlive; }
+
+    /**
+     * Enable/disable an item from the game
+     * @param alive False to disable this item, true to "reset" it
+     */
+    void SetAlive(bool alive) { mAlive = alive; }
+
+    /**
+     * Resets an item
+     *
+     * Sets it to dead. Every item gets set
+     * back to alive when setting its level
+     */
+    virtual void Reset() { mAlive = false; }
 };

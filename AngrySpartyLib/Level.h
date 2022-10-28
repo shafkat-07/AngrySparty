@@ -19,7 +19,6 @@
 #include "World.h"
 #include "Sparty.h"
 
-class b2MouseJoint;
 class ItemVisitor;
 
 /**
@@ -79,6 +78,12 @@ public:
      * @return Number of sparties.
      */
     int GetSpartyCount() const { return mSpartyCount; }
+
+    /**
+     * Get the list of sparties
+     * @return A reference to the list of sparties
+     */
+    std::vector<std::shared_ptr<Sparty>>& GetSparties() { return mSparties; }
 
     /**
      * Updates the score by incrementing with the parameter (can be negative)

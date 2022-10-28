@@ -6,6 +6,7 @@
  *
  * Defines the member functions for the CircleBody class.
  */
+
 #include "pch.h"
 
 #include <b2_circle_shape.h>
@@ -93,11 +94,9 @@ void CircleBody::Draw(std::shared_ptr<wxGraphicsContext> graphics)
  */
 bool CircleBody::HitTest(double x, double y)
 {
-    // DEBUG: Body returns junk data (undefined behavior). What happened to mBody?
     auto fixture = GetBody()->GetFixtureList();
     for( ; fixture != nullptr; fixture = fixture->GetNext())
     {
-        // DEBUG: This is the spot where the fixture is null on the second sparty. Why?
         if(fixture->TestPoint(b2Vec2(x, y)))
         {
             return true;

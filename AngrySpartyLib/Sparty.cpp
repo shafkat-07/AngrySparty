@@ -8,7 +8,6 @@
 #include "pch.h"
 #include "Sparty.h"
 #include "Level.h"
-#include "Consts.h"
 
 #include <b2_world.h>
 #include <b2_polygon_shape.h>
@@ -112,12 +111,16 @@ b2Body* Sparty::DefineBody(b2Shape* shape, b2World* world)
         fixtureDef.density = Density;
         fixtureDef.friction = Friction;
         fixtureDef.restitution = Restitution;
-        // DEBUG: Fixture is created correctly but when second sparty is clicked on then the fixture is missing.
-        // This causes a crash. Cannot find the instant where the fixture is deleted or lost from memory.
-        // Thoughts:
-        // 1. The fixture is not added to the correct world. What is the return of GetWorld()? Is it the pyhsics world or something else?
-        // 2. The mouse joint needs to be refreshed when the first sparty is removed from the game.
         body->CreateFixture(&fixtureDef);
         return body;
     }
+}
+
+/**
+ * Resets a sparty to its default state
+ */
+void Sparty::Reset()
+{
+    PhysicalObject::Reset();
+    SetStatic(true);
 }
