@@ -239,7 +239,8 @@ void Shooter::Update(double elapsed)
             mSparty = nullptr;
             mLaunched = false;
             mLoaded = false;
-            Shooter::Update(elapsed);
+            // Will update via down-call.
+            Update(elapsed);
         }
     }
 }
