@@ -30,6 +30,12 @@ public:
      */
     void Accept(ItemVisitor* visitor) override { visitor->VisitFoe(this); }
 
+    /**
+     * Get the down position of this foe.
+     * @return The down position of this foe.
+     */
+    double GetDown() { return mDown; }
+
 };
 
 #endif //ANGRYSPARTY_FOE_H

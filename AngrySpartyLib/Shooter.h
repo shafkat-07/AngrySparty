@@ -144,6 +144,8 @@ public:
             );
 
     void Reset() override;
+
+    void KillDownedEnemies();
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

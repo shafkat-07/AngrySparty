@@ -14,6 +14,7 @@
 #include "Consts.h"
 #include "Sparty.h"
 #include "Level.h"
+#include "KillFoeVisitor.h"
 
 using namespace std;
 
@@ -239,8 +240,9 @@ void Shooter::Update(double elapsed)
             mSparty = nullptr;
             mLaunched = false;
             mLoaded = false;
-            // Will update via down-call.
-            Update(elapsed);
+            KillDownedEnemies();
+            // Recursive call to update the next sparty to load.
+            Shooter::Update(elapsed);
         }
     }
 }
@@ -353,5 +355,14 @@ void Shooter::Reset()
     mSparty = nullptr;
 
     Item::Reset();
+}
+
+/**
+ * Kill the enemies that have been downed.
+ */
+void Shooter::KillDownedEnemies()
+{
+    KillFoeVisitor visitor;
+    GetLevel()->Accept(&visitor);
 }
 

@@ -140,4 +140,10 @@ public:
      * back to alive when setting its level
      */
     virtual void Reset() { mAlive = false; }
+
+    /**
+     * Set the state of this item to be alive or dead
+     * @param state True to set this item to alive, false to set it to dead
+     */
+    void SetAliveState(bool state) { mAlive = state; }
 };
