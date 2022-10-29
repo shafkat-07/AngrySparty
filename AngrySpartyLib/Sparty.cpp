@@ -8,7 +8,6 @@
 #include "pch.h"
 #include "Sparty.h"
 #include "Level.h"
-#include "Consts.h"
 
 #include <b2_world.h>
 #include <b2_polygon_shape.h>
@@ -29,6 +28,12 @@ const float Friction = 1.0f;
 /// The restitution of the dynamic Sparty body.
 const float Restitution = 0.3f;
 
+/// The velocity factor for Helmet Sparty
+const float HelmetSpartyVelocityFactor = 20.0;
+
+/// The velocity factor for Gruff Sparty
+const float GruffSpartyVelocityFactor = 12.0;
+
 /**
  * Constructor for a sparty object
  * @param level The level this item is contained in
@@ -46,6 +51,16 @@ Sparty::Sparty(Level* level) : CircleBody(level)
 void Sparty::XmlLoad(wxXmlNode* node)
 {
     CircleBody::XmlLoad(node);
+
+    if (node->GetName() == "gruff-sparty")
+    {
+        mVelocityFactor = GruffSpartyVelocityFactor;
+    }
+    else if (node->GetName() == "helmet-sparty")
+    {
+        mVelocityFactor = HelmetSpartyVelocityFactor;
+    }
+
 
     // Sparty-specific attributes
     SetStatic(true);
@@ -80,12 +95,16 @@ b2Body* Sparty::DefineBody(b2Shape* shape, b2World* world)
     {
         // Create the body definition
         b2BodyDef bodyDefinition;
-        bodyDefinition.position = GetPosition();
+        bodyDefinition.position = GetBodyPosition();
         bodyDefinition.angle = GetAngle();
         bodyDefinition.type = b2_dynamicBody;
         bodyDefinition.angularDamping = AngularDamping;
         bodyDefinition.linearDamping = LinearDamping;
         auto body = world->CreateBody(&bodyDefinition);
+
+        // Attributes for prior to launch.
+        body->SetFixedRotation(true);
+        body->SetGravityScale(0.0f);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = shape;
@@ -95,4 +114,13 @@ b2Body* Sparty::DefineBody(b2Shape* shape, b2World* world)
         body->CreateFixture(&fixtureDef);
         return body;
     }
+}
+
+/**
+ * Resets a sparty to its default state
+ */
+void Sparty::Reset()
+{
+    PhysicalObject::Reset();
+    SetStatic(true);
 }

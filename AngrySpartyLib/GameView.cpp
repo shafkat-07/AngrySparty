@@ -29,6 +29,7 @@ void GameView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnDebugView,this, IDM_DEBUG_VIEW);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnRingToggle,this, IDM_RING);
 
     Bind(wxEVT_LEFT_DOWN, &GameView::OnLeftDown, this);
     Bind(wxEVT_MOTION, &GameView::OnMouseMove, this);
@@ -124,6 +125,16 @@ void GameView::OnDebugView(wxCommandEvent& event)
 }
 
 /**
+ * Enables/disables the Ring
+ * @param event Paint event object
+ */
+void GameView::OnRingToggle(wxCommandEvent& event)
+{
+    mRingView = !mRingView;
+    mGame.ToggleRing(mRingView);
+}
+
+/**
  * Left mouse button down event.
  * @param event Mouse event
  */
@@ -138,7 +149,7 @@ void GameView::OnLeftDown(wxMouseEvent& event)
 */
 void GameView::OnLeftUp(wxMouseEvent& event)
 {
-    OnMouseMove(event);
+    mGame.OnLeftUp(event);
 }
 
 /**

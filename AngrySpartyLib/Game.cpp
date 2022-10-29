@@ -158,3 +158,38 @@ void Game::OnMouseMove(wxMouseEvent &event)
     }
 
 }
+
+/**
+ * Left mouse button down event
+ * @param event Mouse event
+ */
+void Game::OnLeftUp(wxMouseEvent &event)
+{
+    auto x = (event.m_x / mScale - mXOffset) / Consts::MtoCM;
+    auto y = (event.m_y / -mScale - mYOffset) / Consts::MtoCM;
+    mMouseLocation = b2Vec2(x, y);
+
+    // When the left button is released, we release the
+    // item.
+    if(mMouseJoint != nullptr)
+    {
+        GetCurrentLevel()->GetWorld()->DestroyJoint(mMouseJoint);
+        GetCurrentLevel()->LaunchSparty();
+        mMouseJoint = nullptr;
+    }
+}
+
+/**
+ * Enables/disables the ring for all levels
+ *
+ * This acts on all levels since the menu option
+ * determines the global activation state of rings for the game
+ * @param activate Whether or not to activate the rings
+ */
+void Game::ToggleRing(bool activate)
+{
+    for (auto level : mLevelManager->GetLevels())
+    {
+        level->GetRing()->SetActive(activate);
+    }
+}

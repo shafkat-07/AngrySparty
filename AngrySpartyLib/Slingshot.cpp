@@ -6,9 +6,11 @@
  */
 
 #include "pch.h"
-#include "Consts.h"
 #include "Slingshot.h"
 #include "Sparty.h"
+#include <iostream>
+
+using namespace std;
 
 /// Size of the slingshot image in meters
 const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
@@ -48,87 +50,17 @@ Slingshot::Slingshot(Level* level) : Shooter(level)
  * Draw the slingshot components.
  * @param graphics The graphics context to draw on
  */
-void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Slingshot::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
-    wxPen pen(SlingshotBandColor, SlingshotBandWidth);
-    graphics->PushState();
-
-    graphics->Translate(GetX() * Consts::MtoCM,
-            GetY() * Consts::MtoCM);
-
-    // Make this is left side of the rectangle
-    double x = -GetWidth()/2*Consts::MtoCM;
-
-    // And the top
-    double y = GetHeight()*Consts::MtoCM;
-
-    auto sparty = GetSparty();
-    if (sparty == nullptr)
-    {
-        // Draw the band of the slingshot.
-        graphics->Scale(1, -1);
-        graphics->SetPen(pen);
-        graphics->StrokeLine(
-                WoodSlingshotBandAttachBack.x * Consts::MtoCM,
-                -WoodSlingshotBandAttachBack.y * Consts::MtoCM,
-                WoodSlingshotBandAttachFront.x * Consts::MtoCM,
-                -WoodSlingshotBandAttachFront.y * Consts::MtoCM
-        );
-    }
-    else
-    {
-        auto spartyPosition = sparty->GetPosition();
-        // Compensate for graphics translation.
-        spartyPosition.x -= GetX();
-        spartyPosition.y -= GetY();
-        // Draw the back of the band
-        graphics->Scale(1, -1);
-        graphics->SetPen(pen);
-        graphics->StrokeLine(
-                WoodSlingshotBandAttachBack.x * Consts::MtoCM,
-                -WoodSlingshotBandAttachBack.y * Consts::MtoCM,
-                spartyPosition.x * Consts::MtoCM,
-                -spartyPosition.y * Consts::MtoCM
-        );
-        // Draw the Sparty
-        // Must have a fresh state for graphics or else sparty won't draw.
-        graphics->PopState();
-        sparty->Draw(graphics);
-        graphics->PushState();
-
-        // Return the graphics context to the state it was in.
-        graphics->Translate(GetX()*Consts::MtoCM,
-                GetY()*Consts::MtoCM);
-        graphics->Scale(1, -1);
-        graphics->SetPen(pen);
-
-        // Draw the cross section of the band.
-        graphics->StrokeLine(
-                spartyPosition.x * Consts::MtoCM,
-                -spartyPosition.y * Consts::MtoCM,
-                spartyPosition.x * Consts::MtoCM - ((sparty->GetRadius() * Consts::MtoCM) / 2),
-                -spartyPosition.y * Consts::MtoCM
-                );
-        // Draw the front of the band
-        graphics->StrokeLine(
-                spartyPosition.x * Consts::MtoCM,
-                -spartyPosition.y * Consts::MtoCM,
-                WoodSlingshotBandAttachFront.x * Consts::MtoCM,
-                -WoodSlingshotBandAttachFront.y * Consts::MtoCM
-        );
-    }
-
-    // Draw the front of the slingshot.
-    auto bitmap = GetFrontBitmap();
-    graphics->Translate(0, -y);
-    graphics->DrawBitmap(*bitmap,
-            x,
-            0,
-            GetWidth() * Consts::MtoCM, GetHeight() * Consts::MtoCM);
-
-    graphics->PopState();
+    DrawSpecificShooter(
+            graphics,
+            WoodSlingshotBandAttachBack,
+            WoodSlingshotBandAttachFront,
+            SlingshotBandColor,
+            SlingshotBandWidth
+    );
 }
 
 /**
@@ -148,14 +80,26 @@ void Slingshot::XmlLoad(wxXmlNode* node)
 void Slingshot::Update(double elapsed)
 {
     Shooter::Update(elapsed);
-    std::shared_ptr<Sparty> sparty = GetSparty();
-    if (sparty != nullptr)
-    {
-        sparty->SetXPosition(GetX());
-        sparty->SetYPosition(
-                WoodSlingshotBandAttachBack.y +
-                (WoodSlingshotBandAttachFront.y - WoodSlingshotBandAttachBack.y) / 2 +
-                sparty->GetRadius());
-        sparty->ModifyBodyToDynamic();
-    }
+
+    UpdateSpecificShooter(
+            WoodSlingshotBandAttachBack,
+            WoodSlingshotBandAttachFront,
+            SlingshotMaximumNegativePullAngle,
+            SlingshotMinimumPositivePullAngle,
+            WoodSlingshotMaximumPull
+            );
+}
+
+/**
+ * Launch a sparty from the slingshot.
+ */
+void Slingshot::LaunchSparty()
+{
+    LaunchSpecificSparty(
+            WoodSlingshotBandAttachBack,
+            WoodSlingshotBandAttachFront,
+            SlingshotMaximumNegativePullAngle,
+            SlingshotMinimumPositivePullAngle,
+            WoodSlingshotMaximumPull
+            );
 }

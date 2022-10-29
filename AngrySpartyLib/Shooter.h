@@ -12,6 +12,7 @@
 
 #include "Item.h"
 #include "ItemVisitor.h"
+#include "Level.h"
 
 class Sparty;
 
@@ -26,15 +27,25 @@ private:
     double mY = 0; ///< Y location of the shooter
     double mWidth = 0; ///< Width of the shooter
     double mHeight = 0; ///< Height of the shooter
+    bool mLoaded = false; ///< If the shooter is currently loaded.
+    bool mLaunched = false; ///< If the shooter has launched its sparty.
     std::shared_ptr<wxImage> mFrontImage; ///< The front image for the shooter
     std::shared_ptr<wxBitmap> mFrontBitmap; ///< The front bitmap for the shooter
-    std::vector<std::shared_ptr<Sparty>> mSparties; ///< The sparties in the ready queue for the shooter.
+    int mSpartyIndex = 0; ///< Tracks the current sparty's index in the vector of sparties
     std::shared_ptr<Sparty> mSparty; ///< The sparty currently being shot by the shooter.
 
 public:
     Shooter(Level* level);
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
     virtual void XmlLoad(wxXmlNode* node);
+
+    void DrawSpecificShooter(
+            std::shared_ptr<wxGraphicsContext> graphics,
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const wxColor BandColor,
+            const int ShooterBandThickness
+            );
 
     /**
      * Get the width of the shooter
@@ -72,10 +83,31 @@ public:
     double GetY() const {return mY;}
 
     /**
+     * Whether or not the shooter is loaded
+     * @return True if the shooter is loaded
+     */
+    bool IsLoaded() { return mLoaded; }
+
+
+    bool IsLaunched() { return mLaunched; }
+
+    /**
+     * Sets the shooter's loaded status
+     * @param load The shooter's loaded status
+     */
+    void SetLoaded(bool load) { mLoaded = load; }
+
+    /**
      * Get the pointer to the sparty currently being shot.
      * @return Pointer to the current sparty
      */
     std::shared_ptr<Sparty> GetSparty() {return mSparty;}
+
+    /**
+     * Get the list of sparties in the level to which this shooter belongs
+     * @return A reference to the list of sparties
+     */
+    std::vector<std::shared_ptr<Sparty>>& GetSparties() { return GetLevel()->GetSparties(); }
 
     /**
      * The front bitmap for this shooter
@@ -91,11 +123,27 @@ public:
      */
     virtual void Accept(ItemVisitor* visitor) { }
 
-    void SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties) override;
-
     void Clear() override;
 
     void Update(double elapsed) override;
+
+    void LaunchSpecificSparty(
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MaxPositivePullAngle,
+            const double MaxPull
+            );
+
+    void UpdateSpecificShooter(
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MaxPositivePullAngle,
+            const double MaxPull
+            );
+
+    void Reset() override;
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

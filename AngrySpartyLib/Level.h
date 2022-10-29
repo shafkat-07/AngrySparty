@@ -14,12 +14,13 @@
 
 #include <vector>
 #include <memory>
+#include <random>
 
 #include "Item.h"
 #include "World.h"
 #include "Sparty.h"
+#include "Ring.h"
 
-class b2MouseJoint;
 class ItemVisitor;
 
 /**
@@ -55,12 +56,28 @@ private:
      /// The number of sparties in the world.
      int mSpartyCount = 0;
 
+    /// Random number generator
+    std::mt19937 mRandom;
+
+    /// The speed-boost ring for this level
+    std::shared_ptr<Ring> mRing;
+
 public:
     Level(const std::wstring &);
     void Load(const std::wstring &);
     void Clear();
     void XmlItem(wxXmlNode* node);
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
+    std::shared_ptr<Item> HitTest(double x, double y);
+    void SetLevel();
+    void ResetLevel();
+    void Update(double elapsed);
+
+    /**
+     * Get the random number generator
+     * @return Pointer to the random number generator
+     */
+    std::mt19937 &GetRandom() { return mRandom; }
 
     /**
      * Getter for the score from this level
@@ -81,6 +98,12 @@ public:
     int GetSpartyCount() const { return mSpartyCount; }
 
     /**
+     * Get the list of sparties
+     * @return A reference to the list of sparties
+     */
+    std::vector<std::shared_ptr<Sparty>>& GetSparties() { return mSparties; }
+
+    /**
      * Updates the score by incrementing with the parameter (can be negative)
      * @param score The parameter to increment by (can be negative)
      */
@@ -98,17 +121,19 @@ public:
      */
     b2Body* GetGround() { return mPhysics->GetGround(); }
 
-    std::shared_ptr<Item> HitTest(double x, double y);
+    /**
+     * Get this level's ring
+     * @return This level's ring
+     */
+    std::shared_ptr<Ring> GetRing() { return mRing; }
 
-    void SetLevel();
-
-    void ResetLevel();
 
     void Accept(ItemVisitor* visitor);
 
-    void Update(double elapsed);
-
     void TransferSpartiesToShooter();
+
+    void LaunchSparty();
+
 };
 
 #endif //ANGRYSPARTY_LEVEL_H

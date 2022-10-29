@@ -146,6 +146,14 @@ void Level::TransferSpartiesToShooter()
 }
 
 /**
+ * Launch the sparty that was loaded.
+ */
+void Level::LaunchSparty()
+{
+    mItems[mShooterIndex]->LaunchSparty();
+}
+
+/**
  * Clears the Items from the level
  */
 void Level::Clear()
@@ -167,6 +175,10 @@ void Level::Clear()
 Level::Level(const std::wstring &filename)
 {
     Load(filename); // Load from XML first to have playing area dimensions
+    // Seed the random number generator for the ring's speed
+    random_device rd;
+    mRandom.seed(rd());
+    mRing = make_shared<Ring>(this);
 }
 
 /**
@@ -177,10 +189,17 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 {
     for(auto item : mItems)
     {
-        item->Draw(graphics);
+        if (item->IsAlive())
+        {
+            item->Draw(graphics);
+        }
+    }
+
+    if (mRing->IsActive())
+    {
+        mRing->Draw(graphics);
     }
 }
-
 
 /**
  * Handles the mouse down event
@@ -190,17 +209,24 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
  */
 shared_ptr<Item> Level::HitTest(double x, double y)
 {
+    // TODO Comment out this first loop to disable user grabbing blocks
     for(auto item : mItems){
-        if(item->HitTest(x,y))
+        if (item->IsAlive())
         {
-            return item;
+            if(item->HitTest(x,y))
+            {
+                return item;
+            }
         }
     }
 
-    for(auto item : mSparties){
-        if(item->HitTest(x,y))
+    for(auto sparty : mSparties){
+        if (sparty->IsAlive())
         {
-            return item;
+            if (sparty->HitTest(x, y))
+            {
+                return sparty;
+            }
         }
     }
     return nullptr;
@@ -219,7 +245,8 @@ void Level::Accept(ItemVisitor* visitor)
 }
 
 /**
- * Sets up a level and its items in a physics world
+ * Sets up a level and its items in a physics world,
+ * setting all of the items to alive
  */
 void Level::SetLevel()
 {
@@ -228,14 +255,15 @@ void Level::SetLevel()
     // Install in all the items
     for(auto item: mItems)
     {
-        item->InstallPhysics(mPhysics);
+        item->SetAlive(true);
+        item->InstallPhysics();
     }
     // Do the same for the sparties
     for (auto sparty : mSparties)
     {
-        sparty->InstallPhysics(mPhysics);
+        sparty->SetAlive(true);
+        sparty->InstallPhysics();
     }
-
 
     // Anything else needed to start the level
 }
@@ -243,13 +271,24 @@ void Level::SetLevel()
 /**
  * Resets a level to its default state
  *
- * Resets each item to be "alive", uninstalls physics
- * for each item, and resets the score
+ * Uninstalls physics for each item,
+ * sets them to "dead", and resets the score
  */
 void Level::ResetLevel()
 {
-    mPhysics = nullptr; // TODO Delete each item from the physics world
-    // TODO Set each item to be "alive"
+    for (auto item : mItems)
+    {
+        item->Reset();
+    }
+
+    for (auto sparty : mSparties)
+    {
+        sparty->Reset();
+    }
+
+    mRing->Reset();
+
+    mPhysics = nullptr;
     mScore = 0;
 }
 
@@ -261,7 +300,16 @@ void Level::Update(double elapsed)
 {
     for (auto item : mItems)
     {
-        item->Update(elapsed);
+        if (item->IsAlive())
+        {
+            item->Update(elapsed);
+        }
     }
+
+    if (mRing->IsActive())
+    {
+        mRing->Update(elapsed);
+    }
+
     mPhysics->GetWorld()->Step(elapsed, VelocityIterations, PositionIterations);
 }

@@ -22,7 +22,8 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         CircleBody.cpp CircleBody.h
         Sparty.cpp Sparty.h
         ItemVisitor.cpp ItemVisitor.h
-        FoeVisitor.h)
+        FoeVisitor.h
+        Ring.cpp Ring.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

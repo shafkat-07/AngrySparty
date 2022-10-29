@@ -32,11 +32,12 @@ private:
 public:
     PhysicalObject(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override = 0;
-    void InstallPhysics(std::shared_ptr<World>) override;
+    void InstallPhysics() override;
     virtual void Update(double elapsed) override;
     void XmlLoad(wxXmlNode* node) override;
     virtual b2Body* DefineBody(b2Shape* shape, b2World* world);
     bool HitTest(double x, double y) override;
+    void Reset() override;
 
     /**
      * Creates a shape for a physical body
@@ -75,10 +76,16 @@ public:
     void SetYPosition(float y) { mPosition.y = y; }
 
     /**
-     * Get the position of this physical object.
-     * @return The position of this physical object.
+     * Get the BODY (dynamic) position of this physical object.
+     * @return The body position of this physical object.
      */
-    b2Vec2 GetPosition() { return mPosition; }
+    b2Vec2 GetBodyPosition() { return mBody->GetPosition(); }
+
+    /**
+     * Get the initial position of this physical object
+     * @return the initial position of this object on load in.
+     */
+     b2Vec2 GetPosition() { return mPosition; }
 
     /**
      * Get the static boolean.
@@ -91,6 +98,10 @@ public:
      * @param isStatic True for static, false for dynamic.
      */
     void SetStatic(bool isStatic) { mStatic = isStatic; }
+
+    double DistanceBetweenBodies(b2Vec2 distantPos);
+
+    double AngleBetweenBodies(b2Vec2 distantPos);
 
     void SetTransform(const b2Vec2& location, double angle);
 };

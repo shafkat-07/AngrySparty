@@ -102,9 +102,9 @@
     </items>
     <angry x="-13" y="0.3" spacing="0.6">
         <gruff-sparty/>
-        <helmet-sparty/>
-        <helmet-sparty/>
-        <helmet-sparty/>
-        <helmet-sparty/>
+        <gruff-sparty/>
+        <gruff-sparty/>
+        <gruff-sparty/>
+        <gruff-sparty/>
     </angry>
 </level>
