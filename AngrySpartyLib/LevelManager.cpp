@@ -55,7 +55,9 @@ void LevelManager::ChangeLevel(int desiredLevel)
 {
     GetCurrentLevel()->ResetLevel(); // Reset previous level to default state
     mDisplayedLevel = desiredLevel;
-    GetCurrentLevel()->SetLevel(); // Install new level
+    GetCurrentLevel()->SetLevel();
+    mWinState = false;
+    mLoseState = false;
 }
 
 /**
@@ -75,10 +77,12 @@ void LevelManager::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 void LevelManager::Update(double elapsed)
 {
     GetCurrentLevel()->Update(elapsed);
-    FoeVisitor a;
-    mLevels[mDisplayedLevel]->Accept(&a);
-    if(a.GetNumFoes() == 0){
-        ChangeLevel(mDisplayedLevel+1);
+    FoeVisitor foeVisitor;
+    mLevels[mDisplayedLevel]->Accept(&foeVisitor);
+    if(foeVisitor.GetNumFoes() == 0){
+        mWinState = true;
     }
-
+    if(mLevels[mDisplayedLevel]->GetSpartyCount() == 0){
+        mLoseState = true;
+    }
 }

@@ -25,6 +25,12 @@ private:
     /// The index of the currently displayed level. Indexing from 0
     int mDisplayedLevel = 1;
 
+    /// Determines if the level is in a win state
+    bool mWinState = false;
+
+    /// Determines if the level is in a lose state
+    bool mLoseState = false;
+
 public:
     LevelManager();
     void Load(const std::wstring& filename);
@@ -62,6 +68,18 @@ public:
      * @return current level being displayed
      */
     std::shared_ptr<Level> GetCurrentLevel() const { return mLevels[mDisplayedLevel]; }
+
+    /**
+     * Gets the win state
+     * @return bool of the win state
+     */
+    bool GetWinState() { return mWinState; }
+
+    /**
+     * Gets the loss state
+     * @return bool of the lose state
+     */
+    bool GetLoseState() { return mLoseState; }
 };
 
 #endif //ANGRYSPARTY_LEVELMANAGER_H
