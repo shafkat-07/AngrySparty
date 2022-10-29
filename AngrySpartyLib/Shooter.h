@@ -88,7 +88,10 @@ public:
      */
     bool IsLoaded() { return mLoaded; }
 
-
+    /**
+     * Whether or not the shooter has launched
+     * @return True if the shooter has launched
+     */
     bool IsLaunched() { return mLaunched; }
 
     /**
@@ -144,6 +147,8 @@ public:
             );
 
     void Reset() override;
+
+    void KillDownedEnemies();
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H
