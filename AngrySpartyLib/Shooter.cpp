@@ -21,6 +21,9 @@ using namespace std;
 /// Velocity below which a Sparty is considered as still
 const float VelocityTolerance = 0.0001f;
 
+/// Points awarded per Foe eliminated
+const int PointsPerKill = 100;
+
 /**
  * Constructor for a shooter object
  *
@@ -103,7 +106,7 @@ void Shooter::DrawSpecificShooter(
 
     if (mSparty == nullptr)
     {
-        // Draw the band of the slingshot.
+        // Draw the band of the shooter.
         graphics->Scale(1, -1);
         graphics->SetPen(pen);
         graphics->StrokeLine(
@@ -115,7 +118,7 @@ void Shooter::DrawSpecificShooter(
     }
     else if (mLaunched)
     {
-        // Draw the band of the slingshot.
+        // Draw the band of the shooter.
         graphics->Scale(1, -1);
         graphics->SetPen(pen);
         graphics->StrokeLine(
@@ -177,7 +180,7 @@ void Shooter::DrawSpecificShooter(
         );
     }
 
-    // Draw the front of the slingshot.
+    // Draw the front of the shooter.
     auto bitmap = mFrontBitmap;
     graphics->Translate(0, -y);
     graphics->DrawBitmap(*bitmap,
@@ -235,8 +238,6 @@ void Shooter::Update(double elapsed)
         {
             GetWorld()->DestroyBody(mSparty->GetBody());
             mSparty->SetAlive(false);
-            mSparty->SetBody(nullptr);
-            mSparty.reset();
             mSparty = nullptr;
             mLaunched = false;
             mLoaded = false;
@@ -249,11 +250,11 @@ void Shooter::Update(double elapsed)
 
 /**
  * Launch a sparty according to which type it is and what shooter is being used.
- * @param AttachShooterBack The vector of the back of the slingshot.
- * @param AttachShooterFront The vector of the front of the slingshot.
- * @param MaxNegativePullAngle The maximum negative angle the slingshot can pull back.
- * @param MaxPositivePullAngle The maximum positive angle the slingshot can pull back.
- * @param MaxPull The maximum distance the slingshot can pull back.
+ * @param AttachShooterBack The vector of the back of the shooter.
+ * @param AttachShooterFront The vector of the front of the shooter.
+ * @param MaxNegativePullAngle The maximum negative angle the shooter can pull back.
+ * @param MaxPositivePullAngle The maximum positive angle the shooter can pull back.
+ * @param MaxPull The maximum distance the shooter can pull back.
  */
 void Shooter::LaunchSpecificSparty(
         const b2Vec2 AttachShooterBack,
@@ -271,7 +272,7 @@ void Shooter::LaunchSpecificSparty(
     auto distance = mSparty->DistanceBetweenBodies(centerPos);
     if (mSparty != nullptr)
     {
-        // Get the angle between the slingshot and the mouse
+        // Get the angle between the shooter and the mouse
         double angle = mSparty->AngleBetweenBodies(centerPos);
 
         // If the distance is too small, do nothing
@@ -311,7 +312,14 @@ void Shooter::LaunchSpecificSparty(
     }
 }
 
-
+/**
+ * Update this specific shooter
+ * @param AttachShooterBack The vector of the back of the shooter.
+ * @param AttachShooterFront The vector of the front of the shooter.
+ * @param MaxNegativePullAngle The maximum negative angle the shooter can pull back.
+ * @param MaxPositivePullAngle The maximum positive angle the shooter can pull back.
+ * @param MaxPull The maximum distance the shooter can pull back.
+ */
 void Shooter::UpdateSpecificShooter(
         const b2Vec2 AttachShooterBack,
         const b2Vec2 AttachShooterFront,
@@ -327,7 +335,7 @@ void Shooter::UpdateSpecificShooter(
     );
     if (mSparty != nullptr && !mLoaded)
     {
-        // Set the sparty position to the center of the slingshot.
+        // Set the sparty position to the center of the shooter.
         mSparty->SetTransform(centerPos, 0.0f);
         mLoaded = true;
     }
@@ -338,7 +346,7 @@ void Shooter::UpdateSpecificShooter(
         if (distance > MaxPull)
         {
             // Adjust the Mouse position to be the maximum pull distance
-            // from the slingshot center.
+            // from the shooter center.
             // TODO logic to stop mouse from pulling sparty any further.
         }
     }
@@ -364,5 +372,7 @@ void Shooter::KillDownedEnemies()
 {
     KillFoeVisitor visitor;
     GetLevel()->Accept(&visitor);
+    int totalKills = visitor.GetTotalKills();
+    GetLevel()->UpdateScore(totalKills * PointsPerKill);
 }
 

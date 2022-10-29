@@ -18,9 +18,16 @@ class Foe;
 class KillFoeVisitor : public ItemVisitor
 {
 private:
+    int mKilledFoes = 0; ///< Total number of foes eliminated by this visitor
 
 public:
     void VisitFoe(Foe* foe) override;
+
+    /**
+     * Get the total number of foes eliminated
+     * @return Total number of foes eliminated
+     */
+    int GetTotalKills() const { return mKilledFoes; }
 };
 
 #endif //ANGRYSPARTY_KILLFOEVISITOR_H

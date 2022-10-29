@@ -3,6 +3,7 @@
  * @author brend
  */
 
+#include "pch.h"
 #include "KillFoeVisitor.h"
 #include "Foe.h"
 
@@ -16,10 +17,10 @@ void KillFoeVisitor::VisitFoe(Foe* foe)
     auto position = foe->GetBodyPosition();
     auto down = foe->GetDown();
     // If the position is below the down position, remove the foe from the world and set it to dead.
-    if (body != nullptr && position.y < down)
+    if (foe->IsAlive() && position.y < down)
     {
         foe->GetWorld()->DestroyBody(body);
-        foe->SetAliveState(false);
-        foe->SetBody(nullptr);
+        foe->SetAlive(false);
+        mKilledFoes += 1;
     }
 }
