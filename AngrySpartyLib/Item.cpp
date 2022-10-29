@@ -34,10 +34,6 @@ b2World* Item::GetWorld()
  */
 Item::~Item()
 {
-//    if (mBody != nullptr)
-//    {
-//        mLevel->GetWorld()->DestroyBody(mBody);
-//    }
 }
 
 /**

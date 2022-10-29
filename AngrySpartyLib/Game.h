@@ -50,12 +50,25 @@ public:
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics, int width, int height);
     void SetLevel(int Level);
     void Update(double elapsed);
+    void ToggleRing(bool);
 
     /**
      * Get the total score for the game
      * @return Total score for this game
      */
     int GetTotalScore() const { return mTotalScore; }
+
+    /**
+     * Get the current level object
+     * @return Get the current level object
+     */
+    std::shared_ptr<Level> GetCurrentLevel() { return mLevelManager->GetCurrentLevel(); }
+
+    /**
+     * Get the current level's size
+     * @return Current level's size
+     */
+    b2Vec2 GetCurrentLevelSize() const { return mLevelManager->GetCurrentLevelSize(); }
 
     /**
      * Get the current level's score
@@ -69,25 +82,9 @@ public:
      */
     void UpdateTotalScore(int score) { mTotalScore += score; }
 
-    /**
-     * Get the current level's size
-     * @return Current level's size
-     */
-    b2Vec2 GetCurrentLevelSize() const { return mLevelManager->GetCurrentLevelSize(); }
-
     void OnMouseMove(wxMouseEvent& event);
-
-//    void OnMouseUp(wxMouseEvent& event);
-
     void OnLeftDown(wxMouseEvent& event);
-
     void OnLeftUp(wxMouseEvent& event);
-
-    /**
-     * Get the current level object
-     * @return Get the current level object
-     */
-    std::shared_ptr<Level> GetCurrentLevel() { return mLevelManager->GetCurrentLevel(); }
 };
 
 #endif //ANGRYSPARTY_GAME_H

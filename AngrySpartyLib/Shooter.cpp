@@ -35,7 +35,7 @@ Shooter::Shooter(Level* level) : Item(level)
  *
  * @param graphics
  */
-void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Shooter::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
 
     graphics->PushState();
@@ -49,7 +49,7 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     // And the top
     double y = mHeight * Consts::MtoCM;
 
-    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+    shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Translate(0, y);
     graphics->Scale(1, -1);
@@ -81,7 +81,7 @@ void Shooter::Draw(std::shared_ptr<wxGraphicsContext> graphics)
  * @param ShooterBandThickness The thickness of the band being drawn.
  */
 void Shooter::DrawSpecificShooter(
-        std::shared_ptr<wxGraphicsContext> graphics,
+        shared_ptr<wxGraphicsContext> graphics,
         const b2Vec2 AttachShooterBack,
         const b2Vec2 AttachShooterFront,
         const wxColor BandColor,
@@ -200,8 +200,8 @@ void Shooter::XmlLoad(wxXmlNode* node)
     node->GetAttribute(L"y", L"0.0").ToDouble(&mY);
 
     auto name = "images/" + node->GetName() + "-front.png";
-    mFrontImage = std::make_shared<wxImage>(name);
-    mFrontBitmap = std::make_shared<wxBitmap>(*mFrontImage);
+    mFrontImage = make_shared<wxImage>(name);
+    mFrontBitmap = make_shared<wxBitmap>(*mFrontImage);
 }
 
 /**
@@ -230,7 +230,7 @@ void Shooter::Update(double elapsed)
     {
         // Get the current velocity from the launched sparty
         auto velocity = mSparty->GetBody()->GetLinearVelocity();
-        if (std::abs(velocity.x) < VelocityTolerance && std::abs(velocity.y) < VelocityTolerance)
+        if (abs(velocity.x) < VelocityTolerance && abs(velocity.y) < VelocityTolerance)
         {
             GetWorld()->DestroyBody(mSparty->GetBody());
             mSparty->SetAlive(false);

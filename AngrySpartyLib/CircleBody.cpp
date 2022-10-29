@@ -15,6 +15,8 @@
 #include "Level.h"
 #include "Consts.h"
 
+using namespace std;
+
 /// Default radius for a circular body
 const double DefaultRadius = 0.25f;
 
@@ -31,9 +33,9 @@ CircleBody::CircleBody(Level* level) : PhysicalObject(level)
  * Create a shape for a circle body
  * @return The b2CircleShape for a circle body
  */
-std::unique_ptr<b2Shape> CircleBody::CreateShape()
+unique_ptr<b2Shape> CircleBody::CreateShape()
 {
-    std::unique_ptr<b2CircleShape> circle = std::make_unique<b2CircleShape>();
+    unique_ptr<b2CircleShape> circle = make_unique<b2CircleShape>();
     circle->m_radius = mRadius;
     return circle;
 }
@@ -50,9 +52,9 @@ void CircleBody::XmlLoad(wxXmlNode* node)
 
     // CircleBody-specific attributes
     auto position = GetPosition();
-    double spacing = std::stof(node->GetParent()->GetAttribute(L"spacing", "0.0").ToStdWstring()) * GetLevel()->GetSpartyCount();
-    position.x = std::stof(node->GetParent()->GetAttribute(L"x", "0.0").ToStdWstring()) + spacing;
-    position.y = std::stof(node->GetParent()->GetAttribute(L"y", "0.0").ToStdWstring());
+    double spacing = stof(node->GetParent()->GetAttribute(L"spacing", "0.0").ToStdWstring()) * GetLevel()->GetSpartyCount();
+    position.x = stof(node->GetParent()->GetAttribute(L"x", "0.0").ToStdWstring()) + spacing;
+    position.y = stof(node->GetParent()->GetAttribute(L"y", "0.0").ToStdWstring());
     SetXPosition(position.x);
     SetYPosition(position.y);
 
@@ -62,7 +64,7 @@ void CircleBody::XmlLoad(wxXmlNode* node)
  * Draw a circular body.
  * @param graphics The graphics context to draw on
  */
-void CircleBody::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void CircleBody::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     auto body = GetBody();
     auto position = body->GetPosition();
@@ -76,7 +78,7 @@ void CircleBody::Draw(std::shared_ptr<wxGraphicsContext> graphics)
     graphics->Translate(x, y);
     graphics->Rotate(angle);
 
-    std::shared_ptr<wxBitmap> bitmap = GetBitmap();
+    shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,

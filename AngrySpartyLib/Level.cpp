@@ -175,6 +175,10 @@ void Level::Clear()
 Level::Level(const std::wstring &filename)
 {
     Load(filename); // Load from XML first to have playing area dimensions
+    // Seed the random number generator for the ring's speed
+    random_device rd;
+    mRandom.seed(rd());
+    mRing = make_shared<Ring>(this);
 }
 
 /**
@@ -185,10 +189,17 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 {
     for(auto item : mItems)
     {
-        item->Draw(graphics);
+        if (item->IsAlive())
+        {
+            item->Draw(graphics);
+        }
+    }
+
+    if (mRing->IsActive())
+    {
+        mRing->Draw(graphics);
     }
 }
-
 
 /**
  * Handles the mouse down event
@@ -245,15 +256,14 @@ void Level::SetLevel()
     for(auto item: mItems)
     {
         item->SetAlive(true);
-        item->InstallPhysics(mPhysics);
+        item->InstallPhysics();
     }
     // Do the same for the sparties
     for (auto sparty : mSparties)
     {
         sparty->SetAlive(true);
-        sparty->InstallPhysics(mPhysics);
+        sparty->InstallPhysics();
     }
-
 
     // Anything else needed to start the level
 }
@@ -276,6 +286,8 @@ void Level::ResetLevel()
         sparty->Reset();
     }
 
+    mRing->Reset();
+
     mPhysics = nullptr;
     mScore = 0;
 }
@@ -288,7 +300,16 @@ void Level::Update(double elapsed)
 {
     for (auto item : mItems)
     {
-        item->Update(elapsed);
+        if (item->IsAlive())
+        {
+            item->Update(elapsed);
+        }
     }
+
+    if (mRing->IsActive())
+    {
+        mRing->Update(elapsed);
+    }
+
     mPhysics->GetWorld()->Step(elapsed, VelocityIterations, PositionIterations);
 }

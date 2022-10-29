@@ -10,6 +10,8 @@
 #include "Sparty.h"
 #include <iostream>
 
+using namespace std;
+
 /// Size of the slingshot image in meters
 const b2Vec2 WoodSlingshotSize = b2Vec2(0.5, 1.446);
 
@@ -48,7 +50,7 @@ Slingshot::Slingshot(Level* level) : Shooter(level)
  * Draw the slingshot components.
  * @param graphics The graphics context to draw on
  */
-void Slingshot::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Slingshot::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 

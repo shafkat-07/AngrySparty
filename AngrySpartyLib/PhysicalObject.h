@@ -32,7 +32,7 @@ private:
 public:
     PhysicalObject(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override = 0;
-    void InstallPhysics(std::shared_ptr<World>) override;
+    void InstallPhysics() override;
     virtual void Update(double elapsed) override;
     void XmlLoad(wxXmlNode* node) override;
     virtual b2Body* DefineBody(b2Shape* shape, b2World* world);

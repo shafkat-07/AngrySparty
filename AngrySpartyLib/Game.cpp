@@ -178,3 +178,18 @@ void Game::OnLeftUp(wxMouseEvent &event)
         mMouseJoint = nullptr;
     }
 }
+
+/**
+ * Enables/disables the ring for all levels
+ *
+ * This acts on all levels since the menu option
+ * determines the global activation state of rings for the game
+ * @param activate Whether or not to activate the rings
+ */
+void Game::ToggleRing(bool activate)
+{
+    for (auto level : mLevelManager->GetLevels())
+    {
+        level->GetRing()->SetActive(activate);
+    }
+}

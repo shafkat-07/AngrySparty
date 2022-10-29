@@ -30,6 +30,9 @@ private:
     /// Debug view enabled?
     bool mDebugView = false;
 
+    /// Ring enabled?
+    bool mRingView = false;
+
     void OnPaint(wxPaintEvent& event);
 
     void OnLevel0(wxCommandEvent& event);
@@ -37,6 +40,7 @@ private:
     void OnLevel2(wxCommandEvent& event);
     void OnLevel3(wxCommandEvent& event);
     void OnDebugView(wxCommandEvent& event);
+    void OnRingToggle(wxCommandEvent& event);
 
     void OnTimer(wxTimerEvent& event);
 
@@ -51,6 +55,7 @@ public:
      * Stop the timer so the window can close
      */
     void Stop() { mTimer.Stop(); }
+
 };
 
 #endif //ANGRYSPARTY_GAMEVIEW_H

@@ -68,14 +68,14 @@ public:
      * The bitmap for this item
      * @return The wxBitmap for this item
      */
-    std::shared_ptr<wxBitmap> GetBitmap() { return mItemBitmap; }
+    virtual std::shared_ptr<wxBitmap> GetBitmap() { return mItemBitmap; }
 
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 
     virtual void XmlLoad(wxXmlNode* node);
 
     /** Installs physics for an item */
-    virtual void InstallPhysics(std::shared_ptr<World>) {}
+    virtual void InstallPhysics() {}
 
     /**
      * Test to see if an item is hit by a mouse click

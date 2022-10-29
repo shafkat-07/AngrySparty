@@ -67,11 +67,10 @@ void PhysicalObject::XmlLoad(wxXmlNode* node)
 
 /**
  * Install physics for a physical object
- * @param physicsWorld The physics world in which to install the object
  */
-void PhysicalObject::InstallPhysics(std::shared_ptr<World> physicsWorld) // TODO Add physics parameter
+void PhysicalObject::InstallPhysics()
 {
-    auto world = GetWorld(); // TODO use physics object in the level and get its world
+    auto world = GetWorld();
     mBody = DefineBody(&(*CreateShape()), world);
 }
 
@@ -149,7 +148,7 @@ void PhysicalObject::SetTransform(const b2Vec2& location, double angle)
 double PhysicalObject::DistanceBetweenBodies(b2Vec2 distantPos)
 {
     auto pos = mBody->GetPosition();
-    auto distance = std::hypot(distantPos.x - pos.x, distantPos.y - pos.y);
+    auto distance = hypot(distantPos.x - pos.x, distantPos.y - pos.y);
     return distance;
 }
 
@@ -161,7 +160,7 @@ double PhysicalObject::DistanceBetweenBodies(b2Vec2 distantPos)
 double PhysicalObject::AngleBetweenBodies(b2Vec2 distantPos)
 {
     auto pos = mBody->GetPosition();
-    auto angle = std::atan2(distantPos.y - pos.y, distantPos.x - pos.x);
+    auto angle = atan2(distantPos.y - pos.y, distantPos.x - pos.x);
     return angle;
 }
 

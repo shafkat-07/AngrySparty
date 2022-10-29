@@ -38,10 +38,10 @@ public:
     int GetDisplayedLevel() const {return mDisplayedLevel;}
 
     /**
-     * Returns the total number of levels in the game
-     * @return The total number of levels in the game
+     * Returns the vector of levels
+     * @return The vector of levels
      */
-    int GetLevelCount() const {return mLevelCount;}
+    std::vector<std::shared_ptr<Level>> GetLevels() const { return mLevels; }
 
     void Update(double elapsed);
 

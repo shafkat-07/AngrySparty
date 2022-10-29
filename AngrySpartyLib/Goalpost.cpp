@@ -10,6 +10,8 @@
 #include "Goalpost.h"
 #include "Sparty.h"
 
+using namespace std;
+
 /// Size of the Goalpost image in meters
 const b2Vec2 GoalpostsSize = b2Vec2(1, 2.649);
 
@@ -48,7 +50,7 @@ Goalpost::Goalpost(Level* level) : Shooter(level)
  * Draw the goalpost components.
  * @param graphics The graphics context to draw on
  */
-void Goalpost::Draw(std::shared_ptr<wxGraphicsContext> graphics)
+void Goalpost::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
     Shooter::Draw(graphics);
 
