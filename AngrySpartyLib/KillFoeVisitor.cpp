@@ -16,9 +16,10 @@ void KillFoeVisitor::VisitFoe(Foe* foe)
     auto position = foe->GetBodyPosition();
     auto down = foe->GetDown();
     // If the position is below the down position, remove the foe from the world and set it to dead.
-    if (position.y < down)
+    if (body != nullptr && position.y < down)
     {
         foe->GetWorld()->DestroyBody(body);
         foe->SetAliveState(false);
+        foe->SetBody(nullptr);
     }
 }

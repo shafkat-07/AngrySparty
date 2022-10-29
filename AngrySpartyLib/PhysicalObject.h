@@ -79,7 +79,7 @@ public:
      * Get the BODY (dynamic) position of this physical object.
      * @return The body position of this physical object.
      */
-    b2Vec2 GetBodyPosition() { return mBody->GetPosition(); }
+    b2Vec2 GetBodyPosition() { return mBody != nullptr ? mBody->GetPosition() : b2Vec2(0.0f, 0.0f); }
 
     /**
      * Get the initial position of this physical object
