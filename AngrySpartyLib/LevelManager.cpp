@@ -116,15 +116,33 @@ void LevelManager::Update(double elapsed)
 
     case State::Playing:
         GetCurrentLevel()->Update(elapsed);
-        // Count foes
-        // Count sparties to determin win state
-        // Change to ending state
+        mLevels[mDisplayedLevel]->Accept(&foeVisitor);
+        if (foeVisitor.GetNumFoes() == 0)
+        {
+            mWinState = true;
+        }
+        else if (mLevels[mDisplayedLevel]->GetSpartiesLeft() == 0)
+        {
+            mLoseState = true;
+        }
+
+        if (mWinState || mLoseState)
+        {
+            mState = State::Ending;
+            mLevelMessageDuration = 0;
+        }
         break;
 
     case State::Ending:
-        // Determine next level depending on win state
-        // Update total score depending on win state
-        // Change to corresponding level
+        mLevelMessageDuration += elapsed;
+        if(mLevelMessageDuration >= LevelMessageDisplayTime)
+        {
+            // Determine next level depending on win state
+            int nextLevel = mWinState ? (mDisplayedLevel + 1) % mLevelCount : mDisplayedLevel;
+            // Update total score depending on win state
+            if (mWinState) UpdateTotalScore(GetCurrentLevelScore());
+            ChangeLevel(nextLevel); // Resets the level message duration and sets back to Starting state
+        }
         break;
 
     default:
