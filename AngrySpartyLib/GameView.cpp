@@ -12,7 +12,7 @@
 using namespace std;
 
 /// Frame duration in seconds
-const double FrameDuration = 1.0/60.0;
+const float FrameDuration = 1.0f/60.0f;
 /**
  * Initialize the game view class.
  * @param parent The parent window for this class
@@ -36,7 +36,7 @@ void GameView::Initialize(wxFrame* parent)
     Bind(wxEVT_LEFT_UP, &GameView::OnLeftUp, this);
 
     mTimer.SetOwner(this);
-    mTimer.Start(FrameDuration);
+    mTimer.Start(int(FrameDuration * 1000));
     Bind(wxEVT_TIMER, &GameView::OnTimer, this);
 
     mStopWatch.Start();
