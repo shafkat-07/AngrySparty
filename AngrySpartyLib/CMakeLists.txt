@@ -21,8 +21,8 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         PolygonBody.cpp PolygonBody.h
         CircleBody.cpp CircleBody.h
         Sparty.cpp Sparty.h
-        ItemVisitor.cpp ItemVisitor.h
-        FoeVisitor.h
+        ItemVisitor.h
+        FoeVisitor.cpp FoeVisitor.h
         Ring.cpp Ring.h
         KillFoeVisitor.cpp KillFoeVisitor.h)
 

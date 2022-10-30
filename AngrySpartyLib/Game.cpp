@@ -190,6 +190,6 @@ void Game::ToggleRing(bool activate)
 {
     for (auto level : mLevelManager->GetLevels())
     {
-        level->GetRing()->SetActive(activate);
+        level->GetRing()->SetAlive(activate);
     }
 }

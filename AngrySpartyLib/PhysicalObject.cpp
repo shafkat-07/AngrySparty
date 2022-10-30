@@ -31,14 +31,12 @@ void PhysicalObject::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
 }
 
-
 /**
  * Update the object
  * @param elapsed time since last update
  */
 void PhysicalObject::Update(double elapsed)
 {
-
 }
 
 /**

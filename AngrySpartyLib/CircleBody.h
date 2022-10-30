@@ -28,6 +28,7 @@ public:
     CircleBody(Level* level);
     std::unique_ptr<b2Shape> CreateShape();
     void XmlLoad(wxXmlNode* node) override;
+    bool HitTest(double x, double y) override;
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
 
     /**
@@ -35,8 +36,6 @@ public:
      * @return The radius of this circle body
      */
     double GetRadius() { return mRadius; }
-
-    bool HitTest(double x, double y) override;
 };
 
 #endif //ANGRYSPARTY_CIRCLEBODY_H

@@ -21,14 +21,11 @@ class Slingshot : public Shooter
 {
 private:
 
-
 public:
     Slingshot(Level* level);
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void XmlLoad(wxXmlNode* node) override;
-
     void Update(double elapsed) override;
-
     void LaunchSparty() override;
 };
 

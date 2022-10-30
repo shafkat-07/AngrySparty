@@ -28,7 +28,6 @@ class ItemVisitor;
  */
 class Level {
 private:
-
     /// Size of the playing area in meters
     b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
 
@@ -54,7 +53,7 @@ private:
      int mScore = 0;
 
      /// The number of sparties in the world.
-     int mSpartyCount = 0;
+     int mSpartiesLeft = 0;
 
     /// Random number generator
     std::mt19937 mRandom;
@@ -65,13 +64,13 @@ private:
 public:
     Level(const std::wstring &);
     void Load(const std::wstring &);
-    void Clear();
     void XmlItem(wxXmlNode* node);
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
     std::shared_ptr<Item> HitTest(double x, double y);
     void SetLevel();
     void ResetLevel();
     void Update(double elapsed);
+    void Accept(ItemVisitor* visitor);
 
     /**
      * Get the random number generator
@@ -92,10 +91,21 @@ public:
     b2Vec2 GetSize() const { return mSize; }
 
     /**
-     * Getter for the number of sparties in the world.
-     * @return Number of sparties.
+     * Getter for the number of sparties left
+     * @return Number of sparties alive
      */
-    int GetSpartyCount() const { return mSpartyCount; }
+    int GetSpartiesLeft() const { return mSpartiesLeft; }
+
+    /**
+     * Decreases the amount of sparties left by 1
+     */
+    void ReduceSpartiesLeft() { --mSpartiesLeft; }
+
+    /**
+     * Getter for the total sparties in this level (including dead ones)
+     * @return Total number of sparties
+     */
+    int GetTotalSparties() const { return mSparties.size(); }
 
     /**
      * Get the list of sparties
@@ -127,13 +137,9 @@ public:
      */
     std::shared_ptr<Ring> GetRing() { return mRing; }
 
-
-    void Accept(ItemVisitor* visitor);
-
+    // Sparty methods
     void TransferSpartiesToShooter();
-
     void LaunchSparty();
-
 };
 
 #endif //ANGRYSPARTY_LEVEL_H

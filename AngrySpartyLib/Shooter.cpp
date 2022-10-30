@@ -19,7 +19,7 @@
 using namespace std;
 
 /// Velocity below which a Sparty is considered as still
-const float VelocityTolerance = 0.0001f;
+const float VelocityTolerance = 0.01f;
 
 /// Points awarded per Foe eliminated
 const int PointsPerKill = 100;
@@ -209,22 +209,12 @@ void Shooter::XmlLoad(wxXmlNode* node)
 }
 
 /**
- * Called when resetting the level.
- * Will remove references to any sparties or currently loaded sparties.
- */
-void Shooter::Clear()
-{
-    mSparty = nullptr;
-    GetSparties().clear();
-}
-
-/**
  * Update the Shooter.
  * @param elapsed time elapsed since last clock tick.
  */
 void Shooter::Update(double elapsed)
 {
-    if (mSparty == nullptr && !GetSparties().empty())
+    if (mSparty == nullptr && GetLevel()->GetSpartiesLeft() != 0)
     {
         mSparty = GetSparties()[mSpartyIndex];
         mSpartyIndex += 1;
@@ -238,6 +228,7 @@ void Shooter::Update(double elapsed)
         {
             GetWorld()->DestroyBody(mSparty->GetBody());
             mSparty->SetAlive(false);
+            GetLevel()->ReduceSpartiesLeft();
             mSparty = nullptr;
             mLaunched = false;
             mLoaded = false;
@@ -328,6 +319,10 @@ void Shooter::UpdateSpecificShooter(
         const double MaxPull
         )
 {
+    if (GetLevel()->GetSpartiesLeft() == 0)
+    {
+        return;
+    }
     const b2Vec2 centerPos = b2Vec2(GetX(),
             AttachShooterBack.y -
                     (AttachShooterFront.y - AttachShooterBack.y) / 2 +

@@ -4,7 +4,9 @@
  */
 
 #include "pch.h"
+#include <sstream>
 #include "LevelManager.h"
+#include "Consts.h"
 
 using namespace std;
 
@@ -22,6 +24,16 @@ const wstring XML3 = L"levels/level3.xml";
 
 /// The first level to display when starting the game
 const int StartingLevel = 1;
+
+/// Time the level start or end message displays
+const double LevelMessageDisplayTime = 2.0;
+
+/// How big the level message's font size is
+/// relative to the level's height
+const int LevelMessageFontRatio = 10;
+
+/// The color for the level message
+const wxColour LevelMessageColor = wxColour(0, 0, 255);
 
 /**
  * Constructor for the LevelManager, will load the 3 predefined levels on creation
@@ -44,11 +56,12 @@ void LevelManager::Load(const wstring& filename)
     auto newLevel = make_shared<Level>(filename);
     mLevels.push_back(newLevel);
     ++mLevelCount;
-//    cout << "Just loaded level " << mLevelCount << '\n';
 }
 
 /**
  * Updates the level displayed to the one passed in
+ *
+ * This function also gets called when using the menu options
  * @param desiredLevel The index of the level to play
  */
 void LevelManager::ChangeLevel(int desiredLevel)
@@ -56,6 +69,11 @@ void LevelManager::ChangeLevel(int desiredLevel)
     GetCurrentLevel()->ResetLevel(); // Reset previous level to default state
     mDisplayedLevel = desiredLevel;
     GetCurrentLevel()->SetLevel();
+
+    mState = State::Starting;
+    mLevelMessageDuration = 0;
+
+    // Restart win state
     mWinState = false;
     mLoseState = false;
 }
@@ -67,22 +85,77 @@ void LevelManager::ChangeLevel(int desiredLevel)
 void LevelManager::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 {
     GetCurrentLevel()->OnDraw(graphics);
-    graphics->Flush();
+
+    if (mState == State::Starting)
+    {
+        OnBeginDraw(graphics);
+    }
+    else if (mState == State::Ending)
+    {
+        OnEndDraw(graphics);
+    }
 }
 
 /**
- * Handle updates for animation
+ * Handle updates for animation and level state
  * @param elapsed The time since the last update
  */
 void LevelManager::Update(double elapsed)
 {
-    GetCurrentLevel()->Update(elapsed);
     FoeVisitor foeVisitor;
-    mLevels[mDisplayedLevel]->Accept(&foeVisitor);
-    if(foeVisitor.GetNumFoes() == 0){
-        mWinState = true;
+    switch(mState)
+    {
+    case State::Starting:
+        mLevelMessageDuration += elapsed;
+        if(mLevelMessageDuration >= LevelMessageDisplayTime)
+        {
+            mState = State::Playing;
+            mLevelMessageDuration = 0;
+        }
+        break;
+
+    case State::Playing:
+        GetCurrentLevel()->Update(elapsed);
+        // Count foes
+        // Count sparties to determin win state
+        // Change to ending state
+        break;
+
+    case State::Ending:
+        // Determine next level depending on win state
+        // Update total score depending on win state
+        // Change to corresponding level
+        break;
+
+    default:
+        break;
     }
-    if(mLevels[mDisplayedLevel]->GetSpartyCount() == 0){
-        mLoseState = true;
-    }
+}
+
+/**
+ * Draw the level begin message
+ * @param graphics The graphics context to draw on
+ */
+void LevelManager::OnBeginDraw(shared_ptr<wxGraphicsContext> graphics)
+{
+    // Set up begin message and call DrawMessage
+}
+
+/**
+ * Draw the level end message depending on the win state
+ * @param graphics The graphics context to draw on
+ */
+void LevelManager::OnEndDraw(shared_ptr<wxGraphicsContext> graphics)
+{
+    // Set up message and call DrawMessage
+}
+
+/**
+ * Draw a specific level message on the screen
+ * @param graphics The graphics context to draw on
+ * @param message The message to draw
+ */
+void LevelManager::DrawMessage(shared_ptr<wxGraphicsContext> graphics, string message)
+{
+    // Draw message
 }

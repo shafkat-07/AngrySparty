@@ -35,7 +35,6 @@ public:
      * @return The down position of this foe.
      */
     double GetDown() { return mDown; }
-
 };
 
 #endif //ANGRYSPARTY_FOE_H
