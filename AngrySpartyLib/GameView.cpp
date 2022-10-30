@@ -12,7 +12,7 @@
 using namespace std;
 
 /// Frame duration in seconds
-const float FrameDuration = 1.0f/60.0f;
+const double FrameDuration = 1.0f/60.0f;
 /**
  * Initialize the game view class.
  * @param parent The parent window for this class
