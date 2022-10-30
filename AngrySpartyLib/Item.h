@@ -39,13 +39,16 @@ public:
     /// Copy constructor (disabled)
     Item(const Item &) = delete;
 
-    Item(Level* level);
-
     /// Assignment operator (disabled)
     void operator=(const Item &) = delete;
 
     /// Destructor
     virtual ~Item();
+
+    Item(Level* level);
+    virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
+    virtual void XmlLoad(wxXmlNode* node);
+    b2World* GetWorld();
 
     /**
      * Handle updates for animation
@@ -55,8 +58,6 @@ public:
 
     /// Indicates that the item has been released by the mouse
     virtual void Release() {}
-
-    b2World* GetWorld();
 
     /**
      * Get the level this item is contained in.
@@ -69,10 +70,6 @@ public:
      * @return The wxBitmap for this item
      */
     virtual std::shared_ptr<wxBitmap> GetBitmap() { return mItemBitmap; }
-
-    virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
-
-    virtual void XmlLoad(wxXmlNode* node);
 
     /** Installs physics for an item */
     virtual void InstallPhysics() {}
@@ -90,36 +87,6 @@ public:
      * @param visitor The visitor to accept.
      */
     virtual void Accept(ItemVisitor *visitor) = 0;
-
-    // Shooter pass down methods.
-
-    /**
-     * Set the sparties to shoot inside the shooter.
-     *
-     * When the sparty is inside the shooter, it needs to be drawn by it.
-     * @param sparties The sparties of the current level. These can be shot out of a shooter object.
-     */
-    virtual void SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties) {}
-
-    /**
-     * Clear the Sparties that are in the shooter.
-     *
-     * If there are any sparties left in the shooter, they will be cleared out.
-     */
-    virtual void Clear() {}
-
-    /**
-     * Get the body for an item
-     * @return This item's body (nullptr if no body)
-     */
-    virtual b2Body* GetBody() { return nullptr; }
-
-    /**
-     * Handles launching a sparty
-     *
-     * Empty for everything except shooters
-     */
-    virtual void LaunchSparty() {};
 
     /**
      * Whether or not this item is to be considered in the game
@@ -140,4 +107,27 @@ public:
      * back to alive when setting its level
      */
     virtual void Reset() { mAlive = false; }
+
+    // Shooter pass down methods.
+
+    /**
+     * Set the sparties to shoot inside the shooter.
+     *
+     * When the sparty is inside the shooter, it needs to be drawn by it.
+     * @param sparties The sparties of the current level. These can be shot out of a shooter object.
+     */
+    virtual void SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties) {}
+
+    /**
+     * Get the body for an item
+     * @return This item's body (nullptr if no body)
+     */
+    virtual b2Body* GetBody() { return nullptr; }
+
+    /**
+     * Handles launching a sparty
+     *
+     * Empty for everything except shooters
+     */
+    virtual void LaunchSparty() {};
 };

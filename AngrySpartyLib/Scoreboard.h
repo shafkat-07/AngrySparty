@@ -25,5 +25,4 @@ public:
     void Draw(std::shared_ptr<wxGraphicsContext> graphics);
 };
 
-
 #endif //ANGRYSPARTY_SCOREBOARD_H

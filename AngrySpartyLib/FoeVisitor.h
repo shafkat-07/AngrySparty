@@ -14,17 +14,13 @@
 /**
  * Concrete visitor for counting foes
  */
-class FoeVisitor : public ItemVisitor{
+class FoeVisitor : public ItemVisitor {
 private:
     /// Number of foes alive in the current level
     int mAliveFoes = 0;
 
 public:
-    /**
-     * Visits each foe and increments it's counter
-     * @param foe The visited foe
-     */
-    void VisitFoe(Foe* foe) override { ++mAliveFoes; }
+    void VisitFoe(Foe* foe) override;
 
     /**
      * A getter for the foe count from the level

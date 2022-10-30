@@ -52,12 +52,12 @@ void CircleBody::XmlLoad(wxXmlNode* node)
 
     // CircleBody-specific attributes
     auto position = GetPosition();
-    double spacing = stof(node->GetParent()->GetAttribute(L"spacing", "0.0").ToStdWstring()) * GetLevel()->GetSpartyCount();
+    double spacing = stof(node->GetParent()->GetAttribute(L"spacing", "0.0").ToStdWstring())
+                        * GetLevel()->GetTotalSparties();
     position.x = stof(node->GetParent()->GetAttribute(L"x", "0.0").ToStdWstring()) + spacing;
     position.y = stof(node->GetParent()->GetAttribute(L"y", "0.0").ToStdWstring());
     SetXPosition(position.x);
     SetYPosition(position.y);
-
 }
 
 /**

@@ -40,8 +40,6 @@ void Level::Load(const std::wstring &filename)
         return;
     }
 
-    Clear();
-
     // Get the XML document root node
     auto root = xmlDoc.GetRoot();
     mSize.x = stof(root->GetAttribute(L"width", "0.0").ToStdWstring());
@@ -111,7 +109,6 @@ void Level::XmlItem(wxXmlNode *node)
     {
         auto spartyItem = make_shared<Sparty>(this);
         spartyItem->XmlLoad(node);
-        mSpartyCount++;
         mSparties.push_back(spartyItem);
         return;
     }
@@ -154,21 +151,6 @@ void Level::LaunchSparty()
 }
 
 /**
- * Clears the Items from the level
- */
-void Level::Clear()
-{
-    // Sync the clear with the Shooter.
-    if (mShooterIndex >= 0)
-    {
-        mItems[mShooterIndex]->Clear();
-    }
-    // Clean up items in this level.
-    mItems.clear();
-    mSparties.clear();
-}
-
-/**
  * Constructor for the level, requires an XML file path
  * @param filename Path to the XML file
  */
@@ -195,7 +177,7 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
         }
     }
 
-    if (mRing->IsActive())
+    if (mRing->IsAlive())
     {
         mRing->Draw(graphics);
     }
@@ -264,8 +246,7 @@ void Level::SetLevel()
         sparty->SetAlive(true);
         sparty->InstallPhysics();
     }
-
-    // Anything else needed to start the level
+    mSpartiesLeft = GetTotalSparties(); // Reset to max # of sparties
 }
 
 /**
@@ -298,15 +279,14 @@ void Level::ResetLevel()
  */
 void Level::Update(double elapsed)
 {
-    for (auto item : mItems)
+    // Shooter is in charge of updating sparties and everything else
+    auto shooter = mItems[mShooterIndex];
+    if (shooter->IsAlive())
     {
-        if (item->IsAlive())
-        {
-            item->Update(elapsed);
-        }
+        shooter->Update(elapsed);
     }
 
-    if (mRing->IsActive())
+    if (mRing->IsAlive())
     {
         mRing->Update(elapsed);
     }

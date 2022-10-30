@@ -24,9 +24,6 @@ private:
     /// The Scoreboard associated to this game
     std::unique_ptr<Scoreboard> mScoreboard;
 
-    /// The total score for the game
-    int mTotalScore = 0;
-
     /// Scale we are drawing at
     double mScale = 1;
 
@@ -37,7 +34,7 @@ private:
     double mYOffset = 0;
 
     /// Mouse location
-    b2Vec2 mMouseLocation;
+    b2Vec2 mMouseLocation = b2Vec2(0.0f, 0.0f);
 
     /// Size of the playing area in meters
     std::shared_ptr<Item> mGrabbedItem;
@@ -52,11 +49,15 @@ public:
     void Update(double elapsed);
     void ToggleRing(bool);
 
+    void OnMouseMove(wxMouseEvent& event);
+    void OnLeftDown(wxMouseEvent& event);
+    void OnLeftUp(wxMouseEvent& event);
+
     /**
      * Get the total score for the game
      * @return Total score for this game
      */
-    int GetTotalScore() const { return mTotalScore; }
+    int GetTotalScore() const { return mLevelManager->GetTotalScore(); }
 
     /**
      * Get the current level object
@@ -80,11 +81,7 @@ public:
      * Add a score to the total
      * @param score The score to add
      */
-    void UpdateTotalScore(int score) { mTotalScore += score; }
-
-    void OnMouseMove(wxMouseEvent& event);
-    void OnLeftDown(wxMouseEvent& event);
-    void OnLeftUp(wxMouseEvent& event);
+    void UpdateTotalScore(int score) { mLevelManager->UpdateTotalScore(score); }
 };
 
 #endif //ANGRYSPARTY_GAME_H

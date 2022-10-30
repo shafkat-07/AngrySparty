@@ -31,11 +31,27 @@ private:
     /// Determines if the level is in a lose state
     bool mLoseState = false;
 
+    /// The duration for the level begin/end message
+    double mLevelMessageDuration = 0;
+
+    /// The level state possibilities
+    enum class State {Starting, Playing, Ending};
+
+    /// The current level station state
+    State mState = State::Starting;
+
+    /// The total score for the game
+    int mTotalScore = 0;
+
 public:
     LevelManager();
     void Load(const std::wstring& filename);
     void ChangeLevel(int desiredLevel);
+    void Update(double elapsed);
     void OnDraw(std::shared_ptr<wxGraphicsContext> graphics);
+    void OnBeginDraw(std::shared_ptr<wxGraphicsContext> graphics);
+    void OnEndDraw(std::shared_ptr<wxGraphicsContext> graphics);
+    void DrawMessage(std::shared_ptr<wxGraphicsContext> graphics, std::string message);
 
     /**
      * Returns the currently played/displayed level
@@ -48,8 +64,6 @@ public:
      * @return The vector of levels
      */
     std::vector<std::shared_ptr<Level>> GetLevels() const { return mLevels; }
-
-    void Update(double elapsed);
 
     /**
      * Get the current level's score
@@ -70,16 +84,16 @@ public:
     std::shared_ptr<Level> GetCurrentLevel() const { return mLevels[mDisplayedLevel]; }
 
     /**
-     * Gets the win state
-     * @return bool of the win state
+     * Get the total score for the game
+     * @return Total score for this game
      */
-    bool GetWinState() { return mWinState; }
+    int GetTotalScore() const { return mTotalScore; }
 
     /**
-     * Gets the loss state
-     * @return bool of the lose state
+     * Add a score to the total
+     * @param score The score to add
      */
-    bool GetLoseState() { return mLoseState; }
+    void UpdateTotalScore(int score) { mTotalScore += score; }
 };
 
 #endif //ANGRYSPARTY_LEVELMANAGER_H

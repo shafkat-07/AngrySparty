@@ -10,14 +10,18 @@
 
 using namespace std;
 
-/// The font size for the scoreboard
-const int FontSize = 80;
+/// How big the scoreboard's font size is
+/// relative to the level's height
+const int ScoreboardFontRatio = 10;
 
 /// The horizontal distance to the edge of the screen for the scores
 const int HorizontalMargin = 20;
 
 /// The vertical distance to the edge of the screen for the scores
 const int VerticalMargin = 10;
+
+/// The color for the scoreboard
+const wxColour ScoreboardColor = wxColour(255, 0, 0);
 
 /**
  * Constructor for a Scoreboard
@@ -41,11 +45,11 @@ void Scoreboard::Draw(shared_ptr<wxGraphicsContext> graphics)
     double hit = currentLevelSize.y * Consts::MtoCM;
 
     graphics->PushState();
-    wxFont bigFont(wxSize(0, FontSize),
+    wxFont bigFont(wxSize(0, currentLevelSize.y * ScoreboardFontRatio),
                    wxFONTFAMILY_SWISS,
                    wxFONTSTYLE_NORMAL,
                    wxFONTWEIGHT_BOLD);
-    graphics->SetFont(bigFont, wxColour(255, 0, 0));
+    graphics->SetFont(bigFont, ScoreboardColor);
 
     // Store the width of the score to fit it to the screen accordingly
     double currScoreWidth;

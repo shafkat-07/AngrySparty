@@ -38,7 +38,9 @@ public:
     Shooter(Level* level);
     virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
     virtual void XmlLoad(wxXmlNode* node);
-
+    void Update(double elapsed) override;
+    void Reset() override;
+    void KillDownedEnemies();
     void DrawSpecificShooter(
             std::shared_ptr<wxGraphicsContext> graphics,
             const b2Vec2 AttachShooterBack,
@@ -46,6 +48,22 @@ public:
             const wxColor BandColor,
             const int ShooterBandThickness
             );
+
+    void LaunchSpecificSparty(
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MaxPositivePullAngle,
+            const double MaxPull
+    );
+
+    void UpdateSpecificShooter(
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MaxPositivePullAngle,
+            const double MaxPull
+    );
 
     /**
      * Get the width of the shooter
@@ -125,30 +143,6 @@ public:
      * Does nothing.
      */
     virtual void Accept(ItemVisitor* visitor) { }
-
-    void Clear() override;
-
-    void Update(double elapsed) override;
-
-    void LaunchSpecificSparty(
-            const b2Vec2 AttachShooterBack,
-            const b2Vec2 AttachShooterFront,
-            const double MaxNegativePullAngle,
-            const double MaxPositivePullAngle,
-            const double MaxPull
-            );
-
-    void UpdateSpecificShooter(
-            const b2Vec2 AttachShooterBack,
-            const b2Vec2 AttachShooterFront,
-            const double MaxNegativePullAngle,
-            const double MaxPositivePullAngle,
-            const double MaxPull
-            );
-
-    void Reset() override;
-
-    void KillDownedEnemies();
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

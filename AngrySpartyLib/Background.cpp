@@ -18,7 +18,6 @@ using namespace std;
  */
 Background::Background(Level* level) : Item(level)
 {
-
 }
 
 /**
@@ -27,7 +26,6 @@ Background::Background(Level* level) : Item(level)
  */
 void Background::Draw(shared_ptr<wxGraphicsContext> graphics)
 {
-
     auto wid = mWidth * Consts::MtoCM;
     auto hit = mHeight * Consts::MtoCM;
 
@@ -40,7 +38,6 @@ void Background::Draw(shared_ptr<wxGraphicsContext> graphics)
             -hit,
             wid, hit);
     graphics->PopState();
-
 }
 
 /**

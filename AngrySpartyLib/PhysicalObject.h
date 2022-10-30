@@ -100,9 +100,7 @@ public:
     void SetStatic(bool isStatic) { mStatic = isStatic; }
 
     double DistanceBetweenBodies(b2Vec2 distantPos);
-
     double AngleBetweenBodies(b2Vec2 distantPos);
-
     void SetTransform(const b2Vec2& location, double angle);
 };
 

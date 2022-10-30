@@ -52,6 +52,9 @@ void Sparty::XmlLoad(wxXmlNode* node)
 {
     CircleBody::XmlLoad(node);
 
+    // Sparty-specific attributes
+    SetStatic(true);
+
     if (node->GetName() == "gruff-sparty")
     {
         mVelocityFactor = GruffSpartyVelocityFactor;
@@ -60,10 +63,6 @@ void Sparty::XmlLoad(wxXmlNode* node)
     {
         mVelocityFactor = HelmetSpartyVelocityFactor;
     }
-
-
-    // Sparty-specific attributes
-    SetStatic(true);
 }
 
 /**

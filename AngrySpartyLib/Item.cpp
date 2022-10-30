@@ -17,7 +17,6 @@ using namespace std;
  */
 Item::Item(Level* level) : mLevel(level)
 {
-
 }
 
 /**

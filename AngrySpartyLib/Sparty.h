@@ -27,6 +27,9 @@ private:
 public:
     Sparty(Level* level);
     void XmlLoad(wxXmlNode* node) override;
+    void ModifyBodyToDynamic();
+    b2Body* DefineBody(b2Shape* shape, b2World* world) override;
+    void Reset() override;
 
     /**
      * Accept a visitor to this item
@@ -35,10 +38,6 @@ public:
      * This will install the physics for the sparty.
      */
     void Accept(ItemVisitor* visitor) override { visitor->VisitSparty(this); }
-
-    void ModifyBodyToDynamic();
-
-    b2Body* DefineBody(b2Shape* shape, b2World* world) override;
 
     /**
      * Set the velocity factor of this sparty.
@@ -51,9 +50,6 @@ public:
      * @return The velocity factor of this sparty.
      */
     double GetVelocityFactor() { return mVelocityFactor; }
-
-    void Reset() override;
-
 };
 
 #endif //ANGRYSPARTY_SPARTY_H
