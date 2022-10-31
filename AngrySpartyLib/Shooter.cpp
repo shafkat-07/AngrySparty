@@ -24,6 +24,9 @@ const float VelocityTolerance = 0.01f;
 /// Points awarded per Foe eliminated
 const int PointsPerKill = 100;
 
+/// The velocity boost that the sparty gets when it collides with a ring.
+const float RingBoost = 5.0f;
+
 /**
  * Constructor for a shooter object
  *
@@ -224,6 +227,8 @@ void Shooter::Update(double elapsed)
     {
         // Get the current velocity from the launched sparty
         auto velocity = mSparty->GetBody()->GetLinearVelocity();
+        auto spartyPosInAir = mSparty->GetBodyPosition();
+        auto hit = GetLevel()->GetRing()->HitTest(spartyPosInAir.x, spartyPosInAir.y);
         if (abs(velocity.x) < VelocityTolerance && abs(velocity.y) < VelocityTolerance)
         {
             GetWorld()->DestroyBody(mSparty->GetBody());
@@ -235,6 +240,10 @@ void Shooter::Update(double elapsed)
             KillDownedEnemies();
             // Recursive call to update the next sparty to load.
             Shooter::Update(elapsed);
+        }
+        else if (hit)
+        {
+            mSparty->GetBody()->SetLinearVelocity(b2Vec2(velocity.x + RingBoost, velocity.y));
         }
     }
 }
@@ -293,9 +302,13 @@ void Shooter::LaunchSpecificSparty(
         // Make the sparty movable
         mSparty->GetBody()->SetFixedRotation(false);
         mSparty->GetBody()->SetGravityScale(1.0f);
-        // Set the sparty's velocity based on the angle and distance
+        // Set the sparty's velocity based on the angle and distance pulled back.
         auto velocityFactor = mSparty->GetVelocityFactor();
-        mSparty->GetBody()->SetLinearVelocity(b2Vec2(cos(angle) * distance * velocityFactor, sin(angle) * distance * velocityFactor));
+        mSparty->GetBody()->SetLinearVelocity(
+                b2Vec2(
+                        cos(angle) * distance * velocityFactor,
+                        sin(angle) * distance * velocityFactor
+                        ));
 
         // Set the sparty to not be loaded, but launched.
         mLoaded = false;
@@ -343,6 +356,9 @@ void Shooter::UpdateSpecificShooter(
             // Adjust the Mouse position to be the maximum pull distance
             // from the shooter center.
             // TODO logic to stop mouse from pulling sparty any further.
+            // Suggested to grab the mouse joint and manipulate its x and y pull position.
+            // Attempting to update the Sparty's position here instead of the mouse joint will result in glitchy,
+            // often game crashing behavior (I've tried). - Brendan 11/30/2020
         }
     }
 }

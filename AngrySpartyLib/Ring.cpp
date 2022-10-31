@@ -41,6 +41,7 @@ const wstring RingFileName = L"images/ring.png";
  Ring::Ring(Level* level) : Item(level)
 {
     mRadius = GetLevel()->GetSize().y * RingRadiusRatio;
+    mX = -GetLevel()->GetSize().x / 4;
     mRingImage = make_unique<wxImage>(RingFileName, wxBITMAP_TYPE_ANY);
     mRingBitmap = make_unique<wxBitmap>(*mRingImage);
     mY = GetLevel()->GetSize().y/2; // Inital ring position
@@ -83,7 +84,7 @@ void Ring::Draw(shared_ptr<wxGraphicsContext> graphics)
     shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->PushState();
-    graphics->Translate(0, mY * Consts::MtoCM);
+    graphics->Translate(mX * Consts::MtoCM, mY * Consts::MtoCM);
     graphics->Rotate(mAngle);
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,
@@ -104,4 +105,31 @@ void Ring::Reset()
     mY = GetLevel()->GetSize().y/2; // Inital ring position
     uniform_real_distribution<> distribution(RingMinSpeedY, RingMaxSpeedY);
     mSpeedY = distribution(GetLevel()->GetRandom());
+}
+
+/**
+ * Test if a sparty has hit this ring.
+ * @param x The x position of collision
+ * @param y The y position of collision
+ * @return If the sparty collided with the ring or not.
+ */
+bool Ring::HitTest(double x, double y)
+{
+    if (!IsAlive())
+        return false;
+    double diameter = mRadius * 2;
+
+    // Make x and y relative to the top-left corner of the bitmap image
+    // Subtracting the center makes x, y relative to the image center
+    // Adding half the size makes x, y relative to the image top corner
+    double testX = x - mX + mRadius;
+    double testY = y - mY + mRadius;
+
+    // Test to see if x, y are in the image
+    if (testX < 0 || testY < 0 || testX >= diameter || testY >= diameter)
+    {
+        // We are outside the image
+        return false;
+    }
+    return true;
 }

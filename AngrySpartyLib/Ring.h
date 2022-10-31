@@ -18,7 +18,8 @@
  */
 class Ring : public Item {
 private:
-    double mY = 0; ///< Inital x-position of the ring in meters
+    double mX = 0; ///< The x location of the ring, skewed to the left side, near the launcher.
+    double mY = 0; ///< Inital y-position of the ring in meters
     double mSpeedY = 0;///< Vertical speed of the ring
     double mRadius = 0; ///< The radius of the ring
     double mAngle = 0; ///< The angle to make the ring rotate
@@ -48,6 +49,16 @@ public:
      * @return The wxBitmap for this item
      */
     std::shared_ptr<wxBitmap> GetBitmap() override { return mRingBitmap; }
+
+    /**
+     * Hitest the ring
+     *
+     * Used for testing if the launched sparty has hit the ring.
+     * @param x The x-position of the sparty
+     * @param y The y-position of the sparty
+     * @return True if the sparty has hit the ring
+     */
+    bool HitTest(double x, double y) override;
 };
 
 #endif //ANGRYSPARTY_RING_H
