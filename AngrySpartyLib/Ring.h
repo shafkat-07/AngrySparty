@@ -51,6 +51,12 @@ public:
     std::shared_ptr<wxBitmap> GetBitmap() override { return mRingBitmap; }
 
     bool SpartyHitRingTest(double x, double y, double radius);
+
+    /**
+     * Loads the x pos from XML
+     * @param node XML node
+     */
+    void XmlLoad(wxXmlNode* node) override;
 };
 
 #endif //ANGRYSPARTY_RING_H
