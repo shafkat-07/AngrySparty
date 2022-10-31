@@ -64,7 +64,7 @@ void Ring::Update(double elapsed)
     mY += mSpeedY * elapsed;
 
     // Reversing the ring in the Y direction
-    if (mSpeedY > 0 && mY + mRadius + MetersToEdge >= GetLevel()->GetSize().y ||
+    if (mSpeedY > 0 && mY + mRadius + MetersToEdge >= GetLevel()->GetSize().y / 2 ||
         mSpeedY < 0 && mY - mRadius - MetersToEdge < 0)
     {
         mSpeedY = -mSpeedY;
