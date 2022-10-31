@@ -100,8 +100,6 @@ void Ring::Draw(shared_ptr<wxGraphicsContext> graphics)
             -wid/2,
             wid, wid);
     graphics->PopState();
-
-    std::cout << mAngle << '\n';
 }
 
 /**

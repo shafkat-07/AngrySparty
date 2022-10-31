@@ -30,7 +30,7 @@ void GameView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel2,this, LEVEL_2);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnLevel3,this, LEVEL_3);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnDebugView,this, IDM_DEBUG_VIEW);
-    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnRingToggle,this, IDM_RING);
+//    parent->Bind(wxEVT_COMMAND_MENU_SELECTED,&GameView::OnRingToggle,this, IDM_RING);
 
     Bind(wxEVT_LEFT_DOWN, &GameView::OnLeftDown, this);
     Bind(wxEVT_MOTION, &GameView::OnMouseMove, this);

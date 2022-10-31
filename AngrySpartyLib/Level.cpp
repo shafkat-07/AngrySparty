@@ -98,7 +98,6 @@ void Level::XmlItem(wxXmlNode *node)
     }
     else if (type == "ring")
     {
-        std::cout << "Loaded ring" << '\n';
         item = mRing;
         mRingToggle = true;
     }
