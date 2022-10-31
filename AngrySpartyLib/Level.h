@@ -61,9 +61,6 @@ private:
     /// The speed-boost ring for this level
     std::shared_ptr<Ring> mRing;
 
-    /// Determines if the level has a ring to draw
-    bool mRingToggle = false;
-
 public:
     Level(const std::wstring &);
     void Load(const std::wstring &);
