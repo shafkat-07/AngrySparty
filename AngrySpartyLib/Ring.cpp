@@ -41,7 +41,7 @@ const wstring RingFileName = L"images/ring.png";
  Ring::Ring(Level* level) : Item(level)
 {
     mRadius = GetLevel()->GetSize().y * RingRadiusRatio;
-    mX = -GetLevel()->GetSize().x / 4;
+    mX = -GetLevel()->GetSize().x / 5;
     mRingImage = make_unique<wxImage>(RingFileName, wxBITMAP_TYPE_ANY);
     mRingBitmap = make_unique<wxBitmap>(*mRingImage);
     mY = GetLevel()->GetSize().y/2; // Inital ring position
