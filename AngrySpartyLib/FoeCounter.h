@@ -1,12 +1,12 @@
 /**
- * @file FoeVisitor.h
+ * @file FoeCounter.h
  * @author Western Tanager
  *
  * Concrete visitor for counting foes
  */
 
-#ifndef ANGRYSPARTY_FOEVISITOR_H
-#define ANGRYSPARTY_FOEVISITOR_H
+#ifndef ANGRYSPARTY_FOECOUNTER_H
+#define ANGRYSPARTY_FOECOUNTER_H
 
 #include "ItemVisitor.h"
 #include "Item.h"
@@ -14,7 +14,7 @@
 /**
  * Concrete visitor for counting foes
  */
-class FoeVisitor : public ItemVisitor {
+class FoeCounter : public ItemVisitor {
 private:
     /// Number of foes alive in the current level
     int mAliveFoes = 0;
@@ -29,4 +29,4 @@ public:
     int GetNumFoes() const { return  mAliveFoes; }
 };
 
-#endif //ANGRYSPARTY_FOEVISITOR_H
+#endif //ANGRYSPARTY_FOECOUNTER_H

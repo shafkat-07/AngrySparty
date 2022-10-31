@@ -37,6 +37,8 @@ public:
      */
     b2Body* GetGround() { return mGround; }
 
+    void Update(double elapsed);
+
 private:
     /// The box2d world
     b2World mWorld;

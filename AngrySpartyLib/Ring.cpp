@@ -41,6 +41,7 @@ const wstring RingFileName = L"images/ring.png";
  Ring::Ring(Level* level) : Item(level)
 {
     mRadius = GetLevel()->GetSize().y * RingRadiusRatio;
+    mX = -GetLevel()->GetSize().x / 5;
     mRingImage = make_unique<wxImage>(RingFileName, wxBITMAP_TYPE_ANY);
     mRingBitmap = make_unique<wxBitmap>(*mRingImage);
     mY = GetLevel()->GetSize().y/2; // Inital ring position
@@ -72,7 +73,7 @@ void Ring::Update(double elapsed)
     mY += mSpeedY * elapsed;
 
     // Reversing the ring in the Y direction
-    if (mSpeedY > 0 && mY + mRadius + MetersToEdge >= GetLevel()->GetSize().y ||
+    if (mSpeedY > 0 && mY + mRadius + MetersToEdge >= GetLevel()->GetSize().y / 2 ||
         mSpeedY < 0 && mY - mRadius - MetersToEdge < 0)
     {
         mSpeedY = -mSpeedY;
@@ -115,4 +116,36 @@ void Ring::Reset()
     mY = GetLevel()->GetSize().y/2; // Inital ring position
     uniform_real_distribution<> distribution(RingMinSpeedY, RingMaxSpeedY);
     mSpeedY = distribution(GetLevel()->GetRandom());
+}
+
+/**
+ * Compute the distance between 2 points
+ * @param x1 x-coordinate of point 1
+ * @param y1 y-coordinate of point 1
+ * @param x2 x-coordinate of point 2
+ * @param y2 y-coordinate of point 2
+ * @return Computed distance
+ */
+double Distance(double x1, double y1, double x2, double y2)
+{
+    return sqrt(pow((x1-x2),2) + pow((y1-y2),2));
+}
+
+/**
+ * Test if the sparty's underlying circle touches
+ * the ring's underlying circle
+ * @param spartyX The x position of the sparty
+ * @param spartyY The y position of the sparty
+ * @param spartyRadius The radius of the sparty
+ * @return True if the sparty touches the ring
+ */
+bool Ring::SpartyHitRingTest(double spartyX, double spartyY, double spartyRadius)
+{
+    if (!IsAlive())
+    {
+        return false;
+    }
+    double distance = Distance(spartyX, spartyY, mX, mY);
+    double sumOfRadii = spartyRadius + mRadius;
+    return distance < sumOfRadii;
 }

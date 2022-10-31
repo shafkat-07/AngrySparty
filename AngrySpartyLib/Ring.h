@@ -18,11 +18,11 @@
  */
 class Ring : public Item {
 private:
-    double mY = 0; ///< Initial x-position of the ring in meters
+    double mX = 0; ///< The x location of the ring, skewed to the left side, near the launcher.
+    double mY = 0; ///< Inital y-position of the ring in meters
     double mSpeedY = 0;///< Vertical speed of the ring
     double mRadius = 0; ///< The radius of the ring
     double mAngle = 0; ///< The angle to make the ring rotate
-    double mX = 0; ///< y-position of the ring in meters
 
     /// The underlying ring image
     std::shared_ptr<wxImage> mRingImage;
@@ -50,7 +50,7 @@ public:
      */
     std::shared_ptr<wxBitmap> GetBitmap() override { return mRingBitmap; }
 
-    void XmlLoad(wxXmlNode* node) override;
+    bool SpartyHitRingTest(double x, double y, double radius);
 };
 
 #endif //ANGRYSPARTY_RING_H

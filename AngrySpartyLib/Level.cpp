@@ -18,15 +18,6 @@
 
 using namespace std;
 
-/// Gravity in meters per second per second
-const float Gravity = -9.8f;
-
-/// Number of velocity update iterations per step
-const int VelocityIterations = 6;
-
-/// Number of position update iterations per step
-const int PositionIterations = 2;
-
 /**
  * Loads a specified XML file into the level
  * @param filename The location of the XML file on disk
@@ -198,7 +189,8 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 shared_ptr<Item> Level::HitTest(double x, double y)
 {
     // TODO Comment out this first loop to disable user grabbing blocks
-    for(auto item : mItems){
+    for(auto item : mItems)
+    {
         if (item->IsAlive())
         {
             if(item->HitTest(x,y))
@@ -208,7 +200,8 @@ shared_ptr<Item> Level::HitTest(double x, double y)
         }
     }
 
-    for(auto sparty : mSparties){
+    for(auto sparty : mSparties)
+    {
         if (sparty->IsAlive())
         {
             if (sparty->HitTest(x, y))
@@ -297,5 +290,5 @@ void Level::Update(double elapsed)
         mRing->Update(elapsed);
     }
 
-    mPhysics->GetWorld()->Step(elapsed, VelocityIterations, PositionIterations);
+    mPhysics->Update(elapsed);
 }

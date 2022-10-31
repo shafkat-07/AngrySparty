@@ -2,7 +2,7 @@
 <level width="30.0" height="16.0">
     <items>
         <background width="30.0" height="16.0" repeat-x="35" image="background1.png"/>
-        <slingshot x="-13.5" y="0.25"/>
+        <slingshot x="-12.5" y="0.25"/>
         <block x="0" y="0.125" width="30.0" height="0.25" repeat-x="60" type="static" image="sand.png"/>
 
         <block x="10.0" y="3.3" angle="90.0" width="2" height="0.4" image="elementWood015.png"/>

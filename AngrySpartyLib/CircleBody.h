@@ -35,7 +35,7 @@ public:
      * Get the radius of this circle body
      * @return The radius of this circle body
      */
-    double GetRadius() { return mRadius; }
+    double GetRadius() const { return mRadius; }
 };
 
 #endif //ANGRYSPARTY_CIRCLEBODY_H
