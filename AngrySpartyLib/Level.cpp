@@ -105,6 +105,12 @@ void Level::XmlItem(wxXmlNode *node)
         item = make_shared<Goalpost>(this);
         mShooterIndex = mItems.size();
     }
+    else if (type == "ring")
+    {
+        std::cout << "Loaded ring" << '\n';
+        item = mRing;
+        mRingToggle = true;
+    }
     else if (type == "gruff-sparty" || type == "helmet-sparty")
     {
         auto spartyItem = make_shared<Sparty>(this);
@@ -156,11 +162,11 @@ void Level::LaunchSparty()
  */
 Level::Level(const std::wstring &filename)
 {
-    Load(filename); // Load from XML first to have playing area dimensions
-    // Seed the random number generator for the ring's speed
     random_device rd;
     mRandom.seed(rd());
     mRing = make_shared<Ring>(this);
+    Load(filename); // Load from XML first to have playing area dimensions
+    // Seed the random number generator for the ring's speed
 }
 
 /**
@@ -177,7 +183,7 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
         }
     }
 
-    if (mRing->IsAlive())
+    if (mRing->IsAlive() && mRingToggle)
     {
         mRing->Draw(graphics);
     }
@@ -286,7 +292,7 @@ void Level::Update(double elapsed)
         shooter->Update(elapsed);
     }
 
-    if (mRing->IsAlive())
+    if (mRing->IsAlive() && mRingToggle)
     {
         mRing->Update(elapsed);
     }

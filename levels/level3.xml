@@ -21,6 +21,7 @@
         <block x="11.0" y="10.5" angle="90.0" width="2" height="0.4" image="elementWood015.png"/>
         <block x="10.5" y="11.7" angle="0.0" width="2" height="0.4" image="elementMetal029.png"/>
 
+        <ring x = "-20"/>
 
         <!--Right Pillar Foundation Triangle-->
         <poly x="12" y="0.8" angle="0" density="5" image="elementMetal002.png">

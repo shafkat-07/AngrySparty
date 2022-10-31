@@ -36,8 +36,8 @@ private:
 
 public:
     Shooter(Level* level);
-    virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics);
-    virtual void XmlLoad(wxXmlNode* node);
+    virtual void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
+    virtual void XmlLoad(wxXmlNode* node) override;
     void Update(double elapsed) override;
     void Reset() override;
     void KillDownedEnemies();
@@ -142,7 +142,7 @@ public:
      *
      * Does nothing.
      */
-    virtual void Accept(ItemVisitor* visitor) { }
+    void Accept(ItemVisitor* visitor) override { }
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

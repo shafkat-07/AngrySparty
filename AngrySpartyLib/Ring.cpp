@@ -48,6 +48,15 @@ const wstring RingFileName = L"images/ring.png";
     mSpeedY = distribution(level->GetRandom());
 }
 
+void Ring::XmlLoad(wxXmlNode* node)
+{
+    Item::XmlLoad(node);
+
+    // Physical object common attributes
+    mX = stof(node->GetAttribute(L"x", "-10.0").ToStdWstring());
+    std::cout << mX << '\n';
+}
+
 /**
  * Handle updates in time for the Ring
  *
@@ -83,7 +92,7 @@ void Ring::Draw(shared_ptr<wxGraphicsContext> graphics)
     shared_ptr<wxBitmap> bitmap = GetBitmap();
 
     graphics->PushState();
-    graphics->Translate(0, mY * Consts::MtoCM);
+    graphics->Translate(mX * Consts::MtoCM, mY * Consts::MtoCM);
     graphics->Rotate(mAngle);
     graphics->Scale(1, -1);
     graphics->DrawBitmap(*bitmap,
@@ -91,6 +100,8 @@ void Ring::Draw(shared_ptr<wxGraphicsContext> graphics)
             -wid/2,
             wid, wid);
     graphics->PopState();
+
+    std::cout << mAngle << '\n';
 }
 
 /**

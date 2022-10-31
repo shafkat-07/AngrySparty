@@ -26,7 +26,7 @@ private:
 
 public:
     CircleBody(Level* level);
-    std::unique_ptr<b2Shape> CreateShape();
+    std::unique_ptr<b2Shape> CreateShape() override;
     void XmlLoad(wxXmlNode* node) override;
     bool HitTest(double x, double y) override;
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;

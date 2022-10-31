@@ -18,10 +18,11 @@
  */
 class Ring : public Item {
 private:
-    double mY = 0; ///< Inital x-position of the ring in meters
+    double mY = 0; ///< Initial x-position of the ring in meters
     double mSpeedY = 0;///< Vertical speed of the ring
     double mRadius = 0; ///< The radius of the ring
     double mAngle = 0; ///< The angle to make the ring rotate
+    double mX = 0; ///< y-position of the ring in meters
 
     /// The underlying ring image
     std::shared_ptr<wxImage> mRingImage;
@@ -48,6 +49,8 @@ public:
      * @return The wxBitmap for this item
      */
     std::shared_ptr<wxBitmap> GetBitmap() override { return mRingBitmap; }
+
+    void XmlLoad(wxXmlNode* node) override;
 };
 
 #endif //ANGRYSPARTY_RING_H
