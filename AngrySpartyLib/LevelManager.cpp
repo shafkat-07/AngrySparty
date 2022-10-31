@@ -102,7 +102,7 @@ void LevelManager::OnDraw(shared_ptr<wxGraphicsContext> graphics)
  */
 void LevelManager::Update(double elapsed)
 {
-    FoeVisitor foeVisitor;
+    FoeCounter foeCounter;
     switch(mState)
     {
     case State::Starting:
@@ -116,8 +116,8 @@ void LevelManager::Update(double elapsed)
 
     case State::Playing:
         GetCurrentLevel()->Update(elapsed);
-        mLevels[mDisplayedLevel]->Accept(&foeVisitor);
-        if (foeVisitor.GetNumFoes() == 0)
+        mLevels[mDisplayedLevel]->Accept(&foeCounter);
+        if (foeCounter.GetNumFoes() == 0)
         {
             mWinState = true;
         }

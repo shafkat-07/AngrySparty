@@ -183,7 +183,8 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 shared_ptr<Item> Level::HitTest(double x, double y)
 {
     // TODO Comment out this first loop to disable user grabbing blocks
-    for(auto item : mItems){
+    for(auto item : mItems)
+    {
         if (item->IsAlive())
         {
             if(item->HitTest(x,y))
@@ -193,7 +194,8 @@ shared_ptr<Item> Level::HitTest(double x, double y)
         }
     }
 
-    for(auto sparty : mSparties){
+    for(auto sparty : mSparties)
+    {
         if (sparty->IsAlive())
         {
             if (sparty->HitTest(x, y))

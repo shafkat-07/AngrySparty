@@ -22,7 +22,7 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         CircleBody.cpp CircleBody.h
         Sparty.cpp Sparty.h
         ItemVisitor.h
-        FoeVisitor.cpp FoeVisitor.h
+        FoeCounter.cpp FoeCounter.h
         Ring.cpp Ring.h
         KillFoeVisitor.cpp KillFoeVisitor.h)
 
