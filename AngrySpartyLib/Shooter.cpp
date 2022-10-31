@@ -25,7 +25,7 @@ const float VelocityTolerance = 0.01f;
 const int PointsPerKill = 100;
 
 /// The velocity boost that the sparty gets when it collides with a ring.
-const float RingBoost = 5.0f;
+const float RingBoost = 2.0f;
 
 /**
  * Constructor for a shooter object
@@ -244,10 +244,12 @@ void Shooter::Update(double elapsed)
             // Recursive call to update the next sparty to load.
             Shooter::Update(elapsed);
         }
-        else if (hit)
+        else if (hit && !mSparty->GetBoosted())
         {
             // TODO Use boolean to indicated boosted and also boost in the y-direction
-            mSparty->GetBody()->SetLinearVelocity(b2Vec2(velocity.x + RingBoost, velocity.y));
+            mSparty->GetBody()->SetLinearVelocity(b2Vec2(velocity.x * RingBoost, velocity.y * RingBoost));
+            // Set the boosted parameter so that the sparty doesn't get boosted again.
+            mSparty->SetBoosted(true);
         }
     }
 }

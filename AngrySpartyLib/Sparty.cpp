@@ -122,4 +122,5 @@ void Sparty::Reset()
 {
     PhysicalObject::Reset();
     SetStatic(true);
+    mBoosted = false;
 }

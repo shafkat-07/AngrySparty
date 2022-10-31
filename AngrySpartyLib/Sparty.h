@@ -23,6 +23,7 @@ class Sparty : public CircleBody
 private:
     double mStopVelocity = 0;    ///< Velocity at which this sparty disappears
     float mVelocityFactor = 0; ///< Velocity factor for this sparty
+    bool mBoosted = false; ///< If the sparty has been boosted by a booster.
 
 public:
     Sparty(Level* level);
@@ -50,6 +51,18 @@ public:
      * @return The velocity factor of this sparty.
      */
     double GetVelocityFactor() { return mVelocityFactor; }
+
+    /**
+     * Set the boosted state of this sparty.
+     * @param boosted The boosted state of this sparty.
+     */
+    void SetBoosted(bool boosted) { mBoosted = boosted; }
+
+    /**
+     * Get the boosted state of this sparty.
+     * @return The boosted state of this sparty.
+     */
+    bool GetBoosted() { return mBoosted; }
 };
 
 #endif //ANGRYSPARTY_SPARTY_H
