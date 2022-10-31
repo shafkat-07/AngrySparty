@@ -269,8 +269,7 @@ void Shooter::LaunchSpecificSparty(
         )
 {
     const b2Vec2 centerPos = b2Vec2(GetX(),
-            AttachShooterBack.y -
-                    (AttachShooterFront.y - AttachShooterBack.y) / 2 +
+                    (AttachShooterFront.y + AttachShooterBack.y) / 2 +
                     mSparty->GetRadius()
     );
     auto distance = mSparty->DistanceBetweenBodies(centerPos);
