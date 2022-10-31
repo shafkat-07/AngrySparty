@@ -227,8 +227,11 @@ void Shooter::Update(double elapsed)
     {
         // Get the current velocity from the launched sparty
         auto velocity = mSparty->GetBody()->GetLinearVelocity();
-        auto spartyPosInAir = mSparty->GetBodyPosition();
-        auto hit = GetLevel()->GetRing()->HitTest(spartyPosInAir.x, spartyPosInAir.y);
+        auto hit = GetLevel()->GetRing()->SpartyHitRingTest(
+                mSparty->GetBodyPosition().x,
+                mSparty->GetBodyPosition().y,
+                mSparty->GetRadius()
+        );
         if (abs(velocity.x) < VelocityTolerance && abs(velocity.y) < VelocityTolerance)
         {
             GetWorld()->DestroyBody(mSparty->GetBody());
@@ -243,6 +246,7 @@ void Shooter::Update(double elapsed)
         }
         else if (hit)
         {
+            // TODO Use boolean to indicated boosted and also boost in the y-direction
             mSparty->GetBody()->SetLinearVelocity(b2Vec2(velocity.x + RingBoost, velocity.y));
         }
     }
@@ -386,4 +390,3 @@ void Shooter::KillDownedEnemies()
     int totalKills = visitor.GetTotalKills();
     GetLevel()->UpdateScore(totalKills * PointsPerKill);
 }
-

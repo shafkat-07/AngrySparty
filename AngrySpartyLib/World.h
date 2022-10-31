@@ -43,4 +43,7 @@ private:
 
     /// A ground reference object
     b2Body* mGround;
+
+public:
+    void Update(double elapsed);
 };

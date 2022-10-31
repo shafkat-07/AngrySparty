@@ -18,15 +18,6 @@
 
 using namespace std;
 
-/// Gravity in meters per second per second
-const float Gravity = -9.8f;
-
-/// Number of velocity update iterations per step
-const int VelocityIterations = 6;
-
-/// Number of position update iterations per step
-const int PositionIterations = 2;
-
 /**
  * Loads a specified XML file into the level
  * @param filename The location of the XML file on disk
@@ -291,5 +282,5 @@ void Level::Update(double elapsed)
         mRing->Update(elapsed);
     }
 
-    mPhysics->GetWorld()->Step(elapsed, VelocityIterations, PositionIterations);
+    mPhysics->Update(elapsed);
 }

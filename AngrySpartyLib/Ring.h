@@ -50,15 +50,7 @@ public:
      */
     std::shared_ptr<wxBitmap> GetBitmap() override { return mRingBitmap; }
 
-    /**
-     * Hitest the ring
-     *
-     * Used for testing if the launched sparty has hit the ring.
-     * @param x The x-position of the sparty
-     * @param y The y-position of the sparty
-     * @return True if the sparty has hit the ring
-     */
-    bool HitTest(double x, double y) override;
+    bool SpartyHitRingTest(double x, double y, double radius);
 };
 
 #endif //ANGRYSPARTY_RING_H

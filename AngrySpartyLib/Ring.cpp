@@ -108,28 +108,33 @@ void Ring::Reset()
 }
 
 /**
- * Test if a sparty has hit this ring.
- * @param x The x position of collision
- * @param y The y position of collision
- * @return If the sparty collided with the ring or not.
+ * Compute the distance between 2 points
+ * @param x1 x-coordinate of point 1
+ * @param y1 y-coordinate of point 1
+ * @param x2 x-coordinate of point 2
+ * @param y2 y-coordinate of point 2
+ * @return Computed distance
  */
-bool Ring::HitTest(double x, double y)
+double Distance(double x1, double y1, double x2, double y2)
+{
+    return sqrt(pow((x1-x2),2) + pow((y1-y2),2));
+}
+
+/**
+ * Test if the sparty's underlying circle touches
+ * the ring's underlying circle
+ * @param spartyX The x position of the sparty
+ * @param spartyY The y position of the sparty
+ * @param spartyRadius The radius of the sparty
+ * @return True if the sparty touches the ring
+ */
+bool Ring::SpartyHitRingTest(double spartyX, double spartyY, double spartyRadius)
 {
     if (!IsAlive())
-        return false;
-    double diameter = mRadius * 2;
-
-    // Make x and y relative to the top-left corner of the bitmap image
-    // Subtracting the center makes x, y relative to the image center
-    // Adding half the size makes x, y relative to the image top corner
-    double testX = x - mX + mRadius;
-    double testY = y - mY + mRadius;
-
-    // Test to see if x, y are in the image
-    if (testX < 0 || testY < 0 || testX >= diameter || testY >= diameter)
     {
-        // We are outside the image
         return false;
     }
-    return true;
+    double distance = Distance(spartyX, spartyY, mX, mY);
+    double sumOfRadii = spartyRadius + mRadius;
+    return distance < sumOfRadii;
 }

@@ -40,3 +40,12 @@ World::World(const b2Vec2& size) :mWorld(b2Vec2(0.0f, Gravity))
     box.SetAsBox(0.1, size.y, b2Vec2(-size.x, size.y), 0);
     mGround->CreateFixture(&box, 0.0f);
 }
+
+/**
+ * Update the physics world in time.
+ * @param elapsed Elapsed time in seconds
+ */
+void World::Update(double elapsed)
+{
+    mWorld.Step(elapsed, VelocityIterations, PositionIterations);
+}
