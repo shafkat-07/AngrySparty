@@ -56,7 +56,6 @@ void Level::Load(const std::wstring &filename)
     {
         XmlItem(grandChild);
     }
-    TransferSpartiesToShooter();
 }
 
 /**
@@ -130,14 +129,6 @@ void Level::XmlItem(wxXmlNode *node)
 }
 
 /**
- * Send the Sparties down to the shooter for handling of drawing and physics
- */
-void Level::TransferSpartiesToShooter()
-{
-    mItems[mShooterIndex]->SetSparties(mSparties);
-}
-
-/**
  * Launch the sparty that was loaded.
  */
 void Level::LaunchSparty()
@@ -168,6 +159,15 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
         if (item->IsAlive())
         {
             item->Draw(graphics);
+        }
+    }
+
+    for (auto i = 0; i < mSparties.size(); i++)
+    {
+        auto sparty = mSparties[i];
+        if (sparty->IsAlive() && i != mSpartyIndex)
+        {
+            sparty->Draw(graphics);
         }
     }
 }
@@ -259,7 +259,7 @@ void Level::ResetLevel()
     }
 
     mRing->Reset();
-
+    mSpartyIndex = -1;
     mPhysics = nullptr;
     mScore = 0;
 }

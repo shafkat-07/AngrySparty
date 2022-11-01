@@ -111,6 +111,7 @@ void LevelManager::Update(double elapsed)
         {
             mState = State::Playing;
             mLevelMessageDuration = 0;
+            GetCurrentLevel()->IncrementSpartyIndex(); // Set SpartyIndex from -1 to 0 on level begin
         }
         break;
 

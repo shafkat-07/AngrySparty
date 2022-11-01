@@ -24,7 +24,8 @@ set(SOURCE_FILES Consts.h ids.h pch.h
         ItemVisitor.h
         FoeCounter.cpp FoeCounter.h
         Ring.cpp Ring.h
-        KillFoeVisitor.cpp KillFoeVisitor.h)
+        KillFoeVisitor.cpp KillFoeVisitor.h
+        LocationVisitor.cpp LocationVisitor.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)

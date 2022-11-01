@@ -8,6 +8,8 @@
 #include "pch.h"
 #include "Sparty.h"
 #include "Level.h"
+#include "Consts.h"
+#include "LocationVisitor.h"
 
 #include <b2_world.h>
 #include <b2_polygon_shape.h>
@@ -124,3 +126,63 @@ void Sparty::Reset()
     SetStatic(true);
     mBoosted = false;
 }
+
+/**
+ * Handle a click on a sparty
+ * @param mouseLocation The location of the click
+ */
+void Sparty::ClickItem(b2Vec2 mouseLocation)
+{
+    auto targetBody = GetBody();
+    if(targetBody->GetType() == b2_dynamicBody)
+    {
+        //
+        // Create a mouse joint object we can use
+        // to drag items around
+        //
+        // Only works for dynamic bodies
+        //
+        b2MouseJointDef jointDef;
+        jointDef.bodyA = GetLevel()->GetGround();
+        jointDef.bodyB = targetBody;
+        jointDef.maxForce = 10000 * targetBody->GetMass();
+        jointDef.stiffness = 10000 * targetBody->GetMass();
+        jointDef.damping = 125;
+        jointDef.target = mouseLocation;
+
+        mMouseJoint = (b2MouseJoint*)GetLevel()->GetWorld()->CreateJoint(&jointDef);
+        mMouseJoint->SetTarget(mouseLocation);
+    }
+}
+
+/**
+ * Handle mouse movement for a sparty
+ * @param event The mouse event to be handled
+ * @param mouseLocation The location of the mouse
+ */
+void Sparty::MoveItem(wxMouseEvent &event, b2Vec2 mouseLocation)
+{
+    // If an item is being moved, we only continue to
+    // move it while the left button is down.
+    if(event.LeftIsDown())
+    {
+        if(mMouseJoint != nullptr)
+        {
+            LocationVisitor locationVisitor(mouseLocation.x, mouseLocation.y);
+            GetLevel()->Accept(&locationVisitor);
+            b2Vec2 computedLocation = locationVisitor.GetComputedLocation();
+            mMouseJoint->SetTarget(computedLocation);
+        }
+    }
+    else
+    {
+        // When the left button is released, we release the
+        // item.
+        if(mMouseJoint != nullptr)
+        {
+            GetLevel()->GetWorld()->DestroyJoint(mMouseJoint);
+            mMouseJoint = nullptr;
+        }
+    }
+}
+

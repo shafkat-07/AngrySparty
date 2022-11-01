@@ -109,15 +109,6 @@ public:
     virtual void Reset() { mAlive = false; }
 
     // Shooter pass down methods.
-
-    /**
-     * Set the sparties to shoot inside the shooter.
-     *
-     * When the sparty is inside the shooter, it needs to be drawn by it.
-     * @param sparties The sparties of the current level. These can be shot out of a shooter object.
-     */
-    virtual void SetSparties(std::vector<std::shared_ptr<Sparty>>& sparties) {}
-
     /**
      * Get the body for an item
      * @return This item's body (nullptr if no body)
@@ -125,9 +116,38 @@ public:
     virtual b2Body* GetBody() { return nullptr; }
 
     /**
+     * Get the mouse joint for this item
+     * Always nullptr for non-physical bodies
+     * @return The mouse joint for this item
+     */
+    virtual b2MouseJoint* GetMouseJoint() { return nullptr; }
+
+    /**
+     * Set the mouse joint for this item
+     * Does nothing for everything except for sparties
+     * @param mouseJoint The mouse joint to be set
+     */
+    virtual void SetMouseJoint(b2MouseJoint* mouseJoint) {}
+
+    /**
      * Handles launching a sparty
      *
      * Empty for everything except shooters
      */
     virtual void LaunchSparty() {};
+
+    /**
+     * Handle a click on an item
+     * Does nothing for everything except for sparties
+     * @param mouseLocation The location of the click
+     */
+    virtual void ClickItem(b2Vec2 mouseLocation) {}
+
+    /**
+     * Handle mouse movement for an item
+     * Does nothing for everything except sparties
+     * @param event The mouse event to be handled
+     * @param mouseLocation The location of the mouse
+     */
+    virtual void MoveItem(wxMouseEvent &event, b2Vec2 mouseLocation) {}
 };

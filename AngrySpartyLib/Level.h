@@ -29,7 +29,7 @@ class ItemVisitor;
 class Level {
 private:
     /// Size of the playing area in meters
-    b2Vec2 mSize = b2Vec2(14.22f, 8.0f);
+    b2Vec2 mSize = b2Vec2(14.22f, 16.0f);
 
     /// The physics object initialized with the size of the display
     std::shared_ptr<World> mPhysics = nullptr;
@@ -40,14 +40,14 @@ private:
      /// Contains pointers to Sparty objects. Transferred down to the Shooter class.
      std::vector<std::shared_ptr<Sparty>> mSparties;
 
+     /// Tracks the current sparty's index in the vector of sparties
+     int mSpartyIndex = -1;
+
      /// Save the index location of the shooter.
      int mShooterIndex = -1;
 
      /// Any item we have grabbed and are moving
      std::shared_ptr<Item> mGrabbedItem;
-
-     /// Mouse joint for moving things
-     b2MouseJoint* mMouseJoint = nullptr;
 
      /// Score tracking for each level
      int mScore = 0;
@@ -108,10 +108,15 @@ public:
     int GetTotalSparties() const { return mSparties.size(); }
 
     /**
-     * Get the list of sparties
-     * @return A reference to the list of sparties
+     *  Getter for the current sparty
+     * @return The current sparty
      */
-    std::vector<std::shared_ptr<Sparty>>& GetSparties() { return mSparties; }
+    std::shared_ptr<Sparty> GetSparty() { return mSparties[mSpartyIndex]; }
+
+    /**
+     * Increments the sparty index to move to the next one
+     */
+    void IncrementSpartyIndex() { mSpartyIndex++; }
 
     /**
      * Updates the score by incrementing with the parameter (can be negative)
@@ -138,7 +143,6 @@ public:
     std::shared_ptr<Ring> GetRing() { return mRing; }
 
     // Sparty methods
-    void TransferSpartiesToShooter();
     void LaunchSparty();
 };
 
