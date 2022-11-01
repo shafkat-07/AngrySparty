@@ -21,9 +21,9 @@ class Level;
 class Sparty : public CircleBody
 {
 private:
-    double mStopVelocity = 0;    ///< Velocity at which this sparty disappears
     float mVelocityFactor = 0; ///< Velocity factor for this sparty
     bool mBoosted = false; ///< If the sparty has been boosted by a booster.
+    b2MouseJoint* mMouseJoint = nullptr; ///< Mouse joint for moving things
 
 public:
     Sparty(Level* level);
@@ -32,6 +32,10 @@ public:
     b2Body* DefineBody(b2Shape* shape, b2World* world) override;
     void Reset() override;
 
+    // Mouse functions
+    void ClickItem(b2Vec2 mouseLocation) override;
+    void MoveItem(wxMouseEvent& event, b2Vec2 mouseLocation) override;
+
     /**
      * Accept a visitor to this item
      * @param visitor The visitor we accept
@@ -39,12 +43,6 @@ public:
      * This will install the physics for the sparty.
      */
     void Accept(ItemVisitor* visitor) override { visitor->VisitSparty(this); }
-
-    /**
-     * Set the velocity factor of this sparty.
-     * @param factor The velocity factor of this sparty.
-     */
-    void SetVelocityFactor(double factor) { mVelocityFactor = factor; }
 
     /**
      * Get the velocity factor of this sparty.
@@ -63,6 +61,20 @@ public:
      * @return The boosted state of this sparty.
      */
     bool GetBoosted() { return mBoosted; }
+
+    /**
+     * Get this sparty's mouse joint
+     * @return The sparty's mouse joint
+     */
+    b2MouseJoint* GetMouseJoint() override { return mMouseJoint; }
+
+    /**
+     * Set the mouse for this sparty
+     *
+     * Used by game to reset the mouse joint to nullptr on release
+     * @param mouseJoint The mouse joint to be set
+     */
+    void SetMouseJoint(b2MouseJoint* mouseJoint) override { mMouseJoint = mouseJoint; }
 };
 
 #endif //ANGRYSPARTY_SPARTY_H

@@ -13,6 +13,7 @@ class Foe;
 class Sparty;
 class Poly;
 class Block;
+class Shooter;
 
 /**
  * A visitor to adjust values in various items.
@@ -52,6 +53,12 @@ public:
      * @param block Block we are visiting
      */
     virtual void VisitBlock(Block* block) {}
+
+    /**
+     * Visit a Shooter object.
+     * @param shooter Shooter we are visiting
+     */
+    virtual void VisitShooter(Shooter* shooter) {}
 };
 
 #endif //ANGRYSPARTY_ITEMVISITOR_H

@@ -125,12 +125,6 @@ public:
     std::shared_ptr<Sparty> GetSparty() {return mSparty;}
 
     /**
-     * Get the list of sparties in the level to which this shooter belongs
-     * @return A reference to the list of sparties
-     */
-    std::vector<std::shared_ptr<Sparty>>& GetSparties() { return GetLevel()->GetSparties(); }
-
-    /**
      * The front bitmap for this shooter
      * @return The front wxBitmap for this shooter
      */
@@ -142,7 +136,18 @@ public:
      *
      * Does nothing.
      */
-    void Accept(ItemVisitor* visitor) override { }
+    void Accept(ItemVisitor* visitor) override { visitor->VisitShooter(this); }
+
+    /**
+     * Compute a location based on the center of the shooter
+     * @param x The x location to be used in the computation (from the mouse)
+     * @param y The y location to be used in the computation (from the mouse)
+     * @return The computed location
+     */
+    virtual b2Vec2 ComputeLocation(double x, double y) { return b2Vec2(0,0); }
+
+    b2Vec2 ComputeSpecificLocation(double x, double y, const b2Vec2 AttachShooterBack, const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle, const double MinPositivePullAngle, const double MaxPull);
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

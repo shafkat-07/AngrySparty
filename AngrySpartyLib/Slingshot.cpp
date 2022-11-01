@@ -103,3 +103,22 @@ void Slingshot::LaunchSparty()
             WoodSlingshotMaximumPull
             );
 }
+
+/**
+ * Compute a location based on the center of the slingshot
+ * @param x The x location to be used in the computation (from the mouse)
+ * @param y The y location to be used in the computation (from the mouse)
+ * @return The computed location
+ */
+b2Vec2 Slingshot::ComputeLocation(double x, double y)
+{
+    return Shooter::ComputeSpecificLocation(
+            x,
+            y,
+            WoodSlingshotBandAttachBack,
+            WoodSlingshotBandAttachFront,
+            SlingshotMaximumNegativePullAngle,
+            SlingshotMinimumPositivePullAngle,
+            WoodSlingshotMaximumPull
+            );
+}

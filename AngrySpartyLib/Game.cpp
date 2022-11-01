@@ -99,26 +99,7 @@ void Game::OnLeftDown(wxMouseEvent &event)
 
     if (mGrabbedItem != nullptr)
     {
-        auto targetBody = mGrabbedItem->GetBody();
-        if(targetBody->GetType() == b2_dynamicBody)
-        {
-            //
-            // Create a mouse joint object we can use
-            // to drag items around
-            //
-            // Only works for dynamic bodies
-            //
-            b2MouseJointDef jointDef;
-            jointDef.bodyA = mLevelManager->GetCurrentLevel()->GetGround();
-            jointDef.bodyB = targetBody;
-            jointDef.maxForce = 10000 * targetBody->GetMass();
-            jointDef.stiffness = 10000 * targetBody->GetMass();
-            jointDef.damping = 125;
-            jointDef.target = b2Vec2(x, y);
-
-            mMouseJoint = (b2MouseJoint*)mLevelManager->GetCurrentLevel()->GetWorld()->CreateJoint(&jointDef);
-            mMouseJoint->SetTarget(mMouseLocation);
-        }
+        mGrabbedItem->ClickItem(mMouseLocation);
     }
 }
 
@@ -135,26 +116,7 @@ void Game::OnMouseMove(wxMouseEvent &event)
     // See if an item is currently being moved by the mouse
     if (mGrabbedItem != nullptr)
     {
-        // If an item is being moved, we only continue to
-        // move it while the left button is down.
-        if(event.LeftIsDown())
-        {
-            if(mMouseJoint != nullptr)
-            {
-                mMouseJoint->SetTarget(mMouseLocation);
-            }
-        }
-        else
-        {
-            // When the left button is released, we release the
-            // item.
-            if(mMouseJoint != nullptr)
-            {
-                GetCurrentLevel()->GetWorld()->DestroyJoint(mMouseJoint);
-                mMouseJoint = nullptr;
-            }
-        }
-
+        mGrabbedItem->MoveItem(event, mMouseLocation);
     }
 
 }
@@ -165,17 +127,14 @@ void Game::OnMouseMove(wxMouseEvent &event)
  */
 void Game::OnLeftUp(wxMouseEvent &event)
 {
-    auto x = (event.m_x / mScale - mXOffset) / Consts::MtoCM;
-    auto y = (event.m_y / -mScale - mYOffset) / Consts::MtoCM;
-    mMouseLocation = b2Vec2(x, y);
-
-    // When the left button is released, we release the
-    // item.
-    if(mMouseJoint != nullptr)
+    if (mGrabbedItem != nullptr)
     {
-        GetCurrentLevel()->GetWorld()->DestroyJoint(mMouseJoint);
-        GetCurrentLevel()->LaunchSparty();
-        mMouseJoint = nullptr;
+        if (mGrabbedItem->GetMouseJoint()!=nullptr)
+        {
+            GetCurrentLevel()->GetWorld()->DestroyJoint(mGrabbedItem->GetMouseJoint());
+            GetCurrentLevel()->LaunchSparty();
+            mGrabbedItem->SetMouseJoint(nullptr);
+        }
     }
 }
 

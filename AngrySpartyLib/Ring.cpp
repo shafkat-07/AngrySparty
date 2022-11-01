@@ -12,7 +12,7 @@
 using namespace std;
 
 /// The ratio between the ring's radius and the level size
-const double RingRadiusRatio = 0.075;
+const double RingRadiusRatio = 0.0375;
 
 /// Maximum speed in the Y direction in
 /// in pixels per second for the Ring

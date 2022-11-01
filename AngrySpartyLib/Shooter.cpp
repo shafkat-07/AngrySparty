@@ -25,7 +25,7 @@ const float VelocityTolerance = 0.01f;
 const int PointsPerKill = 100;
 
 /// The velocity boost that the sparty gets when it collides with a ring.
-const float RingBoost = 2.0f;
+const float RingBoost = 5.0f;
 
 /**
  * Constructor for a shooter object
@@ -65,18 +65,7 @@ void Shooter::Draw(shared_ptr<wxGraphicsContext> graphics)
             0,
             mWidth * Consts::MtoCM, mHeight * Consts::MtoCM);
 
-
-
     graphics->PopState();
-
-    for (auto sparty : GetSparties())
-    {
-        if (sparty->IsAlive())
-        {
-            sparty->Draw(graphics);
-        }
-    }
-
 }
 
 /**
@@ -219,8 +208,7 @@ void Shooter::Update(double elapsed)
 {
     if (mSparty == nullptr && GetLevel()->GetSpartiesLeft() != 0)
     {
-        mSparty = GetSparties()[mSpartyIndex];
-        mSpartyIndex += 1;
+        mSparty = GetLevel()->GetSparty();
         mSparty->ModifyBodyToDynamic();
     }
     else if (mLaunched)
@@ -237,6 +225,7 @@ void Shooter::Update(double elapsed)
             GetWorld()->DestroyBody(mSparty->GetBody());
             mSparty->SetAlive(false);
             GetLevel()->ReduceSpartiesLeft();
+            GetLevel()->IncrementSpartyIndex();
             mSparty = nullptr;
             mLaunched = false;
             mLoaded = false;
@@ -258,14 +247,14 @@ void Shooter::Update(double elapsed)
  * @param AttachShooterBack The vector of the back of the shooter.
  * @param AttachShooterFront The vector of the front of the shooter.
  * @param MaxNegativePullAngle The maximum negative angle the shooter can pull back.
- * @param MaxPositivePullAngle The maximum positive angle the shooter can pull back.
+ * @param MinPositivePullAngle The minimum positive angle the shooter can pull back.
  * @param MaxPull The maximum distance the shooter can pull back.
  */
 void Shooter::LaunchSpecificSparty(
         const b2Vec2 AttachShooterBack,
         const b2Vec2 AttachShooterFront,
         const double MaxNegativePullAngle,
-        const double MaxPositivePullAngle,
+        const double MinPositivePullAngle,
         const double MaxPull
         )
 {
@@ -273,35 +262,12 @@ void Shooter::LaunchSpecificSparty(
                     (AttachShooterFront.y + AttachShooterBack.y) / 2 +
                     mSparty->GetRadius()
     );
-    auto distance = mSparty->DistanceBetweenBodies(centerPos);
+
     if (mSparty != nullptr)
     {
-        // Get the angle between the shooter and the mouse
+        // Get the angle and distance between the shooter and the sparty
+        auto distance = mSparty->DistanceBetweenBodies(centerPos);
         double angle = mSparty->AngleBetweenBodies(centerPos);
-
-        // If the distance is too small, do nothing
-        if (distance < 0.1)
-        {
-            return;
-        }
-
-        // If the distance is too large, set it to the maximum
-        if (distance > MaxPull)
-        {
-            distance = MaxPull;
-        }
-
-        // If the angle is too small, set it to the minimum
-        if (angle < MaxNegativePullAngle)
-        {
-            angle = MaxNegativePullAngle;
-        }
-
-        // If the angle is too large, set it to the maximum
-        if (angle > MaxPositivePullAngle)
-        {
-            angle = MaxPositivePullAngle;
-        }
 
         // Make the sparty movable
         mSparty->GetBody()->SetFixedRotation(false);
@@ -325,14 +291,14 @@ void Shooter::LaunchSpecificSparty(
  * @param AttachShooterBack The vector of the back of the shooter.
  * @param AttachShooterFront The vector of the front of the shooter.
  * @param MaxNegativePullAngle The maximum negative angle the shooter can pull back.
- * @param MaxPositivePullAngle The maximum positive angle the shooter can pull back.
+ * @param MinPositivePullAngle The maximum positive angle the shooter can pull back.
  * @param MaxPull The maximum distance the shooter can pull back.
  */
 void Shooter::UpdateSpecificShooter(
         const b2Vec2 AttachShooterBack,
         const b2Vec2 AttachShooterFront,
         const double MaxNegativePullAngle,
-        const double MaxPositivePullAngle,
+        const double MinPositivePullAngle,
         const double MaxPull
         )
 {
@@ -350,20 +316,6 @@ void Shooter::UpdateSpecificShooter(
         mSparty->SetTransform(centerPos, 0.0f);
         mLoaded = true;
     }
-    else if (mLoaded && !mLaunched)
-    {
-        auto distance = mSparty->DistanceBetweenBodies(centerPos);
-        auto angle = mSparty->AngleBetweenBodies(centerPos);
-        if (distance > MaxPull)
-        {
-            // Adjust the Mouse position to be the maximum pull distance
-            // from the shooter center.
-            // TODO logic to stop mouse from pulling sparty any further.
-            // Suggested to grab the mouse joint and manipulate its x and y pull position.
-            // Attempting to update the Sparty's position here instead of the mouse joint will result in glitchy,
-            // often game crashing behavior (I've tried). - Brendan 11/30/2020
-        }
-    }
 }
 
 /**
@@ -373,7 +325,6 @@ void Shooter::Reset()
 {
     mLoaded = false;
     mLaunched = false;
-    mSpartyIndex = 0;
     mSparty = nullptr;
 
     Item::Reset();
@@ -388,4 +339,50 @@ void Shooter::KillDownedEnemies()
     GetLevel()->Accept(&visitor);
     int totalKills = visitor.GetTotalKills();
     GetLevel()->UpdateScore(totalKills * PointsPerKill);
+}
+
+/**
+ * Compute a location based on the center of this slingshot
+ * @param x The x location to be used in the computation (from the mouse)
+ * @param y The y location to be used in the computation (from the mouse)
+ * @param AttachShooterBack The vector of the back of the shooter.
+ * @param AttachShooterFront The vector of the front of the shooter.
+ * @param MaxNegativePullAngle The maximum negative angle the shooter can pull back.
+ * @param MinPositivePullAngle The minimum positive angle the shooter can pull back.
+ * @param MaxPull The maximum distance the shooter can pull back.
+ * @return The computed location
+ */
+b2Vec2 Shooter::ComputeSpecificLocation(
+        double x,
+        double y,
+        const b2Vec2 AttachShooterBack,
+        const b2Vec2 AttachShooterFront,
+        const double MaxNegativePullAngle,
+        const double MinPositivePullAngle,
+        const double MaxPull
+        )
+{
+    auto slingOriginX = mX;
+    auto slingOriginY = (AttachShooterFront.y + AttachShooterBack.y) / 2 + mSparty->GetRadius();
+
+    auto computedDistance = sqrt(pow((x - slingOriginX),2) +
+            pow((y - slingOriginY),2));
+    double finalDistance = min(computedDistance, MaxPull);
+
+    auto computedAngle = atan2(y - slingOriginY, x - slingOriginX);
+
+    double finalAngle;
+    if (computedAngle >= 0)
+    {
+        finalAngle = max(computedAngle, MinPositivePullAngle);
+    }
+    else
+    {
+        finalAngle = min(computedAngle, MaxNegativePullAngle);
+    }
+
+    b2Vec2 computedLocation = b2Vec2(finalDistance * cos(finalAngle) + slingOriginX,
+            finalDistance * sin(finalAngle) + slingOriginY);
+
+    return computedLocation;
 }
