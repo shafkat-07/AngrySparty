@@ -195,7 +195,7 @@ void Shooter::XmlLoad(wxXmlNode* node)
     node->GetAttribute(L"x", L"0.0").ToDouble(&mX);
     node->GetAttribute(L"y", L"0.0").ToDouble(&mY);
 
-    auto name = "images/" + node->GetName() + "-front.png";
+    auto name = L"images/" + node->GetName() + L"-front.png";
     mFrontImage = make_shared<wxImage>(name);
     mFrontBitmap = make_shared<wxBitmap>(*mFrontImage);
 }

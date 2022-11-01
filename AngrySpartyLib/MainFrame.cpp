@@ -41,14 +41,14 @@ void MainFrame::Initialize()
     auto viewMenu = new wxMenu();
     auto helpMenu = new wxMenu();
 
-    fileMenu->Append(wxID_EXIT, "&Exit\tAlt-X", "Quit this program");
-    levelMenu->Append(LEVEL_0, "&Level 0", "Go to level 0");
-    levelMenu->Append(LEVEL_1, "&Level 1", "Go to level 1");
-    levelMenu->Append(LEVEL_2, "&Level 2", "Go to level 2");
-    levelMenu->Append(LEVEL_3, "&Level 3", "Go to level 3");
+    fileMenu->Append(wxID_EXIT, L"&Exit\tAlt-X", "Quit this program");
+    levelMenu->Append(LEVEL_0, L"&Level 0", "Go to level 0");
+    levelMenu->Append(LEVEL_1, L"&Level 1", "Go to level 1");
+    levelMenu->Append(LEVEL_2, L"&Level 2", "Go to level 2");
+    levelMenu->Append(LEVEL_3, L"&Level 3", "Go to level 3");
 //    ringMenu->Append(IDM_RING, "&Activate The Ring", "Enable to activate the 2x speed booster ring", wxITEM_CHECK);
-    viewMenu->Append(IDM_DEBUG_VIEW, "&Debug View", "Enable to see box2d outlines", wxITEM_CHECK);
-    helpMenu->Append(wxID_ABOUT, "&About\tF1", "Show about dialog");
+    viewMenu->Append(IDM_DEBUG_VIEW, L"&Debug View", "Enable to see box2d outlines", wxITEM_CHECK);
+    helpMenu->Append(wxID_ABOUT, L"&About\tF1", "Show about dialog");
 
     menuBar->Append(fileMenu, L"&File" );
     menuBar->Append(levelMenu, L"&Level" );

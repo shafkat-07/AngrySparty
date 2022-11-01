@@ -55,16 +55,16 @@ void Item::Draw(shared_ptr<wxGraphicsContext> graphics)
 void Item::XmlLoad(wxXmlNode* node)
 {
     // Get the attributes for this item
-    auto  filename = "images/" +
+    auto  filename = L"images/" +
             node->GetAttribute(L"image", L"");
-    if (filename != "images/")
+    if (filename != L"images/")
     {
         mItemImage = make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
     }
     else
     {
-        filename = "images/" +
-                node->GetName() + ".png";
+        filename = L"images/" +
+                node->GetName() + L".png";
         mItemImage = make_shared<wxImage>(filename, wxBITMAP_TYPE_ANY);
     }
     mItemBitmap = make_shared<wxBitmap>(*mItemImage);

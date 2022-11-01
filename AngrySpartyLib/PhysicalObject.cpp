@@ -60,7 +60,7 @@ void PhysicalObject::XmlLoad(wxXmlNode* node)
     mAngle *= Consts::DtoR;
 
     auto staticType = node->GetAttribute(L"type", "");
-    mStatic = staticType == "static";
+    mStatic = staticType == L"static";
 }
 
 /**

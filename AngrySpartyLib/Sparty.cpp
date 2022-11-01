@@ -57,11 +57,11 @@ void Sparty::XmlLoad(wxXmlNode* node)
     // Sparty-specific attributes
     SetStatic(true);
 
-    if (node->GetName() == "gruff-sparty")
+    if (node->GetName() == L"gruff-sparty")
     {
         mVelocityFactor = GruffSpartyVelocityFactor;
     }
-    else if (node->GetName() == "helmet-sparty")
+    else if (node->GetName() == L"helmet-sparty")
     {
         mVelocityFactor = HelmetSpartyVelocityFactor;
     }
