@@ -69,37 +69,37 @@ void Level::XmlItem(wxXmlNode *node)
 
     // We have an item. What type?
     auto type = node->GetName();
-    if (type == "background")
+    if (type == L"background")
     {
         item = make_shared<Background>(this);
     }
-    else if (type == "block")
+    else if (type == L"block")
     {
         item = make_shared<Block>(this);
     }
-    else if (type == "poly")
+    else if (type == L"poly")
     {
         item = make_shared<Poly>(this);
     }
-    else if (type == "foe")
+    else if (type == L"foe")
     {
         item = make_shared<Foe>(this);
     }
-    else if (type == "slingshot")
+    else if (type == L"slingshot")
     {
         item = make_shared<Slingshot>(this);
         mShooterIndex = mItems.size();
     }
-    else if (type == "goalposts")
+    else if (type == L"goalposts")
     {
         item = make_shared<Goalpost>(this);
         mShooterIndex = mItems.size();
     }
-    else if (type == "ring")
+    else if (type == L"ring")
     {
         item = mRing;
     }
-    else if (type == "gruff-sparty" || type == "helmet-sparty")
+    else if (type == L"gruff-sparty" || type == L"helmet-sparty")
     {
         auto spartyItem = make_shared<Sparty>(this);
         spartyItem->XmlLoad(node);
@@ -116,7 +116,7 @@ void Level::XmlItem(wxXmlNode *node)
     {
         item->XmlLoad(node);
         // The sand image needs to be behind the shooter for the sparties to load properly.
-        if (node->GetAttribute("image", "") == "sand.png")
+        if (node->GetAttribute(L"image", "") == L"sand.png")
         {
             mItems.insert(mItems.begin()+1, item);
             mShooterIndex++;
