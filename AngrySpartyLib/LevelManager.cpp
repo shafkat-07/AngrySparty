@@ -156,7 +156,9 @@ void LevelManager::Update(double elapsed)
  */
 void LevelManager::OnBeginDraw(shared_ptr<wxGraphicsContext> graphics)
 {
-    // Set up begin message and call DrawMessage
+    ostringstream message;
+    message << "Level " << mDisplayedLevel <<  " Begin";
+    DrawMessage(graphics, message.str());
 }
 
 /**
@@ -165,7 +167,8 @@ void LevelManager::OnBeginDraw(shared_ptr<wxGraphicsContext> graphics)
  */
 void LevelManager::OnEndDraw(shared_ptr<wxGraphicsContext> graphics)
 {
-    // Set up message and call DrawMessage
+    string message = mWinState ? "Level Complete!" : "Level Fail!";
+    DrawMessage(graphics, message);
 }
 
 /**
@@ -175,5 +178,22 @@ void LevelManager::OnEndDraw(shared_ptr<wxGraphicsContext> graphics)
  */
 void LevelManager::DrawMessage(shared_ptr<wxGraphicsContext> graphics, string message)
 {
-    // Draw message
+    double levelHeight = GetCurrentLevelSize().y * Consts::MtoCM;
+
+    graphics->PushState();
+    wxFont bigFont(wxSize(0, GetCurrentLevelSize().y *  LevelMessageFontRatio),
+                   wxFONTFAMILY_SWISS,
+                   wxFONTSTYLE_NORMAL,
+                   wxFONTWEIGHT_BOLD);
+    graphics->SetFont(bigFont, LevelMessageColor);
+
+    // Get width and height of message to center it
+    double messageWidth;
+    double messageHeight;
+    graphics->GetTextExtent(message, &messageWidth, &messageHeight);
+
+    graphics->Scale(1, -1);
+    graphics->DrawText(message, -messageWidth/2, -levelHeight/2 - messageHeight/2);
+
+    graphics->PopState();
 }
