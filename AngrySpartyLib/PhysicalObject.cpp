@@ -109,7 +109,7 @@ b2Body* PhysicalObject::DefineBody(b2Shape* shape, b2World* world)
  * Test items to see if they have been clicked on.
  * @param x X location in meters to test
  * @param y Y location in meters to test
- * @return Reference to the item clicked on.
+ * @return True if this item was clicked on
  */
 bool PhysicalObject::HitTest(double x, double y)
 {

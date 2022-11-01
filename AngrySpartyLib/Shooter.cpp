@@ -246,7 +246,6 @@ void Shooter::Update(double elapsed)
         }
         else if (hit && !mSparty->GetBoosted())
         {
-            // TODO Use boolean to indicated boosted and also boost in the y-direction
             mSparty->GetBody()->SetLinearVelocity(b2Vec2(velocity.x * RingBoost, velocity.y * RingBoost));
             // Set the boosted parameter so that the sparty doesn't get boosted again.
             mSparty->SetBoosted(true);
