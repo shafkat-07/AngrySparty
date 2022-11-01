@@ -68,22 +68,22 @@
         </poly>
 
         <!--Triangles blocking the unempowered projectile-->
-        <poly x="2" y="0.8" angle="0" density="5" image="elementMetal002.png">
+        <poly x="2" y="0.8" angle="0" density="150" image="elementMetal002.png">
             <v x="-0.5" y="-0.5"/>
             <v x="0.5" y="-0.5"/>
             <v x="-0.5" y="0.5"/>
         </poly>
-        <poly x="2" y="0.8" angle="-180" density="5" image="elementMetal002.png">
+        <poly x="2" y="0.8" angle="-180" density="150" image="elementMetal002.png">
             <v x="-0.5" y="-0.5"/>
             <v x="0.5" y="-0.5"/>
             <v x="-0.5" y="0.5"/>
         </poly>
-        <poly x="3" y="0.8" angle="0" density="5" image="elementMetal002.png">
+        <poly x="3" y="0.8" angle="0" density="150" image="elementMetal002.png">
             <v x="-0.5" y="-0.5"/>
             <v x="0.5" y="-0.5"/>
             <v x="-0.5" y="0.5"/>
         </poly>
-        <poly x="2" y="1.8" angle="0" density="5" image="elementMetal002.png">
+        <poly x="2" y="1.8" angle="0" density="150" image="elementMetal002.png">
             <v x="-0.5" y="-0.5"/>
             <v x="0.5" y="-0.5"/>
             <v x="-0.5" y="0.5"/>
@@ -94,12 +94,12 @@
         <block x="10.0" y="1.8" angle="0.0" density="10" width="1" height="1" image="elementMetal013.png"/>
         <block x="11.0" y="1.8" angle="0.0" density="10" width="1" height="1" image="elementMetal013.png"/>
 
-        <foe x="10" y="12.2" angle="-337.194" radius="0.3" down="1" image="foeM.png"/>
-        <foe x="10.5" y="12.2" angle="22.9369" radius="0.3" down="1" image="foeM2.png"/>
-        <foe x="10.5" y="9.8" angle="22.9369" radius="0.3" down="1" image="foeM2.png"/>
-        <foe x="10.5" y="7.5" angle="22.9369" radius="0.3" down="1" image="foeM2.png"/>
-        <foe x="10.5" y="5" angle="22.9369" radius="0.3" down="1" image="foeM2.png"/>
-        <foe x="11" y="12.2" angle="22.9369" radius="0.3" down="1" image="foeO.png"/>
+        <foe x="10" y="12.2" angle="-337.194" radius="0.3" down="4" image="foeM.png"/>
+        <foe x="10.5" y="12.2" angle="22.9369" radius="0.3" down="4" image="foeM2.png"/>
+        <foe x="10.5" y="9.8" angle="22.9369" radius="0.3" down="4" image="foeM2.png"/>
+        <foe x="10.5" y="7.5" angle="22.9369" radius="0.3" down="4" image="foeM2.png"/>
+        <foe x="10.5" y="5" angle="22.9369" radius="0.3" down="4" image="foeM2.png"/>
+        <foe x="11" y="12.2" angle="22.9369" radius="0.3" down="4" image="foeO.png"/>
     </items>
     <angry x="-13" y="0.3" spacing="0.6">
         <gruff-sparty/>
