@@ -36,8 +36,8 @@ void Poly::XmlLoad(wxXmlNode* node)
     for ( ; vertexNode; vertexNode = vertexNode->GetNext())
     {
         b2Vec2 currVertex;
-        currVertex.x = stof(vertexNode->GetAttribute(L"x", "0.0").ToStdWstring());
-        currVertex.y = stof(vertexNode->GetAttribute(L"y", "0.0").ToStdWstring());
+        currVertex.x = stof(vertexNode->GetAttribute(L"x", L"0.0").ToStdWstring());
+        currVertex.y = stof(vertexNode->GetAttribute(L"y", L"0.0").ToStdWstring());
         vertices.push_back(currVertex);
     }
 }

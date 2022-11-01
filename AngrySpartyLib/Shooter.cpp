@@ -252,10 +252,7 @@ void Shooter::Update(double elapsed)
  */
 void Shooter::LaunchSpecificSparty(
         const b2Vec2 AttachShooterBack,
-        const b2Vec2 AttachShooterFront,
-        const double MaxNegativePullAngle,
-        const double MinPositivePullAngle,
-        const double MaxPull
+        const b2Vec2 AttachShooterFront
         )
 {
     const b2Vec2 centerPos = b2Vec2(GetX(),

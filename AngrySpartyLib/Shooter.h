@@ -51,10 +51,7 @@ public:
 
     void LaunchSpecificSparty(
             const b2Vec2 AttachShooterBack,
-            const b2Vec2 AttachShooterFront,
-            const double MaxNegativePullAngle,
-            const double MaxPositivePullAngle,
-            const double MaxPull
+            const b2Vec2 AttachShooterFront
     );
 
     void UpdateSpecificShooter(

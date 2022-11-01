@@ -97,10 +97,7 @@ void Goalpost::LaunchSparty()
 {
     LaunchSpecificSparty(
             GoalpostsBandAttachBack,
-            GoalpostsBandAttachFront,
-            GoalpostMaximumNegativePullAngle,
-            GoalpostMinimumPositivePullAngle,
-            GoalpostsMaximumPull
+            GoalpostsBandAttachFront
     );
 }
 

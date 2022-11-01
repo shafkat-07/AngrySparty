@@ -54,7 +54,7 @@ void Ring::XmlLoad(wxXmlNode* node)
     Item::XmlLoad(node);
 
     // Physical object common attributes
-    mX = stof(node->GetAttribute(L"x", "-10.0").ToStdWstring());
+    mX = stof(node->GetAttribute(L"x", L"-10.0").ToStdWstring());
 }
 
 /**

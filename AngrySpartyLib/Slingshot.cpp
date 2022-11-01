@@ -97,10 +97,7 @@ void Slingshot::LaunchSparty()
 {
     LaunchSpecificSparty(
             WoodSlingshotBandAttachBack,
-            WoodSlingshotBandAttachFront,
-            SlingshotMaximumNegativePullAngle,
-            SlingshotMinimumPositivePullAngle,
-            WoodSlingshotMaximumPull
+            WoodSlingshotBandAttachFront
             );
 }
 
