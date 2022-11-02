@@ -263,6 +263,11 @@ void Shooter::LaunchSpecificSparty(
         auto distance = mSparty->DistanceBetweenBodies(centerPos);
         double angle = mSparty->AngleBetweenBodies(centerPos);
 
+        if (distance < 0.01)
+        {
+            return;
+        }
+
         // Make the sparty movable
         mSparty->GetBody()->SetFixedRotation(false);
         mSparty->GetBody()->SetGravityScale(1.0f);
