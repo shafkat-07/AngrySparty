@@ -16,8 +16,7 @@ enum IDs {
     LEVEL_0,
     LEVEL_1,
     LEVEL_2,
-    LEVEL_3,
-    IDM_RING
+    LEVEL_3
 };
 
 #endif //ANGRYSPARTY_IDS_H

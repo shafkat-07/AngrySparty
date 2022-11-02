@@ -8,7 +8,6 @@
 #ifndef ANGRYSPARTY_ITEMVISITOR_H
 #define ANGRYSPARTY_ITEMVISITOR_H
 
-
 class Foe;
 class Sparty;
 class Poly;
@@ -27,7 +26,6 @@ protected:
     ItemVisitor() {}
 
 public:
-
     virtual ~ItemVisitor() {}
 
     /**

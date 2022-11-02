@@ -173,25 +173,14 @@ void Level::OnDraw(shared_ptr<wxGraphicsContext> graphics)
 }
 
 /**
- * Handles the mouse down event
+ * Test an x,y click location to see if it clicked
+ * on a sparty.
  * @param x X coordinate of the mouse
  * @param y Y coordinate of the mouse
  * @return True if the mouse down event hit anything.
  */
 shared_ptr<Item> Level::HitTest(double x, double y)
 {
-    // TODO Comment out this first loop to disable user grabbing blocks
-    for(auto item : mItems)
-    {
-        if (item->IsAlive())
-        {
-            if(item->HitTest(x,y))
-            {
-                return item;
-            }
-        }
-    }
-
     for(auto sparty : mSparties)
     {
         if (sparty->IsAlive())

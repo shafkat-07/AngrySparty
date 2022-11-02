@@ -56,9 +56,6 @@ public:
      */
     virtual void Update(double elapsed) {}
 
-    /// Indicates that the item has been released by the mouse
-    virtual void Release() {}
-
     /**
      * Get the level this item is contained in.
      * @return The level this item is contained in.
@@ -108,7 +105,6 @@ public:
      */
     virtual void Reset() { mAlive = false; }
 
-    // Shooter pass down methods.
     /**
      * Get the body for an item
      * @return This item's body (nullptr if no body)

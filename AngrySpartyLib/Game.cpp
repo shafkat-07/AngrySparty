@@ -73,7 +73,6 @@ void Game::OnDraw(shared_ptr<wxGraphicsContext> graphics, int width, int height)
 void Game::SetLevel(int level)
 {
     mLevelManager->ChangeLevel(level);
-//    cout << "Changed Level" << '\n';
 }
 
 /**

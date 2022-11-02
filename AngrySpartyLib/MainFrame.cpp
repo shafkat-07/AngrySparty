@@ -37,7 +37,6 @@ void MainFrame::Initialize()
 
     auto fileMenu = new wxMenu();
     auto levelMenu = new wxMenu();
-//    auto ringMenu = new wxMenu();
     auto viewMenu = new wxMenu();
     auto helpMenu = new wxMenu();
 
@@ -46,13 +45,11 @@ void MainFrame::Initialize()
     levelMenu->Append(LEVEL_1, L"&Level 1", "Go to level 1");
     levelMenu->Append(LEVEL_2, L"&Level 2", "Go to level 2");
     levelMenu->Append(LEVEL_3, L"&Level 3", "Go to level 3");
-//    ringMenu->Append(IDM_RING, "&Activate The Ring", "Enable to activate the 2x speed booster ring", wxITEM_CHECK);
     viewMenu->Append(IDM_DEBUG_VIEW, L"&Debug View", "Enable to see box2d outlines", wxITEM_CHECK);
     helpMenu->Append(wxID_ABOUT, L"&About\tF1", "Show about dialog");
 
     menuBar->Append(fileMenu, L"&File" );
     menuBar->Append(levelMenu, L"&Level" );
-//    menuBar->Append(ringMenu, L"&The Ring" );
     menuBar->Append(viewMenu, L"&View" );
     menuBar->Append(helpMenu, L"&Help");
 

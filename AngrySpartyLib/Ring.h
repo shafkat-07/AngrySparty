@@ -35,6 +35,7 @@ public:
     void Draw(std::shared_ptr<wxGraphicsContext> graphics) override;
     void Update(double elapsed) override;
     void Reset() override;
+    bool SpartyHitRingTest(double x, double y, double radius);
 
     /**
      * Visit the ring
@@ -49,8 +50,6 @@ public:
      * @return The wxBitmap for this item
      */
     std::shared_ptr<wxBitmap> GetBitmap() override { return mRingBitmap; }
-
-    bool SpartyHitRingTest(double x, double y, double radius);
 
     /**
      * Loads the x pos from XML

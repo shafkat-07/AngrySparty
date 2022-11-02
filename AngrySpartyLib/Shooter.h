@@ -62,6 +62,16 @@ public:
             const double MaxPull
     );
 
+    b2Vec2 ComputeSpecificLocation(
+            double x,
+            double y,
+            const b2Vec2 AttachShooterBack,
+            const b2Vec2 AttachShooterFront,
+            const double MaxNegativePullAngle,
+            const double MinPositivePullAngle,
+            const double MaxPull
+    );
+
     /**
      * Get the width of the shooter
      * @return Width of the shooter
@@ -142,9 +152,6 @@ public:
      * @return The computed location
      */
     virtual b2Vec2 ComputeLocation(double x, double y) { return b2Vec2(0,0); }
-
-    b2Vec2 ComputeSpecificLocation(double x, double y, const b2Vec2 AttachShooterBack, const b2Vec2 AttachShooterFront,
-            const double MaxNegativePullAngle, const double MinPositivePullAngle, const double MaxPull);
 };
 
 #endif //ANGRYSPARTY_SHOOTER_H

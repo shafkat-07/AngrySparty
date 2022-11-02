@@ -39,6 +39,10 @@ public:
     bool HitTest(double x, double y) override;
     void Reset() override;
 
+    double DistanceBetweenBodies(b2Vec2 distantPos);
+    double AngleBetweenBodies(b2Vec2 distantPos);
+    void SetTransform(const b2Vec2& location, double angle);
+
     /**
      * Creates a shape for a physical body
      * @return The b2Shape for the body
@@ -98,10 +102,6 @@ public:
      * @param isStatic True for static, false for dynamic.
      */
     void SetStatic(bool isStatic) { mStatic = isStatic; }
-
-    double DistanceBetweenBodies(b2Vec2 distantPos);
-    double AngleBetweenBodies(b2Vec2 distantPos);
-    void SetTransform(const b2Vec2& location, double angle);
 };
 
 #endif //ANGRYSPARTY_PHYSICALOBJECT_H

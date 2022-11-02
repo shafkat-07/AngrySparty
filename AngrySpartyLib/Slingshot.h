@@ -27,7 +27,6 @@ public:
     void XmlLoad(wxXmlNode* node) override;
     void Update(double elapsed) override;
     void LaunchSparty() override;
-
     b2Vec2 ComputeLocation(double x, double y) override;
 };
 

@@ -246,9 +246,6 @@ void Shooter::Update(double elapsed)
  * Launch a sparty according to which type it is and what shooter is being used.
  * @param AttachShooterBack The vector of the back of the shooter.
  * @param AttachShooterFront The vector of the front of the shooter.
- * @param MaxNegativePullAngle The maximum negative angle the shooter can pull back.
- * @param MinPositivePullAngle The minimum positive angle the shooter can pull back.
- * @param MaxPull The maximum distance the shooter can pull back.
  */
 void Shooter::LaunchSpecificSparty(
         const b2Vec2 AttachShooterBack,
