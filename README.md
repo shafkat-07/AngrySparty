@@ -4,7 +4,7 @@
 
 
 ## Credits:
-### 1. Brendan Bushbaker
-### 2. Vetri Viijay
-### 3. Juan Camilo Sabogal Olarte
-### 4. Tyler Baird
+### 1. Brendan Bushbaker - bushbak2@msu.edu
+### 2. Vetri Viijay - vijayvet@msu.edu
+### 3. Juan Camilo Sabogal Olarte - sabogalo@msu.edu
+### 4. Tyler Baird - bairdty1@msu.edu
